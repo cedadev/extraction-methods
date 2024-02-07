@@ -14,12 +14,12 @@ __contact__ = "richard.d.smith@stfc.ac.uk"
 
 # Python imports
 from collections import defaultdict
+import os
 import json
 import logging
 from typing import Optional
 
 from extraction_methods.core.extraction_method import ExtractionMethod
-from extraction_methods.core.types import SpatialExtent, TemporalExtent
 
 LOGGER = logging.getLogger(__name__)
 
@@ -51,27 +51,33 @@ class JsonFileExtract(ExtractionMethod):
     """
 
     def get_facet_values(self) -> list:
-        output = defaultdict(list)
+        output = defaultdict(set)
 
         for filepath in os.listdir(self.dirpath):
 
-            with open(filepath, "r") as file:
+            with open(os.path.join(self.dirpath, filepath), "r") as file:
                 item = json.load(file)
 
-                item_properties = item["body"]["properties"]
+                item_properties = item["properties"]
 
                 for facet in self.terms:
                     if facet in item_properties:
-                        output[facet].extend(item_properties[facet])
+                        if isinstance(item_properties[facet], list):
+                            output[facet].update(item_properties[facet])
+                        else:
+                            output[facet].add(item_properties[facet])
+
+        for facet in self.terms:
+            output[facet] = list(output[facet])
 
         return output
 
     @staticmethod
-    def get_spatial_extent(item_list: list) -> Optional[SpatialExtent]:
+    def get_spatial_extent(item_list: list) -> dict:
         ...
 
     @staticmethod
-    def get_temporal_extent(item_list: list) -> Optional[TemporalExtent]:
+    def get_temporal_extent(item_list: list) -> dict:
         start_datetime = []
         end_datetime = []
         datetime = []
@@ -91,7 +97,7 @@ class JsonFileExtract(ExtractionMethod):
             file_data = json.load(file)
 
             for item in file_data:
-                if item["body"]["collection_id"] == file_id:
+                if item["collection_id"] == file_id:
                     item_list.append(item)
 
         # spatial_extent = self.get_spatial_extent(item_list)
@@ -100,7 +106,7 @@ class JsonFileExtract(ExtractionMethod):
     def run(self, body: dict, **kwargs) -> dict:
         output = self.get_facet_values()
 
-        if values:
+        if output:
             body |= output
 
         # No need to include extents since the example scanner has none.

@@ -71,7 +71,7 @@ setup(
             "lambda = extraction_methods.plugins.lambda:LambdaExtract",
             "netcdf = extraction_methods.plugins.netcdf:NetCDFfExtract",
             "asset_aggregator = extraction_methods.plugins.asset_aggregator:AssetAggregatorExtract",
-            "intake_asset = extraction_methods.plugins.intake_esm_assets:IntakeESMAssetExtract",
+            "intake_assets = extraction_methods.plugins.intake_esm_assets:IntakeESMAssetExtract",
         ],
         "extraction_methods.header.backends": [
             "ncml = extraction_methods.plugins.header.backends.ncml:NcMLBackend",

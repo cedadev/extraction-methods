@@ -51,6 +51,7 @@ __contact__ = "richard.d.smith@stfc.ac.uk"
 # Python imports
 import logging
 from datetime import datetime
+from pathlib import Path
 
 # Thirdparty imports
 import intake
@@ -87,14 +88,16 @@ class IntakeESMAssetExtract(ExtractionMethod):
         return catalog
 
     def update_search_kwargs(self, body:dict):
-      for search_kwarg_key, search_kwarg_value in search_kwargs.items():
-        if self.search_kwarg_value[0] == self.exists_key:
-                self.search_kwargs[search_kwarg_key] = body[self.search_kwarg_value[1:]]
+      for search_kwarg_key, search_kwarg_value in self.search_kwargs.items():
+        if search_kwarg_value[0] == self.exists_key:
+                self.search_kwargs[search_kwarg_key] = body[search_kwarg_value[1:]]
 
     def run(self, body: dict, **kwargs) -> dict:
 
         self.update_search_kwargs(body)
         catalog = self.open_catalog()
+
+        assets = body.get("assets", {})
 
         for _, row in catalog.df.iterrows():
             href = getattr(row, self.object_attr)
@@ -106,7 +109,7 @@ class IntakeESMAssetExtract(ExtractionMethod):
                 for extraction_method in self.extraction_methods:
                     asset = extraction_method.run(asset)
 
-            assets[Path(path).name] = asset
+            assets[Path(href).name] = asset
 
         body["assets"] = assets
 
