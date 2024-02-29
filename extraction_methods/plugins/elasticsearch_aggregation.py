@@ -69,23 +69,23 @@ class ElasticsearchAggregationExtract(ExtractionMethod):
         if not hasattr(self, "request_tiemout"):
             self.request_tiemout = 15
 
-        for position, geo_bound_term in enumerate(self.geo_bounds):
+        for position, geo_bound_term in enumerate(getattr(self, "geo_bounds", [])):
             if "name" not in geo_bound_term:
                 self.geo_bounds[position]["name"] = geo_bound_term["key"]
 
-        for position, min_term in enumerate(self.min):
+        for position, min_term in enumerate(getattr(self, "min", [])):
             if "name" not in min_term:
                 self.min[position]["name"] = min_term["key"]
 
-        for position, max_term in enumerate(self.max):
+        for position, max_term in enumerate(getattr(self, "max", [])):
             if "name" not in max_term:
                 self.max[position]["name"] = max_term["key"]
 
-        for position, sum_term in enumerate(self.sum):
+        for position, sum_term in enumerate(getattr(self, "sum", [])):
             if "name" not in sum_term:
                 self.sum[position]["name"] = sum_term["key"]
 
-        for position, list_term in enumerate(self.list):
+        for position, list_term in enumerate(getattr(self, "list", [])):
             if "name" not in list_term:
                 self.list[position]["name"] = list_term["key"]
 
@@ -147,7 +147,7 @@ class ElasticsearchAggregationExtract(ExtractionMethod):
                 elif "bounds" in self.aggregations[facet["name"]].keys():
                     value = self.aggregations[facet["name"]]["bounds"]
                 
-                else:
+                elif "value" in self.aggregations[facet["name"]].keys():
                     value = self.aggregations[facet["name"]]["value"]
 
                 self.metadata[facet["name"]] = value

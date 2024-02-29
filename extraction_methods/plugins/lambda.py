@@ -42,7 +42,7 @@ class LambdaExtract(ExtractionMethod):
 
     .. code-block:: yaml
 
-        - method: general_function
+        - method: lambda
           function: 'lambda x: x * x'
           input_args:
             - hello

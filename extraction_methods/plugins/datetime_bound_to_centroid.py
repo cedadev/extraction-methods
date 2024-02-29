@@ -66,10 +66,20 @@ class DatetimeBoundToCentroidExtract(ExtractionMethod):
         if "format" not in self.output_term:
             self.output_term["format"] = "%Y-%m-%dT%H:%M:%SZ"
 
+    def strip_time(self, datetime_str:str, datetime_format:str) -> "datetime":
+        try: 
+            return datetime.strptime(datetime_str, datetime_format)
+        except ValueError as v:
+            if len(v.args) > 0 and v.args[0].startswith('unconverted data remains: '):
+                datetime_str = datetime_str[:-(len(v.args[0]) - 26)]
+                return datetime.strptime(datetime_str, datetime_format)
+        else:
+            raise
+
     def run(self, body: dict, **kwargs):
 
-        start_datetime = datetime.strptime(body[self.start_term["name"]], self.start_term["format"])
-        end_datetime = datetime.strptime(body[self.end_term["name"]], self.end_term["format"])
+        start_datetime = self.strip_time(body[self.start_term["name"]], self.start_term["format"])
+        end_datetime = self.strip_time(body[self.end_term["name"]], self.end_term["format"])
 
         centroid_datetime = start_datetime + (end_datetime - start_datetime) / 2
 
