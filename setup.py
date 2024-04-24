@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as readme_file:
 
 setup(
     name="extraction_methods",
-    version="1.0.2",
+    version="0.0.3",
     description="Methods to enable the extraction of metadata.",
     author="Rhys Evans",
     url="https://github.com/cedadev/extraction-methods/",
