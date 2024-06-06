@@ -14,13 +14,9 @@ __contact__ = "richard.d.smith@stfc.ac.uk"
 
 import glob
 import logging
-import os
 
 # Python imports
-from datetime import datetime
 from pathlib import Path
-
-import magic
 
 from extraction_methods.core.extraction_method import ExtractionMethod
 
@@ -62,15 +58,8 @@ class RegexAssetsExtract(ExtractionMethod):
             self.glob = body[self.glob_term]
 
         for path in glob.iglob(self.glob):
-            stats = os.stat(path)
             asset = {
                 "href": path,
-                "role": self.role,
-                "type": magic.from_file(path, mime=True),
-                "last_modified": datetime.fromtimestamp(
-                    stats.st_mtime
-                ).isoformat(),
-                "size": getattr(stats, "st_size"),
             }
 
             if hasattr(self, "extraction_methods"):
