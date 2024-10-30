@@ -7,14 +7,45 @@ __contact__ = "richard.d.smith@stfc.ac.uk"
 
 import logging
 
+from pydantic import Field
+
 # Package imports
-from extraction_methods.core.extraction_method import ExtractionMethod
+from extraction_methods.core.extraction_method import (
+    ExtractionMethod,
+    Input,
+    update_input,
+)
 
 LOGGER = logging.getLogger(__name__)
 
 
+class BboxInput(Input):
+    """BBox input model."""
+
+    west: float | str = Field(
+        description="west coordinate.",
+    )
+    south: float | str = Field(
+        description="south coordinate.",
+    )
+    east: float | str = Field(
+        description="east coordinate.",
+    )
+    north: float | str = Field(
+        description="north coordinate.",
+    )
+
+    def update_attrs(self, body):
+        super().update_attrs(body)
+        self.west = float(self.west)
+        self.south = float(self.south)
+        self.east = float(self.east)
+        self.north = float(self.north)
+
+
 class BboxExtract(ExtractionMethod):
     """
+    .. list-table::
 
     Processor Name: ``bbox``
 
@@ -23,49 +54,41 @@ class BboxExtract(ExtractionMethod):
         formatted bbox.
 
     Configuration Options:
-        - ``coordinate_keys``: ``REQUIRED`` list of keys to convert to bbox array. Ordering is respected.
+        - ``west``: ``REQUIRED`` Most westerly coordinate.
+        - ``south``: ``REQUIRED`` Most southernly coordinate.
+        - ``east``: ``REQUIRED`` Most easterly coordinate.
+        - ``north``: ``REQUIRED`` Most northernly coordinate.
 
     Example Configuration:
-
-    .. code-block:: yaml
-
-        - method: bbox
-            inputs:
-              coordinate_keys:
-                - west
-                - south
-                - east
-                - north
-
+        .. code-block:: yaml
+            - method: bbox
+                inputs:
+                west: 0
+                south: 0
+                east: $east_variable
+                north: $north_variable
     """
 
-    def run(self, body: dict, **kwargs):
+    input_class = BboxInput
+
+    @update_input
+    def run(self, body: dict) -> dict:
         try:
-            west = body[self.coordinate_keys[0]]
-            south = body[self.coordinate_keys[1]]
-            east = body[self.coordinate_keys[2]]
-            north = body[self.coordinate_keys[3]]
-
-            coordinates = [
-                [
-                    float(west) if west is not None else west,
-                    float(south) if south is not None else south,
-                ],
-                [
-                    float(east) if east is not None else east,
-                    float(north) if north is not None else north,
-                ],
-            ]
-
             body["bbox"] = {
                 "type": "envelope",
-                "coordinates": coordinates,
+                "coordinates": [
+                    [
+                        self.input.west,
+                        self.input.south,
+                    ],
+                    [
+                        self.input.east,
+                        self.input.north,
+                    ],
+                ],
             }
 
-        except TypeError:
-            LOGGER.warning("Unable to convert bbox.", exc_info=True)
-
-        except KeyError:
+        except (TypeError, KeyError):
             LOGGER.warning("Unable to convert bbox.", exc_info=True)
 
         return body

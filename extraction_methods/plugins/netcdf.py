@@ -13,20 +13,49 @@ __contact__ = "richard.d.smith@stfc.ac.uk"
 
 # Python imports
 import logging
-import os
-from pathlib import Path
-import xarray
+
 import cf_xarray
+import xarray
+from pydantic import Field
 
-from extraction_methods.core.extraction_method import ExtractionMethod
+from extraction_methods.core.extraction_method import (
+    ExtractionMethod,
+    Input,
+    KeyOutputKey,
+    update_input,
+)
 
-# Package imports
+LOGGER = logging.getLogger(__name__)
+
+
+class NetCDFInput(Input):
+    """NetCDF input model."""
+
+    input_term: str = Field(
+        default="$uri",
+        description="term for method to run on.",
+    )
+    variable_id: str = Field(
+        description="lambda function to be run.",
+    )
+    variable_attributes: list[KeyOutputKey] = Field(
+        default=[],
+        description="list of variable attributes to extract.",
+    )
+    global_attributes: list[KeyOutputKey] = Field(
+        default=[],
+        description="list of global attributes to extract.",
+    )
+    cf_attributes: list[KeyOutputKey] = Field(
+        default=[],
+        description="list of cf attributes to extract.",
+    )
 
 
 LOGGER = logging.getLogger(__name__)
 
 
-class NetCDFfExtract(ExtractionMethod):
+class NetCDFExtract(ExtractionMethod):
     """
     .. list-table::
 
@@ -58,12 +87,6 @@ class NetCDFfExtract(ExtractionMethod):
               - Allows you to select from the element attribute. In the absence of this value, the default behaviour is to access the text value of the key.
                 In some cases, you might want to access and attribute of the element.
 
-        Example:
-            .. code-block:: yaml
-
-                  - method: start_datetime
-                    key: './/gml:beginPosition'
-
     Example configuration:
         .. code-block:: yaml
 
@@ -78,66 +101,35 @@ class NetCDFfExtract(ExtractionMethod):
     # noqa: W605
     """
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    input_class = NetCDFInput
 
-        if not hasattr(self, "input_term"):
-            self.input_term = "uri"
+    @update_input
+    def run(self, body: dict) -> dict:
+        dataset = xarray.open_dataset(self.input.input_term)
 
-        if not hasattr(self, "exists_key"):
-            self.exists_key = "$"
+        if self.input.variable_attributes:
+            variable = dataset[self.input.variable_id]
+            variable_attrs = variable.attrs
 
-        if not hasattr(self, "variable_id"):
-            self.variable_id = ""
+            for variable_attribute in self.input.variable_attributes:
+                body[variable_attribute.output_key] = variable_attrs.get(
+                    variable_attribute.key, None
+                )
 
-        if not hasattr(self, "variable_terms"):
-            self.variable_terms = []
+        if self.input.global_attributes:
+            global_attrs = dataset.attrs
 
-        if not hasattr(self, "global_terms"):
-            self.global_terms = []
+            for global_attribute in self.input.global_attributes:
+                body[global_attribute.output_key] = global_attrs.get(global_attribute.key, None)
 
-        if not hasattr(self, "cf_terms"):
-            self.cf_terms = []
+        if self.input.cf_attributes:
+            cf_attrs = dataset.cf
 
-    def run(self, body: dict, **kwargs) -> dict:
-        # Extract the keys
-        dataset = xarray.open_dataset(body[self.input_term])
-
-        if self.variable_id:
-            if self.variable_id[0] == self.exists_key:
-                self.variable_id = body[self.variable_id[1:]]
-
-            variable = dataset[self.variable_id]
-
-            if self.variable_terms:
-                variable_attributes = variable.attrs
-
-                for variable_term in self.variable_terms:
-                    name = variable_term.get("name")
-                    key = variable_term.get("key", name)
-
-                    body[name] = variable_attributes.get(key, None)
-
-        if self.global_terms:
-            global_attributes = dataset.attrs
-
-            for global_term in self.global_terms:
-                name = global_term.get("name")
-                key = global_term.get("key", name)
-
-                body[name] = global_attributes.get(key, None)
-
-        if self.cf_terms:
-            cf_attributes = dataset.cf
-
-            for cf_term in self.cf_terms:
-                name = cf_term.get("name")
-                key = cf_term.get("key", name)
-
+            for cf_attribute in self.input.cf_attributes:
                 try:
-                    body[name] = cf_attributes[key]
+                    body[cf_attribute.output_key] = cf_attrs[cf_attribute.key]
 
                 except KeyError:
-                    body[name] = None
+                    body[cf_attribute.output_key] = None
 
         return body

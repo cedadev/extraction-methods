@@ -18,11 +18,28 @@ from xml.etree import ElementTree as ET
 
 # Third party imports
 import requests
+from pydantic import Field
 
-# Package imports
-from extraction_methods.core.extraction_method import ExtractionMethod
+from extraction_methods.core.extraction_method import (
+    ExtractionMethod,
+    Input,
+    KeyOutputKey,
+    update_input,
+)
 
 LOGGER = logging.getLogger(__name__)
+
+
+class ISODateInput(Input):
+    """ISO date input model."""
+
+    url: str = Field(
+        description="Url for record store.",
+    )
+    dates: list[KeyOutputKey] = Field(
+        description="list of dates to extract.",
+    )
+
 
 iso19115_ns = {
     "gmd": "http://www.isotc211.org/2005/gmd",
@@ -38,79 +55,43 @@ class ISO19115Extract(ExtractionMethod):
     """
     .. list-table::
 
-        * - Processor Name
-          - ``iso19115``
+    Processor Name: ``iso19115``
 
     Description:
-        Takes a URL template and calls out to URL to retrieve the
-        iso19115 record. Use pre-processors to inject additional kwargs
-        which are passed to the URL template.
+        Takes a URL and calls out to URL to retrieve the iso19115 record.
 
     Configuration Options:
-        - ``url_template``: ``REQUIRED`` String template to build the URL.
-          Template uses the `python string template <https://docs.python.org/3/library/string.html#template-strings>`_ format.
-        - ``extraction_keys``: List of keys to retrieve from the response.
-
-    Extraction Keys:
-        Extraction keys should be a map.
-
-        .. list-table::
-
-            * - Name
-              - Description
-            * - ``name``
-              - Name of the outputted attribute
-            * - ``key``
-              - Access key to extract the required data. Passed to
-                `xml.etree.ElementTree.find() <https://docs.python.org/3/library/xml.etree.elementtree.html?highlight=find#xml.etree.ElementTree.ElementTree.find>`_
-                and also supports `xpath formatted <https://docs.python.org/3/library/xml.etree.elementtree.html#xpath-support>`_ accessors
-
-        Example:
-            .. code-block:: yaml
-
-                  - method: start_datetime
-                    key: './/gml:beginPosition'
+        - ``url``: ``REQUIRED`` URL to record store.
+        - ``date_terms``: List of name, key, format of date terms to retrieve from the response.
 
     Example configuration:
         .. code-block:: yaml
-
             - method: iso19115
               inputs:
-                url_template: 'api.catalogue.ceda.ac.uk/export/xml/$uri'
-                extraction_keys:
-                  - name: start_datetime
-                    key: './/gml:beginPosition'
+                url: $url
+                dates:
+                  - key: './/gml:beginPosition'
+                    output_key: start_datetime
     """
 
-    def run(self, body: dict, **kwargs) -> dict:
-        # Build the template
-        url = Template(self.url_template)
+    input_class = ISODateInput
 
-        try:
-            url = url.substitute(kwargs)
-        except KeyError:
-            LOGGER.warning(
-                f"URL templating failed. Template: {self.url_template} key not found in kwargs: {body['uri']}"
-            )
-            return {}
-
+    @update_input
+    def run(self, body: dict) -> dict:
         # Retrieve the ISO 19115 record
-        response = requests.get(url)
+        response = requests.get(self.input.url)
 
         if not response.status_code == 200:
-            LOGGER.debug(f"Request {url} failed with response: {response.error}")
-            return {}
+            LOGGER.debug("Request %s failed with response: %s", self.input.url, response.error)
+            return body
 
         iso_record = ET.fromstring(response.text)
 
         # Extract the keys
-        for key in self.extraction_keys:
-            name = key["name"]
-            location = key["key"]
-
-            value = iso_record.find(location, iso19115_ns)
+        for extraction_term in self.input.dates:
+            value = iso_record.find(extraction_term.key, iso19115_ns)
 
             if value is not None:
-                body[name] = value.text
+                body[extraction_term.output_key] = value.text
 
         return body

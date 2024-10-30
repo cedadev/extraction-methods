@@ -16,9 +16,28 @@ __contact__ = "richard.d.smith@stfc.ac.uk"
 import logging
 from pathlib import Path
 
-from extraction_methods.core.extraction_method import ExtractionMethod
+from pydantic import Field
+
+from extraction_methods.core.extraction_method import (
+    ExtractionMethod,
+    Input,
+    update_input,
+)
 
 LOGGER = logging.getLogger(__name__)
+
+
+class PathPartsInput(Input):
+    """path parts input model."""
+
+    path: str = Field(
+        default="$uri",
+        description="path for method to run on.",
+    )
+    skip: int = Field(
+        default=0,
+        description="number of path parts to skip.",
+    )
 
 
 class PathPartsExtract(ExtractionMethod):
@@ -34,27 +53,26 @@ class PathPartsExtract(ExtractionMethod):
         of top level parts.
 
     Configuration Options:
-        - ``skip``: The number of path parts to skip. ``default: 1``
+        - ``skip``: The number of path parts to skip. ``default: 0``
 
 
     Example configuration:
         .. code-block:: yaml
 
-            - method: default
+            - method: path_parts
               inputs:
+                input_term: $uri
                 skip: 2
 
     """
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        if not hasattr(self, "skip"):
-            self.skip = 1
+    input_class = PathPartsInput
 
-    def run(self, body: dict, **kwargs) -> list:
-        path = Path(body["uri"])
+    @update_input
+    def run(self, body: dict) -> list:
+        path = Path(self.input.path)
 
-        parts = list(path.parts)[self.skip :]
+        parts = list(path.parts)[self.input.skip :]
 
         body["filename"] = parts.pop()
 

@@ -8,49 +8,66 @@ __contact__ = "richard.d.smith@stfc.ac.uk"
 import logging
 import re
 
+from pydantic import Field
+
 # Package imports
-from extraction_methods.core.extraction_method import ExtractionMethod
+from extraction_methods.core.extraction_method import (
+    ExtractionMethod,
+    Input,
+    update_input,
+)
 
 LOGGER = logging.getLogger(__name__)
 
 
+class StringTemplateInput(Input):
+    """String template input model."""
+
+    template: str = Field(
+        description="Template to follow.",
+    )
+    descructive: bool = Field(
+        default=False,
+        description="True if terms should be removed after templating.",
+    )
+    output_key: str = Field(
+        description="key to output to.",
+    )
+
+
 class StringTemplateExtract(ExtractionMethod):
     """
+    .. list-table::
 
-    Processor Name: ``string_join``
+    Processor Name: ``string_template``
 
     Description:
-        Accepts a dictionary. String values are popped from the dictionary and
-        are put back into the dictionary with the ``key`` specified.
+        Accepts a template and output_key. terms are added to the template.
 
     Configuration Options:
-        - ``key_list``: ``REQUIRED`` list of keys to convert to bbox array. Ordering is respected.
-        - ``delimiter``: ``REQUIRED`` text delimiter to put between strings
-        - ``key``: ``REQUIRED`` name of the key you would like to output
-        - ``destructive``: Optional boolean false to retain original terms. ``DEFAULT``: True
+        - ``template``: ``REQUIRED`` Template to follow.
+        - ``descructive``: True if terms should be removed after templating.
+        - ``output_key``: ``REQUIRED`` key to output to.
 
     Example Configuration:
-
-
-    .. code-block:: yaml
-
-        - method: string_template
-          template: {hello}/{goodbye}/{hello}/bonjour.html
-          output_key: manifest_url
-
+        .. code-block:: yaml
+            - method: string_template
+            inputs:
+                template: {hello}/{goodbye}/{hello}/bonjour.html
+                output_key: manifest_url
     """
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    input_class = StringTemplateInput
 
-        if not hasattr(self, "destructive"):
-            self.destructive = True
+    @update_input
+    def run(self, body: dict) -> dict:
+        terms = re.findall("{(.*?)}", self.input.template)
 
-    def run(self, body: dict, **kwargs):
-        terms = re.findall("{(.*?)}", self.template)
+        if self.input.descructive:
+            format_terms = {term: body.pop(term, "") for term in terms}
+        else:
+            format_terms = {term: body.get(term, "") for term in terms}
 
-        format_terms = {term: body[term] for term in terms}
-
-        body[self.output_key] = self.template.format(**format_terms)
+        body[self.input.output_key] = self.input.template.format(**format_terms)
 
         return body

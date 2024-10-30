@@ -8,33 +8,58 @@ __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
 __license__ = "BSD - see LICENSE file in top-level package directory"
 __contact__ = "richard.d.smith@stfc.ac.uk"
 
+import logging
+
 import xarray as xr
-from xarray.backends.plugins import guess_engine
+from pydantic import Field
+
+from extraction_methods.core.extraction_method import (
+    Input,
+    KeyOutputKeyField,
+    SetInput,
+    update_input,
+)
+
+LOGGER = logging.getLogger(__name__)
 
 
-class XarrayBackend:
+class XarrayHeaderInput(Input):
+    """Intake backend input model."""
+
+    input_term: str = Field(
+        default="$uri",
+        description="term for method to run on.",
+    )
+    dataset_kwargs: dict = Field(
+        default={},
+        description="kwargs to open dataset.",
+    )
+    namespaces: dict = Field(
+        default={"ncml": "http://www.unidata.ucar.edu/namespaces/netcdf/ncml-2.2"},
+        description="NcML namespaces.",
+    )
+    attributes: list[KeyOutputKeyField] = Field(
+        default={},
+        description="attributes to be extracted.",
+    )
+
+
+class XarrayHeader(SetInput):
     """
-    Xarray
+    XarrayHeader
     ------
 
-    Backend Name: ``Xarray``
+    Backend Name: ``XarrayHeader``
 
     Description:
         Takes an input string and returns a boolean on whether this
         backend can open that file.
     """
 
-    def guess_can_open(self, filepath: str) -> bool:
-        """Return a boolean on whether this backend can open that file."""
-        try:
-            self.engine = guess_engine(filepath)
-            return True
-        except ValueError:
-            return False
+    input_class = XarrayHeaderInput
 
-    def attr_extraction(
-        self, body: dict, attributes: list, backend_kwargs: dict
-    ) -> dict:
+    @update_input
+    def run(self) -> dict:
         """
         Takes a dictionary and list of attributes and extracts the metadata.
 
@@ -45,14 +70,13 @@ class XarrayBackend:
 
         :return: Dictionary of extracted attributes
         """
+        ds = xr.open_dataset(self.input.input_term, **self.input.dataset_kwargs)
 
-        ds = xr.open_dataset(body["uri"], engine=self.engine, **backend_kwargs)
+        output = {}
+        for attribute in self.input.attributes:
 
-        extracted_metadata = {}
-        for attr in attributes:
-
-            value = ds.attrs.get(attr)
+            value = ds.attrs.get(attribute.key)
             if value:
-                extracted_metadata[attr] = value
+                output[attribute.output_key] = value
 
-        return body | extracted_metadata
+        return output

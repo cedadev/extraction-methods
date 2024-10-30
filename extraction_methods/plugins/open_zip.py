@@ -11,21 +11,37 @@ __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
 __license__ = "BSD - see LICENSE file in top-level package directory"
 __contact__ = "richard.d.smith@stfc.ac.uk"
 
-# Python imports
-from collections import defaultdict
 import logging
-import zipfile
 import tempfile
-from pathlib import Path
-from xml.etree import ElementTree
-from xml.etree.ElementTree import ParseError
+import zipfile
 
-from extraction_methods.core.extraction_method import ExtractionMethod
+from pydantic import Field
 
-# Package imports
-
+from extraction_methods.core.extraction_method import (
+    ExtractionMethod,
+    Input,
+    KeyOutputKey,
+    update_input,
+)
 
 LOGGER = logging.getLogger(__name__)
+
+
+class ZipInput(Input):
+    """Zip input model."""
+
+    input_term: str = Field(
+        default="$uri",
+        description="term for method to run on.",
+    )
+    inner_files: list[KeyOutputKey] = Field(
+        default=[],
+        description="list of inner zipped files to be read.",
+    )
+    output_key: str = Field(
+        default="",
+        description="key to output to.",
+    )
 
 
 class ZipExtract(ExtractionMethod):
@@ -33,85 +49,49 @@ class ZipExtract(ExtractionMethod):
     .. list-table::
 
         * - Processor Name
-          - ``xml``
+          - ``zip``
 
     Description:
-        Processes XML documents to extract metadata
+        Open a zip file and read inner files
 
     Configuration Options:
-        - ``extraction_keys``: List of keys to retrieve from the document.
-        - ``filter_expr``: Regex to match against files to limit the attempts to known files
-        - ``namespaces``: Map of namespaces
-
-    Extraction Keys:
-        Extraction keys should be a map.
-
-        .. list-table::
-
-            * - Name
-              - Description
-            * - ``name``
-              - Name of the outputted attribute
-            * - ``key``
-              - Access key to extract the required data. Passed to
-                `xml.etree.ElementTree.find() <https://docs.python.org/3/library/xml.etree.elementtree.html?highlight=find#xml.etree.ElementTree.ElementTree.find>`_
-                and also supports `xpath formatted <https://docs.python.org/3/library/xml.etree.elementtree.html#xpath-support>`_ accessors
-            * - ``attribute``
-              - Allows you to select from the element attribute. In the absence of this value, the default behaviour is to access the text value of the key.
-                In some cases, you might want to access and attribute of the element.
-
-        Example:
-            .. code-block:: yaml
-
-                  - method: start_datetime
-                    key: './/gml:beginPosition'
+        - ``input_term``: List of keys to retrieve from the document.
+        - ``inner_files``: Lost of inner zipped files to be read.
+        - ``output_key``: key to output to.
 
     Example configuration:
         .. code-block:: yaml
 
             - method: xml
               inputs:
-                filter_expr: '\.manifest$'
-                extraction_keys:
-                  - name: start_datetime
-                    key: './/gml:beginPosition'
-                    attribute: start
+                input_term: /path/to/a/file
+                inner_files:
+                  - key: hello.txt
+                    output_key: world
 
     # noqa: W605
     """
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    input_class = ZipInput
 
-        if not hasattr(self, "output_key"):
-            self.output_key = "zip_file"
-
-        if not hasattr(self, "inner_file"):
-            self.inner_file = ""
-
-        if not hasattr(self, "zip_file"):
-            self.zip_file = "uri"
-
-    def run(self, body: dict, **kwargs) -> dict:
+    @update_input
+    def run(self, body: dict) -> dict:
         # Extract the keys
-        self.body = body
         try:
-            if self.zip_file[0] == self.exists_key:
-                self.zip_file = body[self.zip_file[1:]]
+            with zipfile.ZipFile(self.input.input_term) as z:
+                output = {}
+                for inner_file in self.input.inner_files:
+                    output[inner_file.output_key] = z.read(inner_file.key)
 
-            if self.inner_file[0] == self.exists_key:
-                self.inner_file = body[self.inner_file[1:]]
-
-            with zipfile.ZipFile(self.zip_file) as z:
-                if self.inner_file:
-                  file_obj = z.read(self.inner_file)
-                else:
-                  file_obj = z.read()
+                if not output:
+                    output = z.read()
 
         except FileNotFoundError:
-            # return body
-            file_obj = tempfile.TemporaryFile()
+            output = tempfile.TemporaryFile()
 
-        body[self.output_key] = file_obj
+        if self.input.output_key:
+            output = {self.input.output_key: output}
+
+        body |= output
 
         return body

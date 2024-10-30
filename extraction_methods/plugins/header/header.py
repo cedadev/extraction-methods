@@ -9,26 +9,37 @@ __license__ = "BSD - see LICENSE file in top-level package directory"
 __contact__ = "richard.d.smith@stfc.ac.uk"
 
 import logging
-from functools import lru_cache
 
-import pkg_resources as pkg
+from pydantic import Field
 
-from extraction_methods.core.decorators import (
-    ExtractionMethod_postprocessors,
-    accepts_postprocessors,
+from extraction_methods.core.extraction_method import (
+    Backend,
+    ExtractionMethod,
+    Input,
+    KeyOutputKey,
+    SetEntryPoints,
+    update_input,
 )
-from extraction_methods.core.extraction_method import ExtractionMethod
 
 LOGGER = logging.getLogger(__name__)
 
 
-class NoSuitableBackendException(Exception):
-    """Returned when backend cannot be found for file"""
+class HeaderInput(Input):
+    """Header input model."""
 
-    ...
+    input_term: str = Field(
+        default="$uri",
+        description="term for method to run on.",
+    )
+    backend: Backend = Field(
+        description="Backend and kwargs to run.",
+    )
+    attributes: list[KeyOutputKey] = Field(
+        description="List of attributes to be extracted.",
+    )
 
 
-class HeaderExtract(ExtractionMethod):
+class HeaderExtract(ExtractionMethod, SetEntryPoints):
     """
 
     .. list-table::
@@ -51,80 +62,25 @@ class HeaderExtract(ExtractionMethod):
 
             - method: header
               inputs:
+                backend:
+                  name: xarray
+                  kwargs:
+                    decode_times: False
                 attributes:
-                  - institution
-                  - sensor
-                  - platform
-                backend: xarray
-                backend_kwargs:
-                  decode_times: False
+                  - name: institution
+                  - name: sensor
+                    key: Sensor
+                  - name: platform
 
     """
 
-    def run(self, body: dict, **kwargs) -> dict:
-        try:
-            backend = self.guess_backend(body["uri"])
-        except NoSuitableBackendException:
-            LOGGER.warning(f"Header extract backend not found for {body['uri']}")
-            return {}
+    input_class = HeaderInput
+    entry_point_group = "extraction_methods.header.backends"
 
-        # Use the handler to extract the desired attributes from the header
-        body = self.attr_extraction(backend, body, self.attributes, self.backend_kwargs)
+    @update_input
+    def run(self, body: dict) -> dict:
+        backend = self.entry_points.get(self.input.backend.name)(**self.input.backend.inputs)
+        output = backend.run(body)
+        body |= output
 
         return body
-
-    @staticmethod
-    @lru_cache(maxsize=1)
-    def list_backend() -> dict:
-        backend_entrypoints = {}
-        for pkg_ep in pkg.iter_entry_points(
-            "extraction_methods.header.backends"
-        ):
-            name = pkg_ep.name
-            try:
-                backend = pkg_ep.load()
-                backend_entrypoints[name] = backend
-            except Exception as ex:
-                LOGGER.warning(ex)
-        return backend_entrypoints
-
-    def guess_backend(self, uri: str) -> dict:
-        if hasattr(self, "backend"):
-            entry_points = pkg.iter_entry_points(
-                "extraction_methods.header.backends",
-                self.backend,
-            )
-
-            entry_points = list(entry_points)
-            backend = None
-            if len(entry_points) > 0:
-                backend = entry_points[0].load()
-
-            if backend and backend().guess_can_open(uri):
-                backend = backend()
-                backend.guess_can_open(uri)
-                return backend
-
-        backends = self.list_backend()
-        for _, backend in backends.items():
-            if backend().guess_can_open(uri):
-                return backend
-
-        raise (NoSuitableBackendException(f"No backend found for file {uri}"))
-
-    @staticmethod
-    def attr_extraction(
-        backend, body: dict, attributes: list, backend_kwargs: dict
-    ) -> dict:
-        """
-        Takes a uri and list of attributes and extracts the metadata from the header.
-
-        :param file: file-like object
-        :param attributes: Header attributes to extract
-        :param kwargs: kwargs to send to xarray.open_dataset(). e.g. engine to
-        specify different engines to use with grib data.
-
-        :return: dictionary of extracted attributes
-        """
-
-        return backend.attr_extraction(body, attributes, backend_kwargs)

@@ -11,36 +11,69 @@ __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
 __license__ = "BSD - see LICENSE file in top-level package directory"
 __contact__ = "richard.d.smith@stfc.ac.uk"
 
+import logging
+
 # Python imports
 from collections import defaultdict
-import logging
-import os
-from pathlib import Path
 from xml.etree import ElementTree
 from xml.etree.ElementTree import ParseError
 
-from extraction_methods.core.extraction_method import ExtractionMethod
+from pydantic import Field
 
 # Package imports
-
+from extraction_methods.core.extraction_method import (
+    ExtractionMethod,
+    Input,
+    KeyOutputKey,
+    update_input,
+)
 
 LOGGER = logging.getLogger(__name__)
+
+
+class XMLProperty(KeyOutputKey):
+    """XML property model."""
+
+    attribute: str = Field(
+        description="Attribute of the XML property.",
+    )
+
+
+class XMLInput(Input):
+    """XML input model."""
+
+    input_term: str = Field(
+        default="$uri",
+        description="Term for method to run on.",
+    )
+    template: str = Field(
+        description="Template to follow.",
+    )
+    properties: list[XMLProperty] = Field(
+        description="List of properties to retrieve from the document.",
+    )
+    filter_expr: str = Field(
+        description="Regex to match against files to limit the attempts to known files.",
+    )
+    namespaces: dict = Field(
+        description="Map of namespaces.",
+    )
 
 
 class XMLExtract(ExtractionMethod):
     """
     .. list-table::
 
-        * - Processor Name
-          - ``xml``
+    Processor Name: ``xml``
 
     Description:
         Processes XML documents to extract metadata
 
     Configuration Options:
-        - ``extraction_keys``: List of keys to retrieve from the document.
-        - ``filter_expr``: Regex to match against files to limit the attempts to known files
-        - ``namespaces``: Map of namespaces
+        - ``input_term``: Term for method to run on.
+        - ``template``: ``REQUIRED`` Template to follow.
+        - ``properties``: ``REQUIRED`` List of properties to retrieve from the document.
+        - ``namespaces``: ``REQUIRED`` Map of namespaces.
 
     Extraction Keys:
         Extraction keys should be a map.
@@ -49,29 +82,21 @@ class XMLExtract(ExtractionMethod):
 
             * - Name
               - Description
-            * - ``name``
-              - Name of the outputted attribute
             * - ``key``
-              - Access key to extract the required data. Passed to
+              - Key of the property. Passed to
                 `xml.etree.ElementTree.find() <https://docs.python.org/3/library/xml.etree.elementtree.html?highlight=find#xml.etree.ElementTree.ElementTree.find>`_
                 and also supports `xpath formatted <https://docs.python.org/3/library/xml.etree.elementtree.html#xpath-support>`_ accessors
+            * - ``output_key``
+              - Key to output to.
             * - ``attribute``
               - Allows you to select from the element attribute. In the absence of this value, the default behaviour is to access the text value of the key.
                 In some cases, you might want to access and attribute of the element.
 
-        Example:
-            .. code-block:: yaml
-
-                  - method: start_datetime
-                    key: './/gml:beginPosition'
-
     Example configuration:
         .. code-block:: yaml
-
             - method: xml
               inputs:
-                filter_expr: '\.manifest$'
-                extraction_keys:
+                properties:
                   - name: start_datetime
                     key: './/gml:beginPosition'
                     attribute: start
@@ -79,49 +104,47 @@ class XMLExtract(ExtractionMethod):
     # noqa: W605
     """
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    input_class = XMLInput
 
-        if not hasattr(self, "input_term"):
-            self.input_term = "uri"
-
-    def run(self, body: dict, **kwargs) -> dict:
+    @update_input
+    def run(self, body: dict) -> dict:
         # Extract the keys
         try:
-            if isinstance(body[self.input_term], str):
-              xml_file = ElementTree.parse(body[self.input_term])
+            if isinstance(self.input.input_term, str):
+                xml_file = ElementTree.parse(self.input.input_term)
 
             else:
-              xml_file = ElementTree.XML(body[self.input_term])
+                xml_file = ElementTree.XML(self.input.input_term)
 
         except (ParseError, FileNotFoundError, TypeError):
             return body
 
         output = defaultdict(list)
 
-        for key in self.extraction_keys:
-            values = xml_file.findall(key["key"], self.namespaces)
+        for prop in self.input.properties:
+            values = xml_file.findall(
+                prop.key,
+                self.input.namespaces,
+            )
 
             for value in values:
+                if value is not None:
+                    attribute = prop.get("attribute")
 
-              if value is not None:
-                  attribute = key.get("attribute")
+                    if attribute:
+                        v = value.get(attribute, "")
 
-                  if attribute:
-                      v = value.get(attribute, "")
+                    else:
+                        v = value.text
 
-                  else:
-                      v = value.text
+                    if v and v not in output[prop.output_key]:
+                        output[prop.output_key].append(v.strip())
 
-                  if v and v not in output[key["name"]]:
-                      output[key["name"]].append(v.strip())
+            if output[prop.output_key] and len(output[prop.output_key]) == 1:
+                output[prop.output_key] = output[prop.output_key][0]
 
-            if output[key["name"]] and len(output[key["name"]]) == 1:
-                output[key["name"]] = output[key["name"]][0]
-
-            if not output[key["name"]]:
-                output[key["name"]] = None
-
+            if not output[prop.output_key]:
+                output[prop.output_key] = None
 
         body |= output
 

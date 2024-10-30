@@ -7,14 +7,34 @@ __contact__ = "richard.d.smith@stfc.ac.uk"
 
 import logging
 
+from pydantic import Field
+
 # Package imports
 from extraction_methods.core.extraction_method import ExtractionMethod
 
 LOGGER = logging.getLogger(__name__)
 
+from extraction_methods.core.extraction_method import (
+    ExtractionMethod,
+    Input,
+    update_input,
+)
+
+LOGGER = logging.getLogger(__name__)
+
+
+class FacetMapInput(Input):
+    """Facet Map input model."""
+
+    term_map: dict = Field(
+        default={},
+        description="Dictionary of terms to be mapped.",
+    )
+
 
 class FacetMapExtract(ExtractionMethod):
     """
+    .. list-table::
 
     Processor Name: ``facet_map``
 
@@ -24,26 +44,27 @@ class FacetMapExtract(ExtractionMethod):
         specified.
 
     Configuration Options:
-        - ``term_map``: Dictionary of terms to map
+        - ``term_map``: Dictionary of terms to map.
 
     Example Configuration:
-
-    .. code-block:: yaml
-
-        - method: facet_map
-          inputs:
-          term_map:
-            time_coverage_start: start_time
-
+        .. code-block:: yaml
+            - method: facet_map
+              inputs:
+                term_map:
+                  old_key: new_key
+                  time_coverage_start: start_time
     """
 
-    def run(self, body: dict, **kwargs) -> dict:
-        output = {}
-        for k, v in body.items():
-            new_key = self.term_map.get(k)
-            if new_key:
-                output[new_key] = v
-            else:
-                output[k] = v
+    input_class = FacetMapInput
 
-        return output
+    @update_input
+    def run(self, body: dict) -> dict:
+        for old_key, new_key in self.input.term_map:
+            try:
+                value = body.pop(old_key)
+                body[new_key] = value
+
+            except KeyError:
+                pass
+
+        return body

@@ -2,7 +2,7 @@
 """
 ..  _regex:
 
-Regex
+RegexAssets
 ------
 """
 __author__ = "Richard Smith"
@@ -15,15 +15,23 @@ __contact__ = "richard.d.smith@stfc.ac.uk"
 import glob
 import logging
 
-# Python imports
-from pathlib import Path
+from pydantic import Field
 
-from extraction_methods.core.extraction_method import ExtractionMethod
+from extraction_methods.core.extraction_method import Input, SetInput, update_input
 
 LOGGER = logging.getLogger(__name__)
 
 
-class RegexAssetsExtract(ExtractionMethod):
+class RegexAssetsInput(Input):
+    """Intake backend input model."""
+
+    input_term: str = Field(
+        default="$uri",
+        description="term for method to run on.",
+    )
+
+
+class RegexAssets(SetInput):
     """
 
     .. list-table::
@@ -51,23 +59,12 @@ class RegexAssetsExtract(ExtractionMethod):
     # noqa: W605
     """
 
-    def run(self, body: dict, **kwargs) -> dict:
-        assets = body.get("assets", {})
+    input_class = RegexAssetsInput
 
-        if not hasattr(self, "glob"):
-            self.glob = body[self.glob_term]
+    @update_input
+    def run(self, body: dict):
 
-        for path in glob.iglob(self.glob):
-            asset = {
+        for path in glob.iglob(self.input.input_term):
+            yield {
                 "href": path,
             }
-
-            if hasattr(self, "extraction_methods"):
-                for extraction_method in self.extraction_methods:
-                    asset = extraction_method.run(asset)
-
-            assets[Path(path).stem] = asset
-
-        body["assets"] = assets
-
-        return body

@@ -12,20 +12,35 @@ import importlib
 # Python imports
 import logging
 
-import pydantic
+from jsonschema import ValidationError
+from pydantic import Field
 
-from extraction_methods.core.extraction_method import ExtractionMethod
+from extraction_methods.core.extraction_method import (
+    ExtractionMethod,
+    Input,
+    update_input,
+)
 
 LOGGER = logging.getLogger(__name__)
 
 
+class ControlledVocabularyInput(Input):
+    """Controlled Vocab input model."""
+
+    model: str = Field(
+        description="pydantic.BaseModel subclass to be imported at run-time, e.g. `package.module.class_name`.",
+    )
+    strict: bool = Field(
+        default=False,
+        description="If True, raise ValidationError, otherwise simply log ValidationError messages.",
+    )
+
+
 class ControlledVocabularyExtract(ExtractionMethod):
     """
-
     .. list-table::
 
-        * - Processor Name
-          - ``controlled_vocabulary``
+    Processor Name: ``controlled_vocabulary``
 
     Description:
         Compare properties to a controlled vocabulary defined by a pydantic.BaseModel.
@@ -35,18 +50,19 @@ class ControlledVocabularyExtract(ExtractionMethod):
         - ``strict``: If True, raise ValidationError, otherwise simply log ValidationError messages.
 
     Example Configuration:
-
-    .. code-block:: yaml
-
+        .. code-block:: yaml
             - name: controlled_vocabulary
               inputs:
                 model: my_cv.collections.CMIP5
                 strict: False
     """
 
-    def run(self, body: dict, **kwargs) -> dict:
+    input_class = ControlledVocabularyInput
+
+    @update_input
+    def run(self, body: dict) -> dict:
         # Import data model
-        scopes = self.model.split(".")
+        scopes = self.input.model.split(".")
         module = ".".join(scopes[:-1])
 
         module = importlib.import_module(module)
@@ -60,10 +76,10 @@ class ControlledVocabularyExtract(ExtractionMethod):
             cv = klass(**properties)
             body = cv.dict()
 
-        except pydantic.ValidationError as exc:
+        except ValidationError as exc:
             LOGGER.warning(exc)
 
-            if self.strict:
+            if self.input.strict:
                 raise exc
 
         return body

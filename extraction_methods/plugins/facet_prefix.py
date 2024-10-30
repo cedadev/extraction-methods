@@ -7,14 +7,32 @@ __contact__ = "richard.d.smith@stfc.ac.uk"
 
 import logging
 
+from pydantic import Field
+
 # Package imports
-from extraction_methods.core.extraction_method import ExtractionMethod
+from extraction_methods.core.extraction_method import (
+    ExtractionMethod,
+    Input,
+    update_input,
+)
 
 LOGGER = logging.getLogger(__name__)
 
 
+class FacetPrefixInput(Input):
+    """Facet Prefix input model."""
+
+    prefix: str = Field(
+        description="Prefix to be added.",
+    )
+    keys: list[str] = Field(
+        description="list of keys that require prefix.",
+    )
+
+
 class FacetPrefixExtract(ExtractionMethod):
     """
+    .. list-table::
 
     Processor Name: ``facet_prefix``
 
@@ -23,30 +41,29 @@ class FacetPrefixExtract(ExtractionMethod):
         based on the vocabulary they're from.
 
     Configuration Options:
-        - ``prefix``: Prefix to be added
-        - ``terms``: List of terms that require prefix
+        - ``prefix``: Prefix to be added.
+        - ``keys``: List of keys that require prefix.
 
     Example Configuration:
-
-    .. code-block:: yaml
-
-        - method: facet_prefix
-          inputs:
-          prefix:
-            cmip6
-          terms:
-            - start_time
-            - model
-
+        .. code-block:: yaml
+            - method: facet_prefix
+            inputs:
+              prefix: cmip6
+              keys:
+                - start_time
+                - model
     """
 
-    def run(self, body: dict, **kwargs) -> dict:
-        output = {}
-        if body:
-            for k, v in body.items():
-                if k in self.terms:
-                    output[f"{self.prefix}:{k}"] = v
-                else:
-                    output[k] = v
+    input_class = FacetPrefixInput
 
-        return output
+    @update_input
+    def run(self, body: dict) -> dict:
+        for term in self.input.keys:
+            try:
+                value = body.pop(term)
+                body[f"{self.input.prefix}:{term}"] = value
+
+            except KeyError:
+                pass
+
+        return body

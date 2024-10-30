@@ -8,13 +8,41 @@ __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
 __license__ = "BSD - see LICENSE file in top-level package directory"
 __contact__ = "richard.d.smith@stfc.ac.uk"
 
+import logging
+
 import cf
-from cf.read_write.read import file_type
+from pydantic import Field
+
+from extraction_methods.core.extraction_method import (
+    Input,
+    NameKeyTerm,
+    SetInput,
+    update_input,
+)
+
+LOGGER = logging.getLogger(__name__)
 
 
-class CfBackend:
+class CfHeaderInput(Input):
+    """Intake backend input model."""
+
+    input_term: str = Field(
+        default="$uri",
+        description="term for method to run on.",
+    )
+    read_kwargs: dict = Field(
+        default={},
+        description="kwargs for cf read.",
+    )
+    attributes: list[NameKeyTerm] = Field(
+        default={},
+        description="attributes to be extracted.",
+    )
+
+
+class CfHeader(SetInput):
     """
-    Cf
+    CfHeader
     ------
 
     Backend Name: ``Cf``
@@ -24,43 +52,31 @@ class CfBackend:
         backend can open that file.
     """
 
-    def guess_can_open(self, filepath: str) -> bool:
-        """Return a boolean on whether this backend can open that file."""
-        try:
-            file_type(filepath)
-            return True
-        except IOError:
-            return False
+    input_class = CfHeaderInput
 
-    def attr_extraction(
-        self, body: dict, attributes: list, backend_kwargs: dict
-    ) -> dict:
+    @update_input
+    def run(self, body: dict) -> dict:
         """
         Takes a dictionary and list of attributes and extracts the metadata.
 
         :param body: current extracted properties
-        :param attributes: attributes to extract
-        :param kwargs: kwargs to send to cf.read().
 
         :return: Dictionary of extracted attributes
         """
 
-        field_list = cf.read(body["uri"], **backend_kwargs)
+        field_list = cf.read(self.input.input_term, **self.input.read_kwargs)
 
         properties = {}
         for field in field_list:
-            properties.update(field.properties())
+            properties |= field.properties()
             if field.nc_global_attributes():
                 properties["global_attributes"] = field.nc_global_attributes()
 
-        extracted_metadata = {}
-        for attr in attributes:
-            if (
-                "global_attributes" in properties
-                and properties["global_attributes"][attr]
-            ):
-                extracted_metadata[attr] = properties["global_attributes"][attr]
-            elif attr in properties:
-                extracted_metadata[attr] = properties[attr]
+        output = {}
+        for attribute in self.input.attributes:
+            if "global_attributes" in properties and properties["global_attributes"][attribute.key]:
+                output[attribute.name] = properties["global_attributes"][attribute.key]
+            elif attribute in properties:
+                output[attribute.name] = properties[attribute.key]
 
-        return body | extracted_metadata
+        return output

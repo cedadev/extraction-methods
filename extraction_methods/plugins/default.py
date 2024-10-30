@@ -15,44 +15,47 @@ __contact__ = "richard.d.smith@stfc.ac.uk"
 # Python imports
 import logging
 
-from extraction_methods.core.extraction_method import ExtractionMethod
+from pydantic import Field
+
+from extraction_methods.core.extraction_method import (
+    ExtractionMethod,
+    Input,
+    update_input,
+)
 
 LOGGER = logging.getLogger(__name__)
 
 
+class DefaultInput(Input):
+    """Default input model."""
+
+    defaults: dict = Field(
+        description="Defaults to be added.",
+    )
+
+
 class DefaultExtract(ExtractionMethod):
     """
-
     .. list-table::
 
-        * - Processor Name
-          - ``default``
+    Processor Name: ``default``
 
     Description:
         Takes a set of default facets.
 
     Configuration Options:
-        - ``defaults``: Dictionary of defaults to be added
-
+        - ``defaults``: Dictionary of defaults to be added.
 
     Example configuration:
         .. code-block:: yaml
-
             - method: default
               inputs:
                 defaults:
                   mip_era: CMIP6
-
     """
 
-    def run(self, body: dict, **kwargs) -> dict:
-        defaults = {}
-        for default_key, default_value in self.defaults.items():
-            if isinstance(default_value, str) and default_value[0] == self.exists_key:
-                default_value = body[default_value[1:]]
+    input_class = DefaultInput
 
-            defaults[default_key] = default_value
-
-        body = body | defaults
-
-        return body
+    @update_input
+    def run(self, body: dict) -> dict:
+        return body | self.input.defaults

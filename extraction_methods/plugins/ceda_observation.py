@@ -6,19 +6,32 @@ __license__ = "BSD - see LICENSE file in top-level package directory"
 __contact__ = "richard.d.smith@stfc.ac.uk"
 
 import logging
-from string import Template
 
 # Third party imports
 import requests
+from pydantic import Field
 
-# Package imports
-from extraction_methods.core.extraction_method import ExtractionMethod
+from extraction_methods.core.extraction_method import (
+    ExtractionMethod,
+    Input,
+    update_input,
+)
 
 LOGGER = logging.getLogger(__name__)
 
 
+class CEDAObservationInput(Input):
+    """CEDA Observation input model."""
+
+    input_term: str = Field(
+        default="$uri",
+        description="term for method to run on.",
+    )
+
+
 class CEDAObservationExtract(ExtractionMethod):
     """
+    .. list-table::
 
     Processor Name: ``ceda_observation``
 
@@ -26,23 +39,20 @@ class CEDAObservationExtract(ExtractionMethod):
         Takes a file path and returns the ceda observation record.
 
     Configuration Options:
-        - ``url_template``: ``REQUIRED`` URL string template to build url.
-          Template uses the `python string template <https://docs.python.org/3/library/string.html#template-strings>`_ format.
+        - ``input_term``: ``REQUIRED`` term for method to run on.
 
     Example Configuration:
-
         .. code-block:: yaml
-
             - method: ceda_observation
-              inputs:
-                url_template: http://api.catalogue.ceda.ac.uk/api/v0/obs/get_info$uri
-
+                inputs:
+                input_term: $url
     """
 
-    def run(self, body: dict, **kwargs) -> dict:
-        url = Template(self.url_template).substitute(uri=body["uri"])
+    input_class = CEDAObservationInput
 
-        r = requests.get(url)
+    @update_input
+    def run(self, body: dict) -> dict:
+        r = requests.get(self.input.input_term)
 
         if r.status_code == 200:
             response = r.json()
