@@ -106,9 +106,9 @@ xarray = "extraction_methods.plugins.header.backends.xarray:XarrayHeader"
 cf = "extraction_methods.plugins.header.backends.cf:CfHeader"
 
 [tool.poetry.plugins."extraction_methods.assets.backends"]
-ncml = "extraction_methods.plugins.assets.backends.elasticsearch:ElasticsearchAssets"
-xarray = "extraction_methods.plugins.assets.backends.intake_esm:IntakeESMAssets"
-cf = "extraction_methods.plugins.assets.backends.regex:RegexAssets"
+elasticsearch = "extraction_methods.plugins.assets.backends.elasticsearch:ElasticsearchAssets"
+intake_esm = "extraction_methods.plugins.assets.backends.intake_esm:IntakeESMAssets"
+regex = "extraction_methods.plugins.assets.backends.regex:RegexAssets"
 
 
 [build-system]

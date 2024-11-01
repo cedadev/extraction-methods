@@ -17,7 +17,7 @@ as a source for file objects.
     * - ``uri``
       - ``string``
       - ``REQUIRED`` The URI of a path or URL to an ESM collection JSON file.
-    * - ``object_path_attr``
+    * - ``href_term``
       - ``string``
       - ``REQUIRED`` The column header which contains the URI to
         the file object.
@@ -67,6 +67,10 @@ class IntakeESMAssetsInput(Input):
         default="$uri",
         description="term for method to run on.",
     )
+    href_term: str = Field(
+        default="path",
+        description="term to use for href.",
+    )
     datastore_kwargs: dict = Field(
         default={},
         description="kwargs to open datastore.",
@@ -74,10 +78,6 @@ class IntakeESMAssetsInput(Input):
     search_kwargs: dict = Field(
         default={},
         description="kwargs for search.",
-    )
-    href_term: str = Field(
-        default="path",
-        description="term to use for href.",
     )
 
 
