@@ -15,6 +15,7 @@ __contact__ = "richard.d.smith@stfc.ac.uk"
 import logging
 
 import cf_xarray
+import rioxarray
 import xarray
 from pydantic import Field
 
@@ -49,6 +50,10 @@ class NetCDFInput(Input):
     cf_attributes: list[KeyOutputKey] = Field(
         default=[],
         description="list of cf attributes to extract.",
+    )
+    rio_attributes: list[KeyOutputKey] = Field(
+        default=[],
+        description="list of rio attributes to extract.",
     )
 
 
@@ -105,7 +110,7 @@ class NetCDFExtract(ExtractionMethod):
 
     @update_input
     def run(self, body: dict) -> dict:
-        dataset = xarray.open_dataset(self.input.input_term)
+        dataset = xarray.open_dataset(self.input.input_term, decode_coords="all")
 
         if self.input.variable_attributes:
             variable = dataset[self.input.variable_id]
@@ -131,5 +136,11 @@ class NetCDFExtract(ExtractionMethod):
 
                 except KeyError:
                     body[cf_attribute.output_key] = None
+
+        if self.input.rio_attributes:
+            rio_attrs = dataset.rio
+
+            for rio_attribute in self.input.rio_attributes:
+                body[rio_attribute.output_key] = getattr(rio_attrs, rio_attribute.key, None)
 
         return body
