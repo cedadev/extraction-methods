@@ -8,7 +8,7 @@ __contact__ = "richard.d.smith@stfc.ac.uk"
 import importlib
 import logging
 
-from pydantic import Field
+from pydantic import BaseModel, Field
 
 # Package imports
 from extraction_methods.core.extraction_method import (
@@ -20,15 +20,11 @@ from extraction_methods.core.extraction_method import (
 LOGGER = logging.getLogger(__name__)
 
 
-class GeneralFunctionInput(Input):
-    """General Function input model."""
+class Function(BaseModel):
+    """Function  model."""
 
-    function: str = Field(
-        description="Path to function seperatated my delimieter.",
-    )
-    delimiter: str = Field(
-        default=".",
-        description="text delimiter to put between module/function names.",
+    name: str = Field(
+        description="Name of function.",
     )
     args: list[str] = Field(
         default=[],
@@ -38,6 +34,19 @@ class GeneralFunctionInput(Input):
         default={},
         description="dictionary of key word arguments for function.",
     )
+
+
+class GeneralFunctionInput(Input):
+    """General Function input model."""
+
+    function: Function = Field(
+        description="Function to be run name maybe seperatated my delimieter.",
+    )
+    delimiter: str = Field(
+        default=".",
+        description="text delimiter to put between module/function names.",
+    )
+
     output_key: str = Field(
         default="",
         description="key to output to, else response will be merged with body.",
@@ -81,7 +90,7 @@ class GeneralFunctionExtract(ExtractionMethod):
     def run(self, body: dict) -> dict:
         output_body = body.copy()
 
-        module_name, function_name = self.input.function.rsplit(self.input.delimiter, 1)
+        module_name, function_name = self.input.function.name.rsplit(self.input.delimiter, 1)
 
         module = importlib.import_module(module_name)
 

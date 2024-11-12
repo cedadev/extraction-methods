@@ -55,40 +55,32 @@ class RemoveExtract(ExtractionMethod):
 
     input_class = RemoveInput
 
-    def compile(self, key: str) -> str:
-        """
-        Compile key into regex
-        """
-        key = f"{'^' if key[0] != '^' else ''}{key}{'$' if key[-1] != '$' else ''}"
-        return re.compile(key)
-
-    def find_keys(self, keys: list, key_regex: str) -> list:
+    def matching_keys(self, keys: list, key_regex: str) -> list:
         """
         Find all keys that match regex
         """
-        regex = self.compile(key_regex)
+        regex = re.compile(key_regex)
 
         return list(filter(regex.match, keys))
 
-    def remove_term(self, body: dict, key_parts: list) -> dict:
+    def remove_key(self, body: dict, key_parts: list) -> dict:
         """
         Remove nested terms
         """
-        if isinstance(body, dict):
-            for key_part in key_parts:
-                for key in self.find_keys(body.keys(), key_part):
-                    if len(key_parts) > 1:
-                        body[key] = self.remove_term(body[key], key_parts[1:])
 
-                    else:
-                        del body[key]
+        for key in self.matching_keys(body.keys(), key_parts[0]):
+
+            if len(key_parts) > 1:
+                body[key] = self.remove_key(body[key], key_parts[1:])
+
+            else:
+                del body[key]
 
         return body
 
     @update_input
     def run(self, body: dict) -> dict:
         for key in self.input.keys:
-            key_parts = key.split(self.input.delimiter)
-            body = self.remove_term(body, key_parts)
+            body = self.remove_key(body, key.split(self.input.delimiter))
 
         return body
