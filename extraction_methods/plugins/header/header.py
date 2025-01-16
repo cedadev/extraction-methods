@@ -13,13 +13,12 @@ import logging
 from pydantic import Field
 
 from extraction_methods.core.extraction_method import (
-    Backend,
     ExtractionMethod,
-    Input,
     KeyOutputKey,
     SetEntryPoints,
     update_input,
 )
+from extraction_methods.core.types import Backend, Input
 
 LOGGER = logging.getLogger(__name__)
 
@@ -79,8 +78,9 @@ class HeaderExtract(ExtractionMethod, SetEntryPoints):
 
     @update_input
     def run(self, body: dict) -> dict:
-        backend = self.entry_points.get(self.input.backend.name)(**self.input.backend.inputs)
-        output = backend.run(body)
+        backend_entry_point = self.entry_points.get(self.input.backend.name).load()
+        backend = backend_entry_point(**self.input.backend.inputs)
+        output = backend._run(body)
         body |= output
 
         return body

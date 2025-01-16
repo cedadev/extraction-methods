@@ -25,7 +25,7 @@ cachetools = "4.2.4"
 certifi = "2023.7.22"
 chardet = "4.0.0"
 docutils = "0.16"
-elasticsearch = "7.13.1"
+elasticsearch = "7.17.12"
 fsspec = "2024.3.1"
 gcsfs = "2024.3.1"
 idna = "2.10"
@@ -73,6 +73,7 @@ ignore_missing_imports = true
 packages = "extraction_methods"
 
 [tool.poetry.plugins."extraction_methods"]
+assets = "extraction_methods.plugins.assets.assets:AssetExtract"
 bbox = "extraction_methods.plugins.bbox:BboxExtract"
 ceda_observation = "extraction_methods.plugins.ceda_observation:CEDAObservationExtract"
 ceda_vocabulary = "extraction_methods.plugins.ceda_vocabulary:CEDAVocabularyExtract"

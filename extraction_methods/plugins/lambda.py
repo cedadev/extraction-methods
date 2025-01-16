@@ -12,9 +12,9 @@ from pydantic import Field
 
 from extraction_methods.core.extraction_method import (
     ExtractionMethod,
-    Input,
     update_input,
 )
+from extraction_methods.core.types import Input
 
 LOGGER = logging.getLogger(__name__)
 
@@ -25,7 +25,7 @@ class LambdaInput(Input):
     function: str = Field(
         description="lambda function to be run.",
     )
-    args: list[str] = Field(
+    args: list = Field(
         default=[],
         description="list of arguments for function.",
     )
@@ -72,22 +72,22 @@ class LambdaExtract(ExtractionMethod):
 
     input_class = LambdaInput
 
-    @update_input
+    # @update_input
     def run(self, body: dict) -> dict:
         output_body = body.copy()
 
-        try:
-            function = literal_eval(self.input.function)
+        # try:
+        function = eval(self.input.function)
 
-            result = function(*self.input.args, **self.input.kwargs)
+        result = function(*self.input.args, **self.input.kwargs)
 
-            if self.input.output_key:
-                output_body[self.input.output_key] = result
+        if self.input.output_key:
+            output_body[self.input.output_key] = result
 
-            elif isinstance(result, dict):
-                output_body |= result
+        elif isinstance(result, dict):
+            output_body |= result
 
-        except Exception as e:
-            LOGGER.warning(f"Lamda function: {self.input.function} failed.")
+        # except Exception as e:
+        #     LOGGER.warning(f"Lamda function: {self.input.function} failed.")
 
         return output_body

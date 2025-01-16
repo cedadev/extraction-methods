@@ -14,11 +14,10 @@ import cf
 from pydantic import Field
 
 from extraction_methods.core.extraction_method import (
-    Input,
-    NameKeyTerm,
-    SetInput,
+    Backend,
     update_input,
 )
+from extraction_methods.core.types import Input, NameKeyTerm
 
 LOGGER = logging.getLogger(__name__)
 
@@ -40,7 +39,7 @@ class CfHeaderInput(Input):
     )
 
 
-class CfHeader(SetInput):
+class CfHeader(Backend):
     """
     CfHeader
     ------

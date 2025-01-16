@@ -19,10 +19,9 @@ from pydantic import Field
 
 from extraction_methods.core.extraction_method import (
     ExtractionMethod,
-    Input,
-    KeyOutputKey,
     update_input,
 )
+from extraction_methods.core.types import Input, KeyOutputKey
 
 LOGGER = logging.getLogger(__name__)
 

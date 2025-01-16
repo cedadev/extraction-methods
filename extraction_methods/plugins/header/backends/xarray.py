@@ -14,11 +14,10 @@ import xarray as xr
 from pydantic import Field
 
 from extraction_methods.core.extraction_method import (
-    Input,
-    KeyOutputKeyField,
     SetInput,
     update_input,
 )
+from extraction_methods.core.types import Input, KeyOutputKeyField
 
 LOGGER = logging.getLogger(__name__)
 

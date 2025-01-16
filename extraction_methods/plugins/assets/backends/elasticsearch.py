@@ -17,7 +17,8 @@ import logging
 from elasticsearch import Elasticsearch as Elasticsearch_client
 from pydantic import Field
 
-from extraction_methods.core.extraction_method import Input, SetInput, update_input
+from extraction_methods.core.extraction_method import Backend, update_input
+from extraction_methods.core.types import Input, KeyOutputKey
 
 LOGGER = logging.getLogger(__name__)
 
@@ -46,13 +47,13 @@ class ElasticsearchAssetsInput(Input):
         default="path",
         description="term to use for href.",
     )
-    extra_fields: list[str] = Field(
+    extra_fields: list[KeyOutputKey] = Field(
         default=[],
         description="term for method to output to.",
     )
 
 
-class ElasticsearchAssets(SetInput):
+class ElasticsearchAssets(Backend):
     """
     Description:
         Using an ID. Generate a summary of information for higher level entities.
@@ -104,7 +105,7 @@ class ElasticsearchAssets(SetInput):
 
         # Run query
         result = es.search(
-            index=self.input.index, body=query, timeout=f"{self.input.request_tiemout}s"
+            index=self.input.index, body=query, timeout=f"{self.input.request_timeout}s"
         )
 
         for hit in result["hits"]["hits"]:
@@ -113,8 +114,8 @@ class ElasticsearchAssets(SetInput):
                 "href": source[self.input.href_term],
             }
 
-            for field in self.input.extract_fields:
+            for field in self.input.extra_fields:
                 if value := source.get(field.key):
-                    asset[field.name] = value
+                    asset[field.output_key] = value
 
             yield asset

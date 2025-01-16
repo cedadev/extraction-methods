@@ -10,12 +10,15 @@ import logging
 # Third party imports
 from pydantic import Field
 
+from typing import Any
 from extraction_methods.core.extraction_method import (
-    Backend,
     ExtractionMethod,
-    Input,
-    SetEntryPoints,
+    SetEntryPointsMixin,
     update_input,
+)
+from extraction_methods.core.types import (
+    Backend,
+    Input,
 )
 
 LOGGER = logging.getLogger(__name__)
@@ -27,7 +30,7 @@ class AssetInput(Input):
     backend: Backend = Field(
         description="Label to add if regex passes.",
     )
-    extraction_methods: list[ExtractionMethod] = Field(
+    extraction_methods: list[Any] = Field(
         default=[],
         description="Extraction methods to run on assets.",
     )
@@ -37,7 +40,7 @@ class AssetInput(Input):
     )
 
 
-class AssetExtract(ExtractionMethod, SetEntryPoints):
+class AssetExtract(SetEntryPointsMixin, ExtractionMethod):
     """
     Description:
         Asset extraction method.
@@ -66,18 +69,22 @@ class AssetExtract(ExtractionMethod, SetEntryPoints):
     """
 
     input_class = AssetInput
-    entry_point_group = "extraction_methods.assets.backends"
+    entry_point_group: str = "extraction_methods.assets.backends"
+
+
+
 
     @update_input
     def run(self, body: dict) -> dict:
 
         output = {}
-        backend = self.entry_points.get(self.input.backend.name)(**self.input.backend.inputs)
-        assets = backend.run(body)
+        backend_entry_point = self.entry_points.get(self.input.backend.name).load()
+        backend = backend_entry_point(**self.input.backend.inputs)
+        assets = backend._run(body)
 
         for asset in assets:
             for extraction_method in self.input.extraction_methods:
-                asset = extraction_method.run(asset)
+                asset = extraction_method._run(asset)
             output[asset["href"]] = asset
 
         body[self.input.output_key] = body.get(self.input.output_key, {}) | output

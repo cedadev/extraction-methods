@@ -12,9 +12,9 @@ from pydantic import Field
 # Package imports
 from extraction_methods.core.extraction_method import (
     ExtractionMethod,
-    Input,
     update_input,
 )
+from extraction_methods.core.types import Input
 
 LOGGER = logging.getLogger(__name__)
 
@@ -22,7 +22,7 @@ LOGGER = logging.getLogger(__name__)
 class GeometryToBboxInput(Input):
     """Geometry to bbox input model."""
 
-    geometry: str | dict = Field(
+    geometry: dict = Field(
         default="$geometry",
         description="geometry to be converted to bbox.",
     )

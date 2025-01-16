@@ -17,7 +17,9 @@ import logging
 
 from pydantic import Field
 
-from extraction_methods.core.extraction_method import Input, SetInput, update_input
+from extraction_methods.core.extraction_method import SetInput, update_input
+from extraction_methods.core.types import Input
+
 
 LOGGER = logging.getLogger(__name__)
 

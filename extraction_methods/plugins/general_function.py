@@ -13,9 +13,9 @@ from pydantic import BaseModel, Field
 # Package imports
 from extraction_methods.core.extraction_method import (
     ExtractionMethod,
-    Input,
     update_input,
 )
+from extraction_methods.core.types import Input
 
 LOGGER = logging.getLogger(__name__)
 
@@ -26,7 +26,7 @@ class Function(BaseModel):
     name: str = Field(
         description="Name of function.",
     )
-    args: list[str] = Field(
+    args: list = Field(
         default=[],
         description="list of arguments for function.",
     )

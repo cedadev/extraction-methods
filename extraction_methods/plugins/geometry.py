@@ -13,9 +13,9 @@ from pydantic import Field
 # Package imports
 from extraction_methods.core.extraction_method import (
     ExtractionMethod,
-    Input,
     update_input,
 )
+from extraction_methods.core.types import Input
 
 LOGGER = logging.getLogger(__name__)
 
@@ -104,7 +104,7 @@ class GeometryExtract(ExtractionMethod):
             # Add the first point to the end to complete the shape
             coordinates.append(coordinates[0])
 
-        return coordinates
+        return [coordinates]
 
     def multi(self, coordinate_type: str, coordinates: list) -> list:
         """

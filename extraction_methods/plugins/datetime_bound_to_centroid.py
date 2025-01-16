@@ -12,9 +12,9 @@ from pydantic import Field
 
 from extraction_methods.core.extraction_method import (
     ExtractionMethod,
-    Input,
     update_input,
 )
+from extraction_methods.core.types import Input
 
 LOGGER = logging.getLogger(__name__)
 
@@ -23,19 +23,19 @@ class DatetimeBoundToCentroidInput(Input):
     """Datetime bound to centroid input model."""
 
     start_datetime: str = Field(
-        default="start_datetime",
+        default="$start_datetime",
         description="Start datetime bound.",
     )
     start_format: str = Field(
-        default="%Y-%m-%dT%H:%M:%SZ",
+        default="%Y-%m-%dT%H:%M:%S",
         description="Format for start datetime.",
     )
     end_datetime: str = Field(
-        default="end_datetime",
+        default="$end_datetime",
         description="End datetime bound.",
     )
     end_format: str = Field(
-        default="%Y-%m-%dT%H:%M:%SZ",
+        default="%Y-%m-%dT%H:%M:%S",
         description="Format of end datetime.",
     )
     output_key: str = Field(
@@ -94,6 +94,6 @@ class DatetimeBoundToCentroidExtract(ExtractionMethod):
 
         centroid_datetime = start_datetime + (end_datetime - start_datetime) / 2
 
-        body[self.input.output_term] = centroid_datetime.strftime(self.input.output_format)
+        body[self.input.output_key] = centroid_datetime.strftime(self.input.output_format)
 
         return body

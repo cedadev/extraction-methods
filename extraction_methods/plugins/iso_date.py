@@ -12,9 +12,9 @@ from pydantic import BaseModel, Field
 
 from extraction_methods.core.extraction_method import (
     ExtractionMethod,
-    Input,
     update_input,
 )
+from extraction_methods.core.types import Input
 
 LOGGER = logging.getLogger(__name__)
 
@@ -38,7 +38,7 @@ class DateTerm(BaseModel):
 class ISODateInput(Input):
     """path parts input model."""
 
-    dates: list[DateTerm] = Field(
+    date_terms: list[DateTerm] = Field(
         default=[],
         description="List of date terms.",
     )

@@ -23,10 +23,9 @@ from pydantic import Field
 # Package imports
 from extraction_methods.core.extraction_method import (
     ExtractionMethod,
-    Input,
-    KeyOutputKey,
     update_input,
 )
+from extraction_methods.core.types import Input, KeyOutputKey
 
 LOGGER = logging.getLogger(__name__)
 
@@ -35,6 +34,7 @@ class XMLProperty(KeyOutputKey):
     """XML property model."""
 
     attribute: str = Field(
+        default="",
         description="Attribute of the XML property.",
     )
 
@@ -46,15 +46,15 @@ class XMLInput(Input):
         default="$uri",
         description="Term for method to run on.",
     )
-    template: str = Field(
-        description="Template to follow.",
-    )
+    # template: str = Field(
+    #     description="Template to follow.",
+    # )
     properties: list[XMLProperty] = Field(
         description="List of properties to retrieve from the document.",
     )
-    filter_expr: str = Field(
-        description="Regex to match against files to limit the attempts to known files.",
-    )
+    # filter_expr: str = Field(
+    #     description="Regex to match against files to limit the attempts to known files.",
+    # )
     namespaces: dict = Field(
         description="Map of namespaces.",
     )
@@ -106,7 +106,6 @@ class XMLExtract(ExtractionMethod):
 
     input_class = XMLInput
 
-    @update_input
     def run(self, body: dict) -> dict:
         # Extract the keys
         try:
@@ -129,10 +128,9 @@ class XMLExtract(ExtractionMethod):
 
             for value in values:
                 if value is not None:
-                    attribute = prop.get("attribute")
 
-                    if attribute:
-                        v = value.get(attribute, "")
+                    if prop.attribute:
+                        v = value.get(prop.attribute, "")
 
                     else:
                         v = value.text

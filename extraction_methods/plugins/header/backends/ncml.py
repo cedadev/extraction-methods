@@ -17,11 +17,10 @@ from lxml.etree import XMLParser, fromstring
 from pydantic import Field
 
 from extraction_methods.core.extraction_method import (
-    Input,
-    NameKeyTerm,
     SetInput,
     update_input,
 )
+from extraction_methods.core.types import Input, NameKeyTerm
 
 LOGGER = logging.getLogger(__name__)
 

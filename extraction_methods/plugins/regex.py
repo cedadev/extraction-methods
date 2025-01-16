@@ -20,9 +20,9 @@ from pydantic import Field
 
 from extraction_methods.core.extraction_method import (
     ExtractionMethod,
-    Input,
     update_input,
 )
+from extraction_methods.core.types import Input
 
 LOGGER = logging.getLogger(__name__)
 
@@ -68,6 +68,7 @@ class RegexExtract(ExtractionMethod):
     @update_input
     def run(self, body: dict) -> dict:
         result = re.search(rf"{self.input.regex}", self.input.input_term)
+
 
         if result:
             body |= result.groupdict()
