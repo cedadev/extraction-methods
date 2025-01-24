@@ -36,6 +36,7 @@ class NetCDFInput(Input):
         description="term for method to run on.",
     )
     variable_id: str = Field(
+        default=None,
         description="lambda function to be run.",
     )
     variable_attributes: list[KeyOutputKey] = Field(

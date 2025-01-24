@@ -55,7 +55,7 @@ import logging
 import intake
 from pydantic import Field
 
-from extraction_methods.core.extraction_method import SetInput, update_input
+from extraction_methods.core.extraction_method import Backend, update_input
 from extraction_methods.core.types import Input
 
 LOGGER = logging.getLogger(__name__)
@@ -82,7 +82,7 @@ class IntakeESMAssetsInput(Input):
     )
 
 
-class IntakeESMAssets(SetInput):
+class IntakeESMAssets(Backend):
     """
     Performs Search on intake catalog to provide a stream of assets for procesing.
     """

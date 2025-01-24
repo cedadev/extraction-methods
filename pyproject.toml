@@ -99,6 +99,7 @@ path_parts = "extraction_methods.plugins.path_parts:PathPartsExtract"
 regex = "extraction_methods.plugins.regex:RegexExtract"
 regex_label = "extraction_methods.plugins.regex_label:RegexLabelExtract"
 remove = "extraction_methods.plugins.remove:RemoveExtract"
+stac_extension = "extraction_methods.plugins.stac_extension:STACExtensionExtract"
 string_template = "extraction_methods.plugins.string_template:StringTemplateExtract"
 xml = "extraction_methods.plugins.xml:XMLExtract"
 

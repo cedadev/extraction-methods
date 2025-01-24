@@ -17,7 +17,7 @@ import logging
 
 from pydantic import Field
 
-from extraction_methods.core.extraction_method import SetInput, update_input
+from extraction_methods.core.extraction_method import Backend, update_input
 from extraction_methods.core.types import Input
 
 
@@ -33,7 +33,7 @@ class RegexAssetsInput(Input):
     )
 
 
-class RegexAssets(SetInput):
+class RegexAssets(Backend):
     """
 
     .. list-table::
