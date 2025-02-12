@@ -58,7 +58,7 @@ class RegexLabelExtract(ExtractionMethod):
     Processor Name: ``regex_label``
 
     Description:
-        Takes a list of catagory label and associated regex.
+        Adds label if full match of regex.
 
     Configuration Options:
         - ``input_term``: term for method to run on.
@@ -83,12 +83,11 @@ class RegexLabelExtract(ExtractionMethod):
     @update_input
     def run(self, body: dict) -> dict:
 
-        match = re.search(rf"{self.input.regex}", self.input.input_term)
+        if re.fullmatch(rf"{self.input.regex}", self.input.input_term):
+            if self.input.allow_multiple:
+                body.setdefault(self.input.output_key, []).append(self.input.label)
 
-        if match and self.input.allow_multiple:
-            body.setdefault(self.input.output_key, []).append(self.input.label)
-
-        elif match:
-            body[self.input.output_key] = self.input.label
+            else:
+                body[self.input.output_key] = self.input.label
 
         return body

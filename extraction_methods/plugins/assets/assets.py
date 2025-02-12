@@ -71,9 +71,6 @@ class AssetExtract(SetEntryPointsMixin, ExtractionMethod):
     input_class = AssetInput
     entry_point_group: str = "extraction_methods.assets.backends"
 
-
-
-
     @update_input
     def run(self, body: dict) -> dict:
 
