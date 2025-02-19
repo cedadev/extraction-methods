@@ -1,9 +1,9 @@
 # encoding: utf-8
 """
-..  _regex:
+..  _hash:
 
-Regex
-------
+Hash Method
+-----------
 """
 __author__ = "Richard Smith"
 __date__ = "27 May 2021"
@@ -16,41 +16,59 @@ __contact__ = "richard.d.smith@stfc.ac.uk"
 import hashlib
 import logging
 
-from extraction_methods.core.extraction_method import ExtractionMethod
+# Package imports
+from typing import Any
+
+from pydantic import Field
+
+from extraction_methods.core.extraction_method import ExtractionMethod, update_input
+from extraction_methods.core.types import Input
 
 LOGGER = logging.getLogger(__name__)
 
 
-class HashExtract(ExtractionMethod):
+class HashInput(Input):
+    """
+    Model for Hash Input.
     """
 
-    .. list-table::
+    hash_str: str = Field(
+        description="string to be hashed.",
+    )
+    output_key: str = Field(
+        description="key to output to.",
+    )
 
-        * - Processor Name
-          - ``hash``
+
+class HashExtract(ExtractionMethod):
+    """
+    Method: ``hash``
 
     Description:
         Hashes input string.
 
     Configuration Options:
-        - ``input_key``: Key for term to be hashed
-        - ``output_key``: Key for result to be saved as
+    .. list-table::
+
+        - ``hash_str``: string to be hashed.
+        - ``output_key``: key to output to.
 
     Example configuration:
-        .. code-block:: yaml
+    .. code-block:: yaml
 
-          id:
-            method: hash
-            inputs:
-              input_key: model
-              output_key: hashed_terms
-
+        method: hash
+          inputs:
+            hash_str: $model
+            output_key: hashed_terms
     """
 
-    def hash(self, input_str: str):
-        return hashlib.md5(input_str.encode("utf-8")).hexdigest()
+    input_class = HashInput
 
-    def run(self, body: dict, **kwargs) -> dict:
-        body[self.output_key] = self.hash(body[self.input_key])
+    @update_input
+    def run(self, body: dict[str, Any]) -> dict[str, Any]:
+
+        body[self.input.output_key] = hashlib.md5(
+            self.input.input_term.encode("utf-8"), usedforsecurity=False
+        ).hexdigest()
 
         return body

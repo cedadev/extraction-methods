@@ -1,9 +1,9 @@
 # encoding: utf-8
 """
-..  _regex:
+..  _default:
 
-Regex
-------
+Default Method
+--------------
 """
 __author__ = "Richard Smith"
 __date__ = "27 May 2021"
@@ -14,45 +14,50 @@ __contact__ = "richard.d.smith@stfc.ac.uk"
 
 # Python imports
 import logging
+from typing import Any
 
-from extraction_methods.core.extraction_method import ExtractionMethod
+from pydantic import Field
+
+from extraction_methods.core.extraction_method import ExtractionMethod, update_input
+from extraction_methods.core.types import Input
 
 LOGGER = logging.getLogger(__name__)
 
 
-class DefaultExtract(ExtractionMethod):
+class DefaultInput(Input):
+    """
+    Model for Default Method Input.
     """
 
-    .. list-table::
+    defaults: dict[str, Any] = Field(
+        description="Defaults to be added.",
+    )
 
-        * - Processor Name
-          - ``default``
+
+class DefaultExtract(ExtractionMethod):
+    """
+    Method: ``default``
 
     Description:
         Takes a set of default facets.
 
     Configuration Options:
+    .. list-table::
+
         - ``defaults``: Dictionary of defaults to be added
 
-
     Example configuration:
-        .. code-block:: yaml
+    .. code-block:: yaml
 
-            - method: default
-              inputs:
-                defaults:
-                  mip_era: CMIP6
-
+        - method: default
+          inputs:
+            defaults:
+                mip_era: CMIP6
     """
 
-    def run(self, body: dict, **kwargs) -> dict:
-        defaults = {}
-        for default_key, default_value in self.defaults.items():
-            if isinstance(default_value, str) and default_value[0] == self.exists_key:
-                default_value = body[default_value[1:]]
+    input_class = DefaultInput
 
-            defaults[default_key] = default_value
+    @update_input
+    def run(self, body: dict[str, Any]) -> dict[str, Any]:
 
-        body = body | defaults
-
-        return body
+        return body | self.input.defaults  # type: ignore[no-any-return]

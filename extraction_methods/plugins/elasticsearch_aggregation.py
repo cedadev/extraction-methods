@@ -1,9 +1,9 @@
 # encoding: utf-8
 """
-..  _elasticsearch-extract:
+..  _elasticsearch-aggregation:
 
-Elasticsearch Extract
-------------------
+Elasticsearch Aggregation Method
+--------------------------------
 """
 __author__ = "Rhys Evans"
 __date__ = "24 May 2022"
@@ -12,268 +12,336 @@ __license__ = "BSD - see LICENSE file in top-level package directory"
 __contact__ = "rhys.r.evans@stfc.ac.uk"
 
 import logging
+from collections import defaultdict
+from typing import Any
 
 # Third party imports
 from elasticsearch import Elasticsearch
-from collections import defaultdict
+from pydantic import Field
 
 from extraction_methods.core.extraction_method import ExtractionMethod
+from extraction_methods.core.types import Input, KeyOutputKey
 
 LOGGER = logging.getLogger(__name__)
 
 
+class ElasticsearchAggregationInput(Input):
+    """
+    Model for Elasticsearch Aggregation Input.
+    """
+
+    index: str = Field(
+        description="Name of the index holding the STAC entities.",
+    )
+    id_term: str = Field(
+        description="Term used for agregating the STAC entities.",
+    )
+    client_kwargs: dict[str, Any] = Field(
+        default={},
+        description="Parameters passed to elasticsearch client.",
+    )
+    search_query: dict[str, Any] = Field(
+        default={
+            "bool": {
+                "must_not": [{"term": {"categories.keyword": {"value": "hidden"}}}],
+                "must": [{"term": {"path": {"value": "$uri"}}}],
+            }
+        },
+        description="Session parameters passed to elasticsearch client.",
+    )
+    geo_bound: list[KeyOutputKey] = Field(
+        default=[],
+        description="list of terms for which the minimum of their aggregate should be returned.",
+    )
+    first: list[KeyOutputKey] = Field(
+        default=[],
+        description="list of terms for which the first record's value should be returned.",
+    )
+    min: list[KeyOutputKey] = Field(
+        default=[],
+        description="list of terms for which the minimum of their aggregate should be returned.",
+    )
+    max: list[KeyOutputKey] = Field(
+        default=[],
+        description="list of terms for which the maximum of their aggregate should be returned.",
+    )
+    sum: list[KeyOutputKey] = Field(
+        default=[],
+        description="list of terms for which the sum of their aggregate should be returned.",
+    )
+    mean: list[KeyOutputKey] = Field(
+        default=[],
+        description="list of terms for which the mean of their summed aggregate should be returned.",
+    )
+    bucket: list[KeyOutputKey] = Field(
+        default=[],
+        description="list of terms for which the list of their aggregate should be returned.",
+    )
+    request_tiemout: int = Field(
+        default=15,
+        description="Time out for search.",
+    )
+    allow_multiple: bool = Field(
+        default=True,
+        description="True if multiple labels are allowed.",
+    )
+    output_key: str = Field(
+        default="label",
+        description="key to output to.",
+    )
+
+
 class ElasticsearchAggregationExtract(ExtractionMethod):
     """
+    Method: ``elasticsearch_aggregation``
+
     Description:
         Using an ID. Generate a summary of information for higher level entities.
 
     Configuration Options:
+    .. list-table::
+
         - ``index``: Name of the index holding the STAC entities
         - ``id_term``: Term used for agregating the STAC entities
-        - ``session_kwargs``: Session parameters passed to
+        - ``client_kwargs``: Session parameters passed to
         `elasticsearch.Elasticsearch<https://elasticsearch-py.readthedocs.io/en/7.10.0/api.html>`_
-        - ``bbox``: list of terms for which their aggregate bbox should be returned.
-        - ``min``: list of terms for which the minimum of their aggregate should be returned.
-        - ``max``: list of terms for which the maximum of their aggregate should be returned.
-        - ``sum``: list of terms for which the sum of their aggregate should be returned.
-        - ``list``: list of terms for which a list of their aggregage should be returned.
+        - ``bbox``: list of terms for which their aggregate bbox should be returned
+        - ``min``: list of terms for which the minimum of their aggregate should be returned
+        - ``max``: list of terms for which the maximum of their aggregate should be returned
+        - ``sum``: list of terms for which the sum of their aggregate should be returned
+        - ``list``: list of terms for which a list of their aggregage should be returned
 
     Configuration Example:
+    .. code-block:: yaml
 
-        .. code-block:: yaml
-
-                name: elasticsearch_aggregation
-                inputs:
-                    index: ceda-index
-                    id_term: item_id
-                    connection_kwargs:
-                      hosts: ['host1:9200','host2:9200']
-                    bbox:
-                      - bbox
-                    min:
-                      - start_time
-                    max:
-                      - end_time
-                    sum:
-                      - size
-                    list:
-                      - term1
-                      - term2
+        - method: elasticsearch_aggregation
+          inputs:
+            index: ceda-index
+            id_term: item_id
+            client_kwargs:
+              hosts: ['host1:9200','host2:9200']
+            bbox:
+              - bbox
+            min:
+              - start_time
+            max:
+              - end_time
+            sum:
+              - size
+            list:
+              - term1
+              - term2
     """
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
-        if hasattr(self, "connection_kwargs"):
-            self.es = Elasticsearch(**self.connection_kwargs)
-
-        if not hasattr(self, "request_tiemout"):
-            self.request_tiemout = 15
-
-        for position, geo_bound_term in enumerate(getattr(self, "geo_bounds", [])):
-            if "name" not in geo_bound_term:
-                self.geo_bounds[position]["name"] = geo_bound_term["key"]
-
-        for position, min_term in enumerate(getattr(self, "min", [])):
-            if "name" not in min_term:
-                self.min[position]["name"] = min_term["key"]
-
-        for position, max_term in enumerate(getattr(self, "max", [])):
-            if "name" not in max_term:
-                self.max[position]["name"] = max_term["key"]
-
-        for position, sum_term in enumerate(getattr(self, "sum", [])):
-            if "name" not in sum_term:
-                self.sum[position]["name"] = sum_term["key"]
-
-        for position, list_term in enumerate(getattr(self, "list", [])):
-            if "name" not in list_term:
-                self.list[position]["name"] = list_term["key"]
+        self.es = Elasticsearch(**self.input.client_kwargs)
 
     @staticmethod
-    def geo_bounds_query(facet_key: str, facet_name: str) -> dict:
+    def basic_aggregation(agg_type: str, facet: KeyOutputKey) -> dict[str, Any]:
         """
-        Query to retrieve the BBOX from items
+        Query to retrieve the minimum value from docs.
+
+        :param agg_type: type of aggregation
+        :type agg_type: str
+        :param facet: facet to aggregate
+        :type facet: KeyOutputKey
+
+        :return: basic aggregation query
+        :rtype: dict
         """
-        return {facet_name: {"geo_bounds": {"field": facet_key}}}
+        return {facet.key: {agg_type: {"field": facet.key}}}
 
     @staticmethod
-    def facet_composite_query(facet_key: str, facet_name: str) -> dict:
+    def facet_composite_aggregation(facet: KeyOutputKey) -> dict[str, Any]:
         """
-        Generate the composite aggregation for the facet
-        :param facet: Facet to aggregate on
+        Generate the composite aggregation for the facet.
+
+        :param facet: facet to aggregate
+        :type facet: KeyOutputKey
+
+        :return: composite aggregation query
+        :rtype: dict
         """
         return {
-            facet_name: {
+            facet.key: {
                 "composite": {
-                    "sources": [
-                        {facet_name: {"terms": {"field": facet_key}}}
-                    ],
+                    "sources": [{facet.key: {"terms": {"field": facet.key}}}],
                     "size": 100,
                 }
             }
         }
 
-    @staticmethod
-    def min_query(facet_key: str, facet_name: str) -> dict:
+    def extract_facet(self, aggregations: dict[str, Any], facet: KeyOutputKey) -> Any:
         """
-        Query to retrieve the minimum value from docs
-        """
-        return {facet_name: {"min": {"field": facet_key}}}
+        Function to extract the given facets from the aggregation.
 
-    @staticmethod
-    def max_query(facet_key: str, facet_name: str) -> dict:
-        """
-        Query to retrieve the maximum value from docs
-        """
-        return {facet_name: {"max": {"field": facet_key}}}
+        :param input_dict: aggregations
+        :type input_dict: dict
+        :param facet: facet to be extracted
+        :type body: KeyOutputKey
 
-    @staticmethod
-    def sum_query(facet_key: str, facet_name: str) -> dict:
+        :return: extracted facet
+        :rtype: Any
         """
-        Query to retrieve the sum of the values from docs
-        """
-        return {facet_name: {"sum": {"field": facet_key}}}
+        if aggregation := aggregations.get(facet.key):
 
-    def extract_facet(self, facets: list):
-        """
-        Function to extract the given facets from the aggregation
-        """
-        for facet in facets:
-            if facet["name"] in self.aggregations.keys():
+            if facet_value := aggregation.get("value_as_string"):
+                return facet_value
 
-                if "value_as_string" in self.aggregations[facet["name"]].keys():
-                    value = self.aggregations[facet["name"]]["value_as_string"]
+            if facet_value := aggregation.get("bounds"):
+                return facet_value
 
-                elif "bounds" in self.aggregations[facet["name"]].keys():
-                    value = self.aggregations[facet["name"]]["bounds"]
-                
-                elif "value" in self.aggregations[facet["name"]].keys():
-                    value = self.aggregations[facet["name"]]["value"]
+            if facet_value := aggregation.get("value"):
+                return facet_value
 
-                self.metadata[facet["name"]] = value
-
-    def extract_first_facet(self, facets: list):
+    def extract_first_facet(
+        self, properties: dict[str, Any], facet: KeyOutputKey
+    ) -> Any:
         """
-        Function to extract the given default facets from the first hit
-        """
-        properties = self.hits[0]["_source"]["properties"]
+        Function to extract the given default facets from the first hit.
 
-        for facet in facets:
-            if facet["key"] in properties.keys():
-                self.metadata[facet["name"]] = properties[facet["key"]]
+        :param properties: properties from first record
+        :type properties: dict
+        :param facet: current facet to be extracted
+        :type KeyOutputKey: dict
 
-    def extract_facet_list(self, facets: list):
+        :return: extracted facet
+        :rtype: Any
         """
-        Function to extract the lists of given facets from the aggregation
+        if facet_value := properties.get(facet.key):
+            return facet_value
+
+    def extract_facet_lists(
+        self,
+        query: dict[str, Any],
+        aggregations: dict[str, Any],
+        facets: list[KeyOutputKey],
+    ) -> dict[str, Any]:
         """
-        next_query = self.base_query
-        current_aggregations = self.aggregations
+        Function to extract the lists of given facets from the aggregation.
+
+        :param query: attribute dictionary to update
+        :type query: dict
+        :param aggregations: current generated properties
+        :type aggregations: dict
+        :param facets: facets to be extracted
+        :type facets: list
+
+        :return: extracted list facets
+        :rtype: dict
+        """
+        output = defaultdict(list)
+        base_query = self.base_query()
 
         while True:
+            next_query = self.base_query()
             for facet in facets:
-                if facet["name"] in current_aggregations.keys():
-                    aggregation = current_aggregations[facet["name"]]
-
-                    self.metadata[facet["name"]].extend(
-                        [bucket["key"][facet["name"]] for bucket in aggregation["buckets"]]
+                if aggregation := aggregations.get(facet.key):
+                    output[facet.output_key].extend(
+                        [bucket["key"][facet.key] for bucket in aggregation["buckets"]]
                     )
 
                     if hasattr(aggregation, "after_key"):
-                        next_query["aggs"] |= self.query["aggs"][facet["name"]]
-                        next_query["aggs"][facet["name"]]["composite"]["sources"]["after"] = {
-                            facet["name"]: aggregation["after_key"][facet["name"]]
-                        }
+                        next_query["aggs"] |= query["aggs"][facet.key]
+                        next_query["aggs"][facet.key]["composite"]["sources"][
+                            "after"
+                        ] = {facet.key: aggregation["after_key"][facet.key]}
 
-            if next_query == self.base_query:
+            if next_query == base_query:
                 break
 
-            else:
-                result = self.es.search(index=self.index, body=next_query)
-                current_aggregations = result["aggregations"].items()
+            result = self.es.search(index=self.input.index, body=next_query)
+            aggregations = result["aggregations"]
 
-    def construct_base_query(self, key: str, uri: str) -> dict:
-        """
-        Base query to filter the results to a single collection
+        return output
 
-        :param uri: Collection to restrict results to
+    def base_query(self) -> dict[str, Any]:
         """
-        self.base_query = {
-            "query": {
-                "bool": {
-                    "must_not": [{"term": {"categories.keyword": {"value": "hidden"}}}],
-                    "must": [{"term": {f"{key}": {"value": uri}}}],
-                }
-            },
+        Base query to filter the results to a single collection.
+
+        :return: base query
+        :rtype: dict
+        """
+        return {
+            "query": self.input.search_query,
             "aggs": {},
+            "size": 1,
         }
 
-    def construct_query(self):
+    def construct_query(self) -> dict[str, Any]:
         """
-        Function to create the initial elasticsearch query
+        Function to create the initial elasticsearch query.
+
+        :return: aggregation query
+        :rtype: dict
         """
-        self.query = self.base_query
+        query = self.base_query()
 
-        if hasattr(self, "geo_bounds"):
-            for geo_term in self.geo_bounds:
-                self.query["aggs"].update(self.geo_bounds_query(geo_term["key"], geo_term["name"]))
+        for bbox_term in self.input.bbox:
+            query["aggs"].update(self.basic_aggregation("geo_bounds", bbox_term))
 
-        if hasattr(self, "min"):
-            for min_term in self.min:
-                self.query["aggs"].update(self.min_query(min_term["key"], min_term["name"]))
+        for min_term in self.input.min:
+            query["aggs"].update(self.basic_aggregation("min", min_term))
 
-        if hasattr(self, "max"):
-            for max_term in self.max:
-                self.query["aggs"].update(self.max_query(max_term["key"], max_term["name"]))
+        for max_term in self.input.max:
+            query["aggs"].update(self.basic_aggregation("max", max_term))
 
-        if hasattr(self, "sum"):
-            for sum_term in self.sum:
-                self.query["aggs"].update(self.sum_query(sum_term["key"], sum_term["name"]))
+        for sum_term in self.input.sum:
+            query["aggs"].update(self.basic_aggregation("sum", sum_term))
 
-        if hasattr(self, "list"):
-            for list_term in self.list:
-                self.query["aggs"].update(self.facet_composite_query(list_term["key"], list_term["name"]))
+        for bucket_term in self.input.bucket:
+            query["aggs"].update(self.facet_composite_aggregation(bucket_term))
 
-    def extract_metadata(self):
+        return query
+
+    def extract_metadata(
+        self, query: dict[str, Any], result: dict[str, Any]
+    ) -> dict[str, Any]:
         """
-        Function to extract the required metadata from the returned query result
+        Function to extract the required metadata from the returned query result.
+
+        :param query: previous query
+        :type query: dict
+        :param result: resutls from previous query
+        :type result: dict
+
+        :return: metadata
+        :rtype: dict
         """
-        if hasattr(self, "first"):
-            self.extract_first_facet(self.first)
+        output = {}
 
-        if hasattr(self, "geo_bounds"):
-            self.extract_facet(self.geo_bounds)
+        properties = result["hits"]["hits"][0]["_source"]["properties"]
+        aggregations = result["aggregations"]
 
-        if hasattr(self, "min"):
-            self.extract_facet(self.min)
+        for facet in self.input.first:
+            if facet_value := self.extract_first_facet(properties, facet):
+                output[facet.output_key] = facet_value
 
-        if hasattr(self, "max"):
-            self.extract_facet(self.max)
+        for facet in (
+            self.input.geo_bounds + self.input.min + self.input.max + self.input.sum
+        ):
+            if facet_value := self.extract_facet(aggregations, facet):
+                output[facet.output_key] = facet_value
 
-        if hasattr(self, "sum"):
-            self.extract_facet(self.sum)
+        list_output = self.extract_facet_lists(query, aggregations, self.input.bucket)
 
-        if hasattr(self, "list"):
-            self.extract_facet_list(self.list)
+        output |= list_output
 
-    def run(self, body: dict, **kwargs) -> dict:
-        self.metadata = defaultdict(list)
+        return output
 
-        self.construct_base_query(self.id_term, body["uri"])
+    def run(self, body: dict[str, Any]) -> dict[str, Any]:
 
-        self.construct_query()
+        query = self.construct_query()
 
-        LOGGER.info("Elasticsearch query: %s", self.query)
+        LOGGER.info("Querying Elasticsearch: %s", query)
 
         # Run query
         result = self.es.search(
-            index=self.index, body=self.query, timeout=f"{self.request_tiemout}s"
+            index=self.input.index, body=query, timeout=f"{self.input.request_tiemout}s"
         )
 
-        self.hits = result["hits"]["hits"]
-
-        self.aggregations = result["aggregations"]
-
         # Extract metadata
-        self.extract_metadata()
+        output = self.extract_metadata(query, result)
 
-        return body | self.metadata
+        return body | output

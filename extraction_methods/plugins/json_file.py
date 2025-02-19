@@ -1,9 +1,9 @@
 # encoding: utf-8
 """
-..  _regex:
+..  _json-file:
 
-Regex
-------
+JSON File Method
+----------------
 """
 __author__ = "Richard Smith"
 __date__ = "27 May 2021"
@@ -12,103 +12,105 @@ __license__ = "BSD - see LICENSE file in top-level package directory"
 __contact__ = "richard.d.smith@stfc.ac.uk"
 
 
-# Python imports
-from collections import defaultdict
-import os
 import json
 import logging
-from typing import Optional
 
-from extraction_methods.core.extraction_method import ExtractionMethod
+# Python imports
+from pathlib import Path
+from typing import Any
+
+from pydantic import Field
+
+from extraction_methods.core.extraction_method import ExtractionMethod, update_input
+from extraction_methods.core.types import Input, KeyOutputKey
 
 LOGGER = logging.getLogger(__name__)
 
 
-class JsonFileExtract(ExtractionMethod):
+class JsonFileInput(Input):
+    """
+    Model for JSON File Input.
     """
 
-    .. list-table::
+    path: str = Field(
+        description="Path to directory of JSON files or single JSON file.",
+    )
+    properties: list[KeyOutputKey] = Field(
+        description="list of properties to extract.",
+    )
 
-        * - Processor Name
-          - ``json``
+
+class JsonFileExtract(ExtractionMethod):
+    """
+    Method: ``json_file``
 
     Description:
         Takes an input list of string to extract from the json file.
 
     Configuration Options:
-        - ``terms``: List of terms to extract
+    .. list-table::
 
+        - ``path``: Path to directory or single JSON file.
+        - ``terms``: List of terms to extract.
 
     Example configuration:
-        .. code-block:: yaml
+    .. code-block:: yaml
 
-            - method: json
-              inputs:
-                dirpath: /path/to/file.json
-                terms:
-                  - mip_era
-
+        - method: json_file
+          inputs:
+            path: /path/to/file.json
+            properties:
+              - key: MIP_ERA
+                output_key: mip_era
     """
 
-    def get_facet_values(self) -> list:
-        output = defaultdict(set)
+    input_class = JsonFileInput
 
-        for filepath in os.listdir(self.dirpath):
+    def extract_terms(self, path: Path) -> dict[str, Any]:
+        """
+        Extract terms from JSON file(s) at path.
 
-            with open(os.path.join(self.dirpath, filepath), "r") as file:
-                item = json.load(file)
+        :param path: path to file
+        :type path: Path
 
-                item_properties = item["properties"]
+        :return: extracted terms
+        :rtype: dict
+        """
 
-                for facet in self.terms:
-                    if facet in item_properties:
-                        if isinstance(item_properties[facet], list):
-                            output[facet].update(item_properties[facet])
-                        else:
-                            output[facet].add(item_properties[facet])
+        try:
+            with open(path, "r", encoding="utf-8") as json_file:
+                load_out = json.load(json_file)
+        except ValueError as error:
+            LOGGER.debug("File: %s can't be json loaded: %s", path, error)
 
-        for facet in self.terms:
-            output[facet] = list(output[facet])
+        output = {}
+        for term in self.input.properties:
+            if term.key in load_out:
+                output[term.output_key] = load_out[term.key]
 
         return output
 
-    @staticmethod
-    def get_spatial_extent(item_list: list) -> dict:
-        ...
+    def find_and_extract(self) -> dict[str, Any]:
+        """
+        Find and extract from JSON files.
 
-    @staticmethod
-    def get_temporal_extent(item_list: list) -> dict:
-        start_datetime = []
-        end_datetime = []
-        datetime = []
+        :return: extracted terms
+        :rtype: dict
+        """
 
-        for item in item_list:
-            start_datetime.append(item["properties"].get("start_datetime"))
-            end_datetime.append(item["properties"].get("end_datetime"))
-            datetime.append(item["properties"].get("datetime"))
+        path = Path(self.input.path)
+        output: dict[str, Any] = {}
 
-        start_datetime = list(set(start_datetime))
-        end_datetime = list(set(end_datetime))
-        datetime = list(set(datetime))
+        if path.is_dir():
+            for child in path.iterdir():
+                output |= self.extract_terms(child)
 
-    def get_extent(self, file_id: str) -> dict:
-        item_list = []
-        with open(self.filepath, "r") as file:
-            file_data = json.load(file)
+        if path.is_file():
+            return {path.name: self.extract_terms(path)}
 
-            for item in file_data:
-                if item["collection_id"] == file_id:
-                    item_list.append(item)
+        return output
 
-        # spatial_extent = self.get_spatial_extent(item_list)
-        # temporal_extent = self.get_temporal_extent(item_list)
+    @update_input
+    def run(self, body: dict[str, Any]) -> dict[str, Any]:
 
-    def run(self, body: dict, **kwargs) -> dict:
-        output = self.get_facet_values()
-
-        if output:
-            body |= output
-
-        # No need to include extents since the example scanner has none.
-
-        return body
+        return body | self.find_and_extract()

@@ -1,3 +1,10 @@
+# encoding: utf-8
+"""
+..  _iso-date:
+
+ISO Date Method
+---------------
+"""
 __author__ = "Richard Smith"
 __date__ = "28 May 2021"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -6,18 +13,49 @@ __contact__ = "richard.d.smith@stfc.ac.uk"
 
 
 import logging
-
-# Package imports
-from extraction_methods.core.extraction_method import ExtractionMethod
 from datetime import datetime
+from typing import Any
+
+from pydantic import BaseModel, Field
+
+from extraction_methods.core.extraction_method import ExtractionMethod, update_input
+from extraction_methods.core.types import Input
 
 LOGGER = logging.getLogger(__name__)
 
 
-class ISODateExtract(ExtractionMethod):
+class DateTerm(BaseModel):
+    """
+    Model for Date terms with format.
     """
 
-    Processor Name: ``isodate_processor``
+    input_term: str = Field(
+        description="Term to run method on.",
+    )
+    format: str = Field(
+        default="%Y-%m-%dT%H:%M:%SZ",
+        description="Format of the date.",
+    )
+    output_key: str = Field(
+        default="datetime",
+        description="Key to output to.",
+    )
+
+
+class ISODateInput(Input):
+    """
+    Model for ISO Date Input.
+    """
+
+    date_terms: list[DateTerm] = Field(
+        default=[],
+        description="List of date terms.",
+    )
+
+
+class ISODateExtract(ExtractionMethod):
+    """
+    Method: ``iso_date``
 
     Description:
         Takes the source dict and the key to access the date and
@@ -32,52 +70,48 @@ class ISODateExtract(ExtractionMethod):
         an error logged.
 
     Configuration Options:
-        - ``date_keys``: `REQUIRED` List keys to the date value. Using a list allows processing of multiple dates.
+    .. list-table::
+
+        - ``date_terms``: `REQUIRED` List keys to the date value. Using a list allows processing of multiple dates.
         - ``format``: Optional format string. Default behaviour uses `dateutil.parser.parse <https://dateutil.readthedocs.io/en/stable/parser.html#dateutil.parser.parse>`_.
-          If a format string is suppled, this will change to use `datetime.datetime.strptime <https://docs.python.org/3/library/datetime.html#datetime.datetime.strptime>`_.
+          If a format string is supplied, this will change to use `datetime.datetime.strptime <https://docs.python.org/3/library/datetime.html#datetime.datetime.strptime>`_.
 
     Example Configuration:
+    .. code-block:: yaml
 
-        .. code-block:: yaml
-
-            - method: isodate_processor
-              inputs:
-              date_keys:
-                - date
-              formats:
-                - '%Y%m'
-
+        - method: iso_date
+          inputs:
+            dates:
+              - key: $datetime
+                output_key: date
+                format: "%Y-%m-%dT%H:%M:%S"
+              - key: 2012-12-12
+                format: "%Y-%m-%d"
     """
 
-    def run(self, body: dict, **kwargs) -> dict:
-        """
-        :param body: dict containing the date value
+    input_class = ISODateInput
 
-        :return: the source dict with the date converted to ISO8601 format.
-        """
+    @update_input
+    def run(self, body: dict[str, Any]) -> dict[str, Any]:
 
-        for date_key in self.date_keys:
-            date_str = body.get(date_key)
-            date_iso = None
+        for date_term in self.input.date_terms:
 
-            if not date_str:
-                LOGGER.error(f"{date_key} not present in body for {body.get('uri', body.get('href'))}")
-            
+            if not date_term:
+                LOGGER.error("%s not present in %s", date_term.input_term, body)
+
             else:
 
-                if hasattr(self, "formats"):
-                
-                    for date_format in self.formats:
-                        try:
-                            date_iso = datetime.strptime(date_str, date_format).isoformat()
+                try:
+                    date_iso = datetime.strptime(
+                        date_term.input_term, date_term.format
+                    ).isoformat()
+                    body[date_term.output_key] = date_iso
 
-                        except ValueError:
-                            pass
-
-                else:
-                    date_iso = datetime.strptime(date_str).isoformat()
-
-                if date_iso:
-                    body[date_key] = date_iso
+                except ValueError:
+                    LOGGER.error(
+                        "date_term: %s doesn't match format: %s",
+                        date_term.input_term,
+                        date_term.format,
+                    )
 
         return body

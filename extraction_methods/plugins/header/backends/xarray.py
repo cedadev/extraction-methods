@@ -1,6 +1,9 @@
 # encoding: utf-8
 """
-Collection of functions which can be used to extract metadata from file headers
+..  _xarray-header:
+
+Xarray Header Backend
+---------------------
 """
 __author__ = "Richard Smith"
 __date__ = "27 May 2021"
@@ -8,51 +11,70 @@ __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
 __license__ = "BSD - see LICENSE file in top-level package directory"
 __contact__ = "richard.d.smith@stfc.ac.uk"
 
+import logging
+from typing import Any
+
 import xarray as xr
-from xarray.backends.plugins import guess_engine
+from pydantic import Field
+
+from extraction_methods.core.extraction_method import ExtractionMethod, update_input
+from extraction_methods.core.types import Input, KeyOutputKey
+
+LOGGER = logging.getLogger(__name__)
 
 
-class XarrayBackend:
+class XarrayHeaderInput(Input):
     """
-    Xarray
-    ------
+    Model for Xarray Header Method Input.
+    """
 
-    Backend Name: ``Xarray``
+    input_term: str = Field(
+        default="$uri",
+        description="term for method to run on.",
+    )
+    dataset_kwargs: dict[str, Any] = Field(
+        default={},
+        description="kwargs to open dataset.",
+    )
+    attributes: list[KeyOutputKey] = Field(
+        default=[],
+        description="attributes to be extracted.",
+    )
+
+
+class XarrayHeader(ExtractionMethod):
+    """
+    Method: ``xarray``
 
     Description:
-        Takes an input string and returns a boolean on whether this
-        backend can open that file.
+        Xarray backend for header method.
+
+    Configuration Options:
+    .. list-table::
+
+        - ``input_term``:term for method to run on
+        - ``dataset_kwargs``:kwargs to open dataset
+        - ``attributes``:attributes to be extracted
+
+    Example configuration:
+    .. code-block:: yaml
+
+        - method: xarray
+          inputs:
+            input_term: hello_world
     """
 
-    def guess_can_open(self, filepath: str) -> bool:
-        """Return a boolean on whether this backend can open that file."""
-        try:
-            self.engine = guess_engine(filepath)
-            return True
-        except ValueError:
-            return False
+    input_class = XarrayHeaderInput
 
-    def attr_extraction(
-        self, body: dict, attributes: list, backend_kwargs: dict
-    ) -> dict:
-        """
-        Takes a dictionary and list of attributes and extracts the metadata.
+    @update_input
+    def run(self, body: dict[str, Any]) -> dict[str, Any]:
 
-        :param body: current extracted properties
-        :param attributes: attributes to extract
-        :param kwargs: kwargs to send to xarray.open_dataset(). e.g. engine to
-        specify different engines to use with grib data.
+        ds = xr.open_dataset(self.input.input_term, **self.input.dataset_kwargs)
 
-        :return: Dictionary of extracted attributes
-        """
+        for attribute in self.input.attributes:
+            value = ds.attrs.get(attribute.key)
 
-        ds = xr.open_dataset(body["uri"], engine=self.engine, **backend_kwargs)
-
-        extracted_metadata = {}
-        for attr in attributes:
-
-            value = ds.attrs.get(attr)
             if value:
-                extracted_metadata[attr] = value
+                body[attribute.output_key] = value
 
-        return body | extracted_metadata
+        return body

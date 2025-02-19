@@ -2,8 +2,8 @@
 """
 ..  _regex:
 
-Regex
-------
+Regex Method
+------------
 """
 __author__ = "Richard Smith"
 __date__ = "27 May 2021"
@@ -15,19 +15,33 @@ __contact__ = "richard.d.smith@stfc.ac.uk"
 # Python imports
 import logging
 import re
+from typing import Any
 
-from extraction_methods.core.extraction_method import ExtractionMethod
+from pydantic import Field
+
+from extraction_methods.core.extraction_method import ExtractionMethod, update_input
+from extraction_methods.core.types import Input
 
 LOGGER = logging.getLogger(__name__)
 
 
-class RegexExtract(ExtractionMethod):
+class RegexInput(Input):
+    """
+    Model for Regex Input.
     """
 
-    .. list-table::
+    input_term: str = Field(
+        default="$uri",
+        description="term for method to run on.",
+    )
+    regex: str = Field(
+        description="The regular expression to match against.",
+    )
 
-        * - Processor Name
-          - ``regex``
+
+class RegexExtract(ExtractionMethod):
+    """
+    Method: ``regex``
 
     Description:
         Takes an input string and a regex with
@@ -35,31 +49,30 @@ class RegexExtract(ExtractionMethod):
         extracted using the named capture groups.
 
     Configuration Options:
-        - ``regex``: The regular expression to match against the filepath
+    .. list-table::
 
+        - ``input_term``: Term for regex to be ran on.
+        - ``regex``: ``REQUIRED`` The regular expression to match against.
 
     Example configuration:
-        .. code-block:: yaml
+    .. code-block:: yaml
 
-            - method: regex
-              inputs:
-                regex: ^(?:[^_]*_){2}(?P<datetime>\d*)
+        - method: regex
+          inputs:
+            regex: ^(?:[^_]*_){2}(?P<datetime>\d*)
 
     # noqa: W605
     """
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.regex = rf"{self.regex}"
+    input_class = RegexInput
 
-        if not hasattr(self, "input_term"):
-            self.input_term = "uri"
+    @update_input
+    def run(self, body: dict[str, Any]) -> dict[str, Any]:
 
-    def run(self, body: dict, **kwargs) -> dict:
-        result = re.search(self.regex, body[self.input_term])
+        result = re.search(rf"{self.input.regex}", self.input.input_term)
 
         if result:
-            body = body | result.groupdict()
+            body |= result.groupdict()
 
         else:
             LOGGER.debug("No matches found for regex extract")

@@ -14,3 +14,5 @@ stac_generator-1.0.2.zip
 GLOB-0.log
 cprofile
 build/
+.ruff_cache
+.mypy_cache

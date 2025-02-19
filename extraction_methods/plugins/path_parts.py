@@ -1,9 +1,9 @@
 # encoding: utf-8
 """
-..  _path_parts:
+..  _path-parts:
 
-Path Parts
-------
+Path Parts Method
+-----------------
 """
 __author__ = "Richard Smith"
 __date__ = "27 May 2021"
@@ -15,46 +15,61 @@ __contact__ = "richard.d.smith@stfc.ac.uk"
 # Python imports
 import logging
 from pathlib import Path
+from typing import Any
 
-from extraction_methods.core.extraction_method import ExtractionMethod
+from pydantic import Field
+
+from extraction_methods.core.extraction_method import ExtractionMethod, update_input
+from extraction_methods.core.types import Input
 
 LOGGER = logging.getLogger(__name__)
 
 
-class PathPartsExtract(ExtractionMethod):
+class PathPartsInput(Input):
+    """
+    Model for Path Parts Input.
     """
 
-    .. list-table::
+    path: str = Field(
+        default="$uri",
+        description="path for method to run on.",
+    )
+    skip: int = Field(
+        default=0,
+        description="number of path parts to skip.",
+    )
 
-        * - Processor Name
-          - ``path_parts``
+
+class PathPartsExtract(ExtractionMethod):
+    """
+    Method: ``path_parts``
 
     Description:
         Extracts the parts of a given path skipping ``skip`` number
         of top level parts.
 
     Configuration Options:
-        - ``skip``: The number of path parts to skip. ``default: 1``
+    .. list-table::
 
+        - ``skip``: The number of path parts to skip. ``default: 0``
 
     Example configuration:
-        .. code-block:: yaml
+    .. code-block:: yaml
 
-            - method: default
-              inputs:
-                skip: 2
-
+        - method: path_parts
+          inputs:
+            input_term: $uri
+            skip: 2
     """
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        if not hasattr(self, "skip"):
-            self.skip = 1
+    input_class = PathPartsInput
 
-    def run(self, body: dict, **kwargs) -> list:
-        path = Path(body["uri"])
+    @update_input
+    def run(self, body: dict[str, Any]) -> dict[str, Any]:
 
-        parts = list(path.parts)[self.skip :]
+        path = Path(self.input.path)
+
+        parts = list(path.parts)[self.input.skip :]
 
         body["filename"] = parts.pop()
 

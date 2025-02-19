@@ -1,4 +1,10 @@
 # encoding: utf-8
+"""
+..  _ceda-observation:
+
+CEDA Observation Method
+-----------------------
+"""
 __author__ = "Richard Smith"
 __date__ = "11 Jun 2021"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -6,43 +12,62 @@ __license__ = "BSD - see LICENSE file in top-level package directory"
 __contact__ = "richard.d.smith@stfc.ac.uk"
 
 import logging
-from string import Template
+from typing import Any
 
 # Third party imports
-import requests
+import httpx
+from pydantic import Field
 
-# Package imports
-from extraction_methods.core.extraction_method import ExtractionMethod
+from extraction_methods.core.extraction_method import ExtractionMethod, update_input
+from extraction_methods.core.types import Input
 
 LOGGER = logging.getLogger(__name__)
 
 
+class CEDAObservationInput(Input):
+    """
+    Model for CEDA Observation Method Input.
+    """
+
+    input_term: str = Field(
+        default="$uri",
+        description="term for method to run on.",
+    )
+    request_timeout: int = Field(
+        default=15,
+        description="request time out.",
+    )
+    output_key: str = Field(
+        default="uuid",
+        description="key to output to.",
+    )
+
+
 class CEDAObservationExtract(ExtractionMethod):
     """
-
-    Processor Name: ``ceda_observation``
+    Method: ``ceda_observation``
 
     Description:
-        Takes a file path and returns the ceda observation record.
+        Returns a ceda observation record for the ``input_term``.
 
     Configuration Options:
-        - ``url_template``: ``REQUIRED`` URL string template to build url.
-          Template uses the `python string template <https://docs.python.org/3/library/string.html#template-strings>`_ format.
+    .. list-table::
+
+        - ``input_term``: ``REQUIRED`` term for method to run on
 
     Example Configuration:
+    .. code-block:: yaml
 
-        .. code-block:: yaml
-
-            - method: ceda_observation
-              inputs:
-                url_template: http://api.catalogue.ceda.ac.uk/api/v0/obs/get_info$uri
-
+        - method: ceda_observation
+          inputs:
+            input_term: $url
     """
 
-    def run(self, body: dict, **kwargs) -> dict:
-        url = Template(self.url_template).substitute(uri=body["uri"])
+    input_class = CEDAObservationInput
 
-        r = requests.get(url)
+    @update_input
+    def run(self, body: dict[str, Any]) -> dict[str, Any]:
+        r = httpx.get(self.input.input_term, timeout=self.input.request_timeout)
 
         if r.status_code == 200:
             response = r.json()
@@ -50,6 +75,6 @@ class CEDAObservationExtract(ExtractionMethod):
             url = response.get("url")
 
             if record_type == "Dataset" and url:
-                body["uuid"] = url.split("/")[-1]
+                body[self.input.output_key] = url.split("/")[-1]
 
         return body

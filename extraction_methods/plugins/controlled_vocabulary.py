@@ -1,5 +1,10 @@
 # encoding: utf-8
+"""
+..  _controlled-vocabulary:
 
+Controlled Vocabulary Method
+----------------------------
+"""
 __author__ = "David Huard"
 __date__ = "June 2022"
 __copyright__ = "Copyright 2022 Ouranos"
@@ -11,32 +16,46 @@ import importlib
 
 # Python imports
 import logging
+from typing import Any
 
-import pydantic
+from jsonschema import ValidationError
+from pydantic import Field
 
-from extraction_methods.core.extraction_method import ExtractionMethod
+from extraction_methods.core.extraction_method import ExtractionMethod, update_input
+from extraction_methods.core.types import Input
 
 LOGGER = logging.getLogger(__name__)
 
 
-class ControlledVocabularyExtract(ExtractionMethod):
+class ControlledVocabularyInput(Input):
+    """
+    Model for Contrilled Vocabulary Method Input.
     """
 
-    .. list-table::
+    model: str = Field(
+        description="pydantic.BaseModel subclass to be imported at run-time, e.g. `package.module.class_name`.",
+    )
+    strict: bool = Field(
+        default=False,
+        description="If True, raise ValidationError, otherwise simply log ValidationError messages.",
+    )
 
-        * - Processor Name
-          - ``controlled_vocabulary``
+
+class ControlledVocabularyExtract(ExtractionMethod):
+    """
+    Method: ``controlled_vocabulary``
 
     Description:
         Compare properties to a controlled vocabulary defined by a pydantic.BaseModel.
 
     Configuration Options:
-        - ``model``: pydantic.BaseModel subclass to be imported at run-time, e.g. `package.module.class_name`.
-        - ``strict``: If True, raise ValidationError, otherwise simply log ValidationError messages.
+    .. list-table::
+
+        - ``model``: pydantic.BaseModel subclass to be imported at run-time, e.g. `package.module.class_name`
+        - ``strict``: If True, raise ValidationError, otherwise simply log ValidationError messages
 
     Example Configuration:
-
-    .. code-block:: yaml
+        .. code-block:: yaml
 
             - name: controlled_vocabulary
               inputs:
@@ -44,12 +63,15 @@ class ControlledVocabularyExtract(ExtractionMethod):
                 strict: False
     """
 
-    def run(self, body: dict, **kwargs) -> dict:
-        # Import data model
-        scopes = self.model.split(".")
-        module = ".".join(scopes[:-1])
+    input_class = ControlledVocabularyInput
 
-        module = importlib.import_module(module)
+    @update_input
+    def run(self, body: dict[str, Any]) -> dict[str, Any]:
+        # Import data model
+        scopes = self.input.model.split(".")
+        module_str = ".".join(scopes[:-1])
+
+        module = importlib.import_module(module_str)
         klass = getattr(module, scopes[-1])
 
         # Get metadata attributes
@@ -60,10 +82,10 @@ class ControlledVocabularyExtract(ExtractionMethod):
             cv = klass(**properties)
             body = cv.dict()
 
-        except pydantic.ValidationError as exc:
+        except ValidationError as exc:
             LOGGER.warning(exc)
 
-            if self.strict:
+            if self.input.strict:
                 raise exc
 
         return body
