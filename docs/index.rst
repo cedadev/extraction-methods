@@ -6,7 +6,7 @@
 ESGF Playground Utils documentation
 ===================================
 
-.. include:: ../README.rst
+.. mdinclude:: ../README.md
 
 .. toctree::
    :maxdepth: 1
