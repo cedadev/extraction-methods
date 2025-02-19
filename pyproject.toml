@@ -1,6 +1,6 @@
 [project]
 name = "extraction-methods"
-version = "0.0.3"
+version = "1.0.0"
 description = "Methods to enable the extraction of metadata"
 authors = [
     {"name" = "rhysrevans3", "email" = "<rhys.r.evans3@gmail.com>"},
