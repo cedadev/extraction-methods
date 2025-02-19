@@ -15,7 +15,7 @@ import logging
 from typing import Any
 
 # Third party imports
-import requests
+import httpx
 from pydantic import Field
 
 from extraction_methods.core.extraction_method import ExtractionMethod, update_input
@@ -67,7 +67,7 @@ class CEDAObservationExtract(ExtractionMethod):
 
     @update_input
     def run(self, body: dict[str, Any]) -> dict[str, Any]:
-        r = requests.get(self.input.input_term, timeout=self.input.request_timeout)
+        r = httpx.get(self.input.input_term, timeout=self.input.request_timeout)
 
         if r.status_code == 200:
             response = r.json()

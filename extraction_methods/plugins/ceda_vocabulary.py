@@ -13,11 +13,10 @@ __contact__ = "richard.d.smith@stfc.ac.uk"
 
 
 # Python imports
-import json
 import logging
 from typing import Any
 
-import requests
+import httpx
 from pydantic import Field
 
 from extraction_methods.core.extraction_method import ExtractionMethod, update_input
@@ -98,21 +97,21 @@ class CEDAVocabularyExtract(ExtractionMethod):
             "strict": self.input.strict,
         }
 
-        response = requests.post(
+        response = httpx.post(
             self.input.url,
-            data=json.dumps(req_data),
+            json=req_data,
             timeout=self.input.request_timeout,
         )
 
         if response.status_code != 200:
             raise Exception(
-                f"Bad response from vocab server: {response.status_code}, reason: {response.reason}"
+                f"Bad response from vocab server: {response.status_code}, reason: {response.text}"
             )
 
         json_response = response.json()
 
         if json_response["error"]:
-            raise Exception(f"Vocab request failed, reason: {json_response['reason']}")
+            raise Exception(f"Vocab request failed, reason: {json_response['text']}")
 
         body = body | json_response["result"]
 

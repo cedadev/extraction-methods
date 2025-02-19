@@ -16,7 +16,7 @@ import logging
 from typing import Any
 
 # Third party imports
-import requests
+import httpx
 from lxml.etree import ElementTree as ET  # nosec B410
 from pydantic import Field
 
@@ -83,11 +83,11 @@ class ISO19115Extract(ExtractionMethod):
     def run(self, body: dict[str, Any]) -> dict[str, Any]:
 
         # Retrieve the ISO 19115 record
-        response = requests.get(self.input.url, timeout=self.input.request_timeout)
+        response = httpx.get(self.input.url, timeout=self.input.request_timeout)
 
         if not response.status_code == 200:
             LOGGER.debug(
-                "Request %s failed with response: %s", self.input.url, response.reason
+                "Request %s failed with response: %s", self.input.url, response.text
             )
             return body
 

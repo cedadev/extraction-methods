@@ -16,7 +16,7 @@ import subprocess  # nosec B404
 from typing import Any
 from urllib.parse import urlparse
 
-import requests
+import httpx
 from lxml.etree import XMLParser, fromstring  # nosec B410
 from pydantic import Field
 
@@ -116,7 +116,7 @@ class NcMLHeader(ExtractionMethod):
         NcML content
         """
 
-        r = requests.get(
+        r = httpx.get(
             self.input.input_term,
             params=self.input.request_params,
             timeout=self.input.request_timeout,
