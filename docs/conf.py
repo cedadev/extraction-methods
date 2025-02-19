@@ -19,7 +19,7 @@ release = "0.1.0"
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
-    "autoapi.extension",
+    "sphinx.ext.autodoc",
     "sphinx-pydantic",
     "sphinx_rtd_theme",
     "sphinx_mdinclude",

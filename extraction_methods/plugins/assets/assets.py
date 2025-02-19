@@ -63,16 +63,16 @@ class AssetExtract(SetEntryPointsMixin, ExtractionMethod):
     .. code-block:: yaml
 
         - method: assets
-            inputs:
+          inputs:
             backend:
-                name elasticsearch
-                inputs:
+              name elasticsearch
+              inputs:
                 connection_kwargs:
-                    hosts: ['host1:9200','host2:9200']
+                  hosts: ['host1:9200','host2:9200']
             extraction_methods:
-                - method: default
+              - method: default
                 inputs:
-                    defaults:
+                  defaults:
                     hello: world
     """
 
