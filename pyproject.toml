@@ -6,7 +6,7 @@ authors = [
     {"name" = "rhysrevans3", "email" = "<rhys.r.evans3@gmail.com>"},
 ]
 license = "BSD - See extraction_methods/LICENSE file for details"
-readme = "README.md"
+readme = "README.rst"
 keywords = ['metadata', 'plugin', 'extraction']
 requires-python = ">=3.10, <4"
 dependencies = [
