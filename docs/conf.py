@@ -13,13 +13,13 @@ sys.path.insert(0, os.path.abspath("../.."))
 project = "Extraction Methods"
 copyright = "2025, Rhys Evans"
 author = "Rhys Evans"
-release = "0.1.0"
+release = "1.0.0"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
-    "sphinx.ext.autodoc",
+    "autoapi.extension",
     "sphinx-pydantic",
     "sphinx_rtd_theme",
     "sphinx_mdinclude",
