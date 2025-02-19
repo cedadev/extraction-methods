@@ -1,9 +1,9 @@
 # encoding: utf-8
 """
-..  _regex:
+..  _ceda-vocabulary:
 
-Regex
-------
+CEDA Vocabulary Method
+----------------------
 """
 __author__ = "Richard Smith"
 __date__ = "27 May 2021"
@@ -15,21 +15,21 @@ __contact__ = "richard.d.smith@stfc.ac.uk"
 # Python imports
 import json
 import logging
+from typing import Any
 
 import requests
 from pydantic import Field
 
-from extraction_methods.core.extraction_method import (
-    ExtractionMethod,
-    update_input,
-)
+from extraction_methods.core.extraction_method import ExtractionMethod, update_input
 from extraction_methods.core.types import Input
 
 LOGGER = logging.getLogger(__name__)
 
 
 class CEDAVocabularyInput(Input):
-    """CEDA Vocab input model."""
+    """
+    Model for CEDA Vocab Method Input.
+    """
 
     url: str = Field(
         description="URL of vocabulary server.",
@@ -45,40 +45,47 @@ class CEDAVocabularyInput(Input):
         default=[],
         description="terms to be validated.",
     )
+    request_timeout: int = Field(
+        default=15,
+        description="request time out.",
+    )
 
 
 class CEDAVocabularyExtract(ExtractionMethod):
     """
-    .. list-table::
-
-    Processor Name: ``ceda_vocabulary``
+    Method: ``ceda_vocabulary``
 
     Description:
         Validates and sorts properties into vocabs and generates
         the `general` vocab for specified properties.
 
     Configuration Options:
-        - ``url``: ``REQUIRED`` url of vocabulary server.
-        - ``namespace``: ``REQUIRED`` namespace of vocab for terms.
-        - ``terms``: Terms to be validated.
-        - ``strict``: Boolean on whether values should be validated.
+    .. list-table::
+
+        - ``url``: ``REQUIRED`` url of vocabulary server
+        - ``namespace``: ``REQUIRED`` namespace of vocab for terms
+        - ``terms``: Terms to be validated
+        - ``strict``: Boolean on whether values should be validated
+        - ``request_timeout``: request time out
 
     Example configuration:
-        .. code-block:: yaml
-            - method: ceda_vocabulary
-            inputs:
-                url: vocab.ceda.ac.uk
-                namespace: cmip6
-                strict: False
-                terms:
-                    - start_time
-                    - model
+    .. code-block:: yaml
+
+        - method: ceda_vocabulary
+          inputs:
+            url: vocab.ceda.ac.uk
+            namespace: cmip6
+            strict: False
+            terms:
+              - start_time
+              - model
     """
 
     input_class = CEDAVocabularyInput
 
     @update_input
-    def run(self, body: dict) -> dict:
+    def run(self, body: dict[str, Any]) -> dict[str, Any]:
+
         properties = body
 
         if "unspecified_vocab" in body:
@@ -91,7 +98,11 @@ class CEDAVocabularyExtract(ExtractionMethod):
             "strict": self.input.strict,
         }
 
-        response = requests.post(self.input.url, data=json.dumps(req_data))
+        response = requests.post(
+            self.input.url,
+            data=json.dumps(req_data),
+            timeout=self.input.request_timeout,
+        )
 
         if response.status_code != 200:
             raise Exception(

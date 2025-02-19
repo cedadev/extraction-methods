@@ -1,6 +1,9 @@
 # encoding: utf-8
 """
-Metadata extraction backend for NcML (XML) description files.
+..  _ncml-header:
+
+NCML Header Backend
+-------------------
 """
 __author__ = "David Huard"
 __date__ = "June 2022"
@@ -9,79 +12,90 @@ __license__ = "BSD - see LICENSE file in top-level package directory"
 __contact__ = "huard.david@ouranos.ca"
 
 import logging
-import subprocess
+import subprocess  # nosec B404
+from typing import Any
 from urllib.parse import urlparse
 
 import requests
-from lxml.etree import XMLParser, fromstring
+from lxml.etree import XMLParser, fromstring  # nosec B410
 from pydantic import Field
 
-from extraction_methods.core.extraction_method import (
-    SetInput,
-    update_input,
-)
-from extraction_methods.core.types import Input, NameKeyTerm
+from extraction_methods.core.extraction_method import ExtractionMethod, update_input
+from extraction_methods.core.types import Input, KeyOutputKey
 
 LOGGER = logging.getLogger(__name__)
 
 
 class NcMLHeaderInput(Input):
-    """Intake backend input model."""
+    """
+    Model for NcML Header Input.
+    """
 
     input_term: str = Field(
         default="$uri",
         description="term for method to run on.",
     )
-    requests_params: dict = Field(
+    request_params: dict[str, Any] = Field(
         default={"catalog": None, "dataset": None},
-        description="params for reqests.",
+        description="params for request.",
     )
-    namespaces: dict = Field(
+    namespaces: dict[str, str] = Field(
         default={"ncml": "http://www.unidata.ucar.edu/namespaces/netcdf/ncml-2.2"},
         description="NcML namespaces.",
     )
-    attributes: list[NameKeyTerm] = Field(
-        default={},
+    attributes: list[KeyOutputKey] = Field(
+        default=[],
         description="attributes to be extracted.",
+    )
+    request_timeout: int = Field(
+        default=15,
+        description="request time out.",
     )
 
 
-class NcMLHeader(SetInput):
+class NcMLHeader(ExtractionMethod):
     """
-    NcMLHeader
-    ----
+    Method: ``ncml``
 
-    Backend Name: ``NcMLHeader``
+    Description:
+        NcML backend for header method.
+
+    Configuration Options:
+    .. list-table::
+
+        - ``input_term``:term for method to run on
+        - ``request_params``:params for request
+        - ``namespaces``:NcML namespaces
+        - ``attributes``:attributes to be extracted
+        - ``request_timeout``:request time out
+
+    Example configuration:
+    .. code-block:: yaml
+
+        - method: ncml
+          inputs:
+            input_term: hello_world
     """
 
     input_class = NcMLHeaderInput
 
     @update_input
-    def run(self, body: dict) -> dict:
-        """
-        Takes a filepath and list of attributes and extracts the metadata.
-
-        :param file: file-like object
-        :param attributes: attributes to extract
-        :param backend_kwargs: {}
-
-        :return: Dictionary of extracted attributes
-        """
-
+    def run(self, body: dict[str, Any]) -> dict[str, Any]:
         # Convert response to an XML etree.Element
         content = self.get_ncml()
-        elemement = fromstring(content, parser=XMLParser(encoding="UTF-8"))
+        elemement = fromstring(
+            content, parser=XMLParser(encoding="UTF-8")
+        )  # nosec B320
 
-        output = {}
         for attribute in self.input.attributes:
 
             # Execute xpath expression
             value = elemement.xpath(attribute.key, namespaces=self.input.namespaces)
 
             if value:
-                output[attribute.name] = value[0]
+                body[attribute.output_key] = value[0]
 
-        return output
+        return body
 
     def get_ncml(self) -> bytes:
         """Get the NcML file description."""
@@ -102,7 +116,11 @@ class NcMLHeader(SetInput):
         NcML content
         """
 
-        r = requests.get(self.input.input_term, params=self.input.params)
+        r = requests.get(
+            self.input.input_term,
+            params=self.input.request_params,
+            timeout=self.input.request_timeout,
+        )
         r.raise_for_status()
         return r.content
 
@@ -110,5 +128,10 @@ class NcMLHeader(SetInput):
         """Return NcML file description using `ncdump` utility."""
 
         cmd = ["ncdump", "-hx", self.input.input_term]
-        proc = subprocess.Popen(cmd, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
-        return proc.stdout.read()
+        proc = subprocess.Popen(
+            cmd, stderr=subprocess.PIPE, stdout=subprocess.PIPE
+        )  # nosec B603
+        if proc.stdout:
+            return proc.stdout.read()
+        else:
+            return b""

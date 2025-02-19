@@ -1,4 +1,10 @@
 # encoding: utf-8
+"""
+..  _assets:
+
+STAC Assets Extraction
+----------------------
+"""
 __author__ = "Rhys Evans"
 __date__ = "24 May 2022"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -6,29 +12,28 @@ __license__ = "BSD - see LICENSE file in top-level package directory"
 __contact__ = "rhys.r.evans@stfc.ac.uk"
 
 import logging
+from typing import Any
 
 # Third party imports
 from pydantic import Field
 
-from typing import Any
 from extraction_methods.core.extraction_method import (
     ExtractionMethod,
     SetEntryPointsMixin,
     update_input,
 )
-from extraction_methods.core.types import (
-    Backend,
-    Input,
-)
+from extraction_methods.core.types import Backend, Input
 
 LOGGER = logging.getLogger(__name__)
 
 
 class AssetInput(Input):
-    """Asset input model."""
+    """
+    Model for Asset Method Input.
+    """
 
     backend: Backend = Field(
-        description="Label to add if regex passes.",
+        description="Backend and inputs to run.",
     )
     extraction_methods: list[Any] = Field(
         default=[],
@@ -42,40 +47,43 @@ class AssetInput(Input):
 
 class AssetExtract(SetEntryPointsMixin, ExtractionMethod):
     """
+    Method: ``assets``
+
     Description:
-        Asset extraction method.
+        Method to generate a dictionary of STAC Assets.
 
     Configuration Options:
+    .. list-table::
+
         - ``backend``: Backend name and inputs.
         - ``extraction_methods``: Extraction methods to run on assets.
         - ``output_key``: key to output to.
 
     Configuration Example:
+    .. code-block:: yaml
 
-        .. code-block:: yaml
-
-                name: elasticsearch
+        - method: assets
+            inputs:
+            backend:
+                name elasticsearch
                 inputs:
-                  backend: elasticsearch
-                  inputs:
-                    index
-                    connection_kwargs:
-                      hosts: ['host1:9200','host2:9200']
-                  extraction_methods:
-                    - method: default
-                      inputs:
-                        defaults:
-                          hello: world
+                connection_kwargs:
+                    hosts: ['host1:9200','host2:9200']
+            extraction_methods:
+                - method: default
+                inputs:
+                    defaults:
+                    hello: world
     """
 
     input_class = AssetInput
     entry_point_group: str = "extraction_methods.assets.backends"
 
     @update_input
-    def run(self, body: dict) -> dict:
+    def run(self, body: dict[str, Any]) -> dict[str, Any]:
 
         output = {}
-        backend_entry_point = self.entry_points.get(self.input.backend.name).load()
+        backend_entry_point = self.entry_points[self.input.backend.name].load()
         backend = backend_entry_point(**self.input.backend.inputs)
         assets = backend._run(body)
 

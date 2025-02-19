@@ -1,9 +1,9 @@
 # encoding: utf-8
 """
-..  _regexlabel:
+..  _regex-label:
 
-Regex Label
------------
+Regex Label Method
+------------------
 """
 __author__ = "Rhys Evans"
 __date__ = "8 Jul 2024"
@@ -15,20 +15,20 @@ __contact__ = "rhys.r.evans@stfc.ac.uk"
 # Python imports
 import logging
 import re
+from typing import Any
 
 from pydantic import Field
 
-from extraction_methods.core.extraction_method import (
-    ExtractionMethod,
-    update_input,
-)
+from extraction_methods.core.extraction_method import ExtractionMethod, update_input
 from extraction_methods.core.types import Input
 
 LOGGER = logging.getLogger(__name__)
 
 
 class RegexLabelInput(Input):
-    """Regex Label input model."""
+    """
+    Model for Regex Label Input.
+    """
 
     input_term: str = Field(
         default="$uri",
@@ -52,15 +52,14 @@ class RegexLabelInput(Input):
 
 class RegexLabelExtract(ExtractionMethod):
     """
-
-    .. list-table::
-
-    Processor Name: ``regex_label``
+    Method: ``regex_label``
 
     Description:
         Adds label if full match of regex.
 
     Configuration Options:
+    .. list-table::
+
         - ``input_term``: term for method to run on.
         - ``label``: ``REQUIRED`` Label to add if regex passes.
         - ``regex``: ``REQUIRED`` Regex to test against.
@@ -68,12 +67,13 @@ class RegexLabelExtract(ExtractionMethod):
         - ``output_key``: Term for method to output to.
 
     Example configuration:
-        .. code-block:: yaml
-            - method: regex_label
-              inputs:
-                label: metadata
-                regex: README
-                allow_multiple: true
+    .. code-block:: yaml
+
+        - method: regex_label
+          inputs:
+            label: metadata
+            regex: README
+            allow_multiple: true
 
     # noqa: W605
     """
@@ -81,7 +81,7 @@ class RegexLabelExtract(ExtractionMethod):
     input_class = RegexLabelInput
 
     @update_input
-    def run(self, body: dict) -> dict:
+    def run(self, body: dict[str, Any]) -> dict[str, Any]:
 
         if re.fullmatch(rf"{self.input.regex}", self.input.input_term):
             if self.input.allow_multiple:

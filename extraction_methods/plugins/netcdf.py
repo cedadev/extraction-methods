@@ -1,9 +1,9 @@
 # encoding: utf-8
 """
-..  _xml-extract:
+..  _netcdf:
 
-XML Extract
-------------
+NetCDF Method
+-------------
 """
 __author__ = "Richard Smith"
 __date__ = "19 Aug 2021"
@@ -13,30 +13,28 @@ __contact__ = "richard.d.smith@stfc.ac.uk"
 
 # Python imports
 import logging
+from typing import Any
 
-import cf_xarray
-import rioxarray
 import xarray
 from pydantic import Field
 
-from extraction_methods.core.extraction_method import (
-    ExtractionMethod,
-    update_input,
-)
+from extraction_methods.core.extraction_method import ExtractionMethod, update_input
 from extraction_methods.core.types import Input, KeyOutputKey
 
 LOGGER = logging.getLogger(__name__)
 
 
 class NetCDFInput(Input):
-    """NetCDF input model."""
+    """
+    Model for NetCDF Input.
+    """
 
     input_term: str = Field(
         default="$uri",
         description="term for method to run on.",
     )
     variable_id: str = Field(
-        default=None,
+        default="$uri",
         description="lambda function to be run.",
     )
     variable_attributes: list[KeyOutputKey] = Field(
@@ -62,15 +60,13 @@ LOGGER = logging.getLogger(__name__)
 
 class NetCDFExtract(ExtractionMethod):
     """
-    .. list-table::
+    Method: ``netcdf``
 
-        * - Processor Name
-          - ``xml``
-
-    Description:
-        Processes XML documents to extract metadata
+    Description:  Processes XML documents to extract metadata
 
     Configuration Options:
+    .. list-table::
+
         - ``extraction_keys``: List of keys to retrieve from the document.
         - ``filter_expr``: Regex to match against files to limit the attempts to known files
         - ``namespaces``: Map of namespaces
@@ -82,7 +78,7 @@ class NetCDFExtract(ExtractionMethod):
 
             * - Name
               - Description
-            * - ``name``
+            * - ``output_key``
               - Name of the outputted attribute
             * - ``key``
               - Access key to extract the required data. Passed to
@@ -90,18 +86,18 @@ class NetCDFExtract(ExtractionMethod):
                 and also supports `xpath formatted <https://docs.python.org/3/library/xml.etree.elementtree.html#xpath-support>`_ accessors
             * - ``attribute``
               - Allows you to select from the element attribute. In the absence of this value, the default behaviour is to access the text value of the key.
-                In some cases, you might want to access and attribute of the element.
+                In some cases, you might want to access and attribute of the element
 
     Example configuration:
-        .. code-block:: yaml
+    .. code-block:: yaml
 
-            - method: xml
-              inputs:
-                filter_expr: '\.manifest$'
-                extraction_keys:
-                  - name: start_datetime
-                    key: './/gml:beginPosition'
-                    attribute: start
+        - method: xml
+          inputs:
+            filter_expr: '\.manifest$'
+            extraction_keys:
+              - name: start_datetime
+                key: './/gml:beginPosition'
+                attribute: start
 
     # noqa: W605
     """
@@ -109,7 +105,8 @@ class NetCDFExtract(ExtractionMethod):
     input_class = NetCDFInput
 
     @update_input
-    def run(self, body: dict) -> dict:
+    def run(self, body: dict[str, Any]) -> dict[str, Any]:
+
         dataset = xarray.open_dataset(self.input.input_term, decode_coords="all")
 
         if self.input.variable_attributes:
@@ -125,7 +122,9 @@ class NetCDFExtract(ExtractionMethod):
             global_attrs = dataset.attrs
 
             for global_attribute in self.input.global_attributes:
-                body[global_attribute.output_key] = global_attrs.get(global_attribute.key, None)
+                body[global_attribute.output_key] = global_attrs.get(
+                    global_attribute.key, None
+                )
 
         if self.input.cf_attributes:
             cf_attrs = dataset.cf
@@ -141,6 +140,8 @@ class NetCDFExtract(ExtractionMethod):
             rio_attrs = dataset.rio
 
             for rio_attribute in self.input.rio_attributes:
-                body[rio_attribute.output_key] = getattr(rio_attrs, rio_attribute.key, None)
+                body[rio_attribute.output_key] = getattr(
+                    rio_attrs, rio_attribute.key, None
+                )
 
         return body

@@ -1,3 +1,10 @@
+# encoding: utf-8
+"""
+..  _geometry-to-bbox:
+
+Geometry to Bounding Box Method
+-------------------------------
+"""
 __author__ = "Richard Smith"
 __date__ = "28 May 2021"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -7,22 +14,23 @@ __contact__ = "richard.d.smith@stfc.ac.uk"
 
 import logging
 
+# Package imports
+from typing import Any
+
 from pydantic import Field
 
-# Package imports
-from extraction_methods.core.extraction_method import (
-    ExtractionMethod,
-    update_input,
-)
+from extraction_methods.core.extraction_method import ExtractionMethod, update_input
 from extraction_methods.core.types import Input
 
 LOGGER = logging.getLogger(__name__)
 
 
 class GeometryToBboxInput(Input):
-    """Geometry to bbox input model."""
+    """
+    Model for Geometry to Bounding Box Input.
+    """
 
-    geometry: dict = Field(
+    geometry: dict[str, Any] = Field(  # type: ignore[assignment]
         default="$geometry",
         description="geometry to be converted to bbox.",
     )
@@ -34,35 +42,43 @@ class GeometryToBboxInput(Input):
 
 class GeometryToBboxExtract(ExtractionMethod):
     """
-    .. list-table::
-
-    Processor Name: ``geometry_to_bbox``
+    Method: ``geometry_to_bbox``
 
     Description:
         Accepts a geometry with type and list of coordinates to `RFC 7946,
         section 5 <https://tools.ietf.org/html/rfc7946#section-5>`_ formatted bbox.
 
     Configuration Options:
+    .. list-table::
+
         - ``geometry``: ``REQUIRED`` geometry to be converted to bbox.
         - ''output_key'': key to output to.
 
     Example Configuration:
-        .. code-block:: yaml
-            - method: geometry_to_bbox
-                inputs:
-                  geometry:
-                    type: point
-                    coordinates:
-                    - 20
-                    - 0
+    .. code-block:: yaml
+
+        - method: geometry_to_bbox
+          inputs:
+            geometry:
+              type: point
+              coordinates:
+                - 20
+                - 0
     """
 
     input_class = GeometryToBboxInput
 
-    def point(self, coordinates: list) -> list:
+    def point(self, coordinates: list[float]) -> list[float]:
         """
         Get point bbox
+
+        :param coordinates: list of coordinates
+        :type coordinates: list
+
+        :return: bounding box of coordinates
+        :rtype: list
         """
+
         return [
             coordinates[0],
             coordinates[1],
@@ -70,10 +86,17 @@ class GeometryToBboxExtract(ExtractionMethod):
             coordinates[1],
         ]
 
-    def line(self, coordinates: list) -> list:
+    def line(self, coordinates: list[list[float]]) -> list[float]:
         """
         Get line bbox
+
+        :param coordinates: list of coordinates
+        :type coordinates: list
+
+        :return: bounding box of coordinates
+        :rtype: list
         """
+
         bbox = self.point(coordinates[0])
 
         for coordinate in coordinates[1:]:
@@ -92,19 +115,35 @@ class GeometryToBboxExtract(ExtractionMethod):
 
         return bbox
 
-    def polygon(self, coordinates: list) -> list:
+    def polygon(self, coordinates: list[list[float]]) -> list[float]:
         """
         Get polygon bbox
-        """
-        return self.line(coordinates[0][1:])
 
-    def multi(self, coordinate_type: str, coordinates: list) -> list:
+        :param coordinates: list of coordinates
+        :type coordinates: list
+
+        :return: bounding box of coordinates
+        :rtype: list
+        """
+
+        return self.line(coordinates[1:])
+
+    def multi(self, coordinate_type: str, coordinates: list[Any]) -> list[float]:
         """
         Get polygon bbox
+
+        :param coordinate_type: type of coordinates
+        :type coordinate_type: str
+        :param coordinates: list of coordinates
+        :type coordinates: list
+
+        :return: bounding box of coordinates
+        :rtype: list
         """
 
         bboxes = [
-            self.get_bbox(coordinate_type.lstrip("Multi"), coordinate) for coordinate in coordinates
+            self.get_bbox(coordinate_type.lstrip("Multi"), coordinate)
+            for coordinate in coordinates
         ]
         return [
             min(bbox[0] for bbox in bboxes),
@@ -113,10 +152,19 @@ class GeometryToBboxExtract(ExtractionMethod):
             max(bbox[3] for bbox in bboxes),
         ]
 
-    def get_bbox(self, coordinate_type: str, coordinates: list) -> list:
+    def get_bbox(self, coordinate_type: str, coordinates: list[Any]) -> list[float]:
         """
         Get bbox from geometry
+
+        :param coordinate_type: type of coordinates
+        :type coordinate_type: str
+        :param coordinates: list of coordinates
+        :type coordinates: list
+
+        :return: bounding box of coordinates
+        :rtype: list
         """
+
         if coordinate_type == "Point":
             return self.point(coordinates)
 
@@ -124,13 +172,15 @@ class GeometryToBboxExtract(ExtractionMethod):
             return self.line(coordinates)
 
         if coordinate_type == "Polygon":
-            return self.polygon(coordinates)
+            return self.polygon(coordinates[0])
 
         if coordinate_type.startswith("Multi"):
             return self.multi(coordinate_type, coordinates)
 
+        return []
+
     @update_input
-    def run(self, body: dict) -> dict:
+    def run(self, body: dict[str, Any]) -> dict[str, Any]:
 
         body[self.input.output_key] = self.get_bbox(
             self.input.geometry["type"], self.input.geometry["coordinates"]

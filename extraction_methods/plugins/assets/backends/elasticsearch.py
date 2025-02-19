@@ -1,9 +1,9 @@
 # encoding: utf-8
 """
-..  _elasticsearch-extract:
+..  _elasticsearch-assets:
 
-Elasticsearch Extract
-------------------
+Elasticsearch Assets Backend
+----------------------------
 """
 __author__ = "Rhys Evans"
 __date__ = "24 May 2022"
@@ -12,6 +12,7 @@ __license__ = "BSD - see LICENSE file in top-level package directory"
 __contact__ = "rhys.r.evans@stfc.ac.uk"
 
 import logging
+from typing import Any, Iterator
 
 # Third party imports
 from elasticsearch import Elasticsearch as Elasticsearch_client
@@ -24,12 +25,14 @@ LOGGER = logging.getLogger(__name__)
 
 
 class ElasticsearchAssetsInput(Input):
-    """Elasticsearch backend input model."""
+    """
+    Model for Elasticsearch Assets Backend Input.
+    """
 
     index: str = Field(
         description="Elasticsearch index to search on.",
     )
-    client_kwargs: dict = Field(
+    client_kwargs: dict[str, Any] = Field(
         default={},
         description="Elasticsearch connection kwargs.",
     )
@@ -55,39 +58,61 @@ class ElasticsearchAssetsInput(Input):
 
 class ElasticsearchAssets(Backend):
     """
+    Method: ``elasticsearch_assets``
+
     Description:
         Using an ID. Generate a summary of information for higher level entities.
 
     Configuration Options:
-        - ``index``: Name of the index holding the STAC entities
-        - ``id_term``: Term used for agregating the STAC entities
-        - ``connection_kwargs``: Connection parameters passed to
+    .. list-table::
+        :header-rows: 1
+
+        * - Option
+        - Type
+        - Description
+        * - ``index``
+        - str
+        - Name of the index holding the STAC entities
+        * - ``id_term``
+        - str
+        - Term used for agregating the STAC entities
+        * - ``connection_kwargs``
+        - dict
+        - Connection parameters passed to
         `elasticsearch.Elasticsearch<https://elasticsearch-py.readthedocs.io/en/7.10.0/api.html>`_
-        - ``bbox``: list of terms for which their aggregate bbox should be returned.
-        - ``min``: list of terms for which the minimum of their aggregate should be returned.
-        - ``max``: list of terms for which the maximum of their aggregate should be returned.
-        - ``sum``: list of terms for which the sum of their aggregate should be returned.
-        - ``list``: list of terms for which a list of their aggregage should be returned.
+        * - ``bbox``
+        - list
+        - list of terms for which their aggregate bbox should be returned.
+        * - ``min``
+        - list
+        - list of terms for which the minimum of their aggregate should be returned.
+        * - ``max``
+        - list
+        - list of terms for which the maximum of their aggregate should be returned.
+        * - ``sum``
+        - list
+        - list of terms for which the sum of their aggregate should be returned.
+        * - ``list``
+        - list
+        - list of terms for which a list of their aggregage should be returned.
 
     Configuration Example:
+    .. code-block:: yaml
 
-        .. code-block:: yaml
-
-                name: elasticsearch
-                inputs:
-                    index: ceda-index
-                    id_term: item_id
-                    client_kwargs:
-                      hosts: ['host1:9200','host2:9200']
-                    fields:
-                      - roles
-                      -
+        - name: elasticsearch
+          inputs:
+            index: ceda-index
+            id_term: item_id
+            client_kwargs:
+                hosts: ['host1:9200','host2:9200']
+            fields:
+                - roles
     """
 
     input_class = ElasticsearchAssetsInput
 
     @update_input
-    def run(self, body: dict):
+    def run(self, body: dict[str, Any]) -> Iterator[dict[str, Any]]:
 
         es = Elasticsearch_client(**self.input.client_kwargs)
 

@@ -1,6 +1,9 @@
 # encoding: utf-8
 """
-Collection of functions which can be used to extract metadata from file headers
+..  _xarray-header:
+
+Xarray Header Backend
+---------------------
 """
 __author__ = "Richard Smith"
 __date__ = "27 May 2021"
@@ -9,73 +12,69 @@ __license__ = "BSD - see LICENSE file in top-level package directory"
 __contact__ = "richard.d.smith@stfc.ac.uk"
 
 import logging
+from typing import Any
 
 import xarray as xr
 from pydantic import Field
 
-from extraction_methods.core.extraction_method import (
-    SetInput,
-    update_input,
-)
-from extraction_methods.core.types import Input, KeyOutputKeyField
+from extraction_methods.core.extraction_method import ExtractionMethod, update_input
+from extraction_methods.core.types import Input, KeyOutputKey
 
 LOGGER = logging.getLogger(__name__)
 
 
 class XarrayHeaderInput(Input):
-    """Intake backend input model."""
+    """
+    Model for Xarray Header Method Input.
+    """
 
     input_term: str = Field(
         default="$uri",
         description="term for method to run on.",
     )
-    dataset_kwargs: dict = Field(
+    dataset_kwargs: dict[str, Any] = Field(
         default={},
         description="kwargs to open dataset.",
     )
-    namespaces: dict = Field(
-        default={"ncml": "http://www.unidata.ucar.edu/namespaces/netcdf/ncml-2.2"},
-        description="NcML namespaces.",
-    )
-    attributes: list[KeyOutputKeyField] = Field(
-        default={},
+    attributes: list[KeyOutputKey] = Field(
+        default=[],
         description="attributes to be extracted.",
     )
 
 
-class XarrayHeader(SetInput):
+class XarrayHeader(ExtractionMethod):
     """
-    XarrayHeader
-    ------
-
-    Backend Name: ``XarrayHeader``
+    Method: ``xarray``
 
     Description:
-        Takes an input string and returns a boolean on whether this
-        backend can open that file.
+        Xarray backend for header method.
+
+    Configuration Options:
+    .. list-table::
+
+        - ``input_term``:term for method to run on
+        - ``dataset_kwargs``:kwargs to open dataset
+        - ``attributes``:attributes to be extracted
+
+    Example configuration:
+    .. code-block:: yaml
+
+        - method: xarray
+          inputs:
+            input_term: hello_world
     """
 
     input_class = XarrayHeaderInput
 
     @update_input
-    def run(self) -> dict:
-        """
-        Takes a dictionary and list of attributes and extracts the metadata.
+    def run(self, body: dict[str, Any]) -> dict[str, Any]:
 
-        :param body: current extracted properties
-        :param attributes: attributes to extract
-        :param kwargs: kwargs to send to xarray.open_dataset(). e.g. engine to
-        specify different engines to use with grib data.
-
-        :return: Dictionary of extracted attributes
-        """
         ds = xr.open_dataset(self.input.input_term, **self.input.dataset_kwargs)
 
-        output = {}
         for attribute in self.input.attributes:
-
             value = ds.attrs.get(attribute.key)
-            if value:
-                output[attribute.output_key] = value
 
-        return output
+            if value:
+                body[attribute.output_key] = value
+
+        return body

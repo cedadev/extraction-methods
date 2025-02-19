@@ -1,9 +1,9 @@
 # encoding: utf-8
 """
-..  _iso19115-extract:
+..  _iso19115:
 
-ISO 19115 Extract
-------------------
+ISO 19115 Method
+----------------
 """
 __author__ = "Richard Smith"
 __date__ = "28 Jul 2021"
@@ -13,31 +13,33 @@ __contact__ = "richard.d.smith@stfc.ac.uk"
 
 # Python imports
 import logging
-from string import Template
-from xml.etree import ElementTree as ET
+from typing import Any
 
 # Third party imports
 import requests
+from lxml.etree import ElementTree as ET  # nosec B410
 from pydantic import Field
 
-from extraction_methods.core.extraction_method import (
-    ExtractionMethod,
-
-    update_input,
-)
+from extraction_methods.core.extraction_method import ExtractionMethod, update_input
 from extraction_methods.core.types import Input, KeyOutputKey
 
 LOGGER = logging.getLogger(__name__)
 
 
-class ISODateInput(Input):
-    """ISO date input model."""
+class ISO19115Input(Input):
+    """
+    Model for ISO19115 Date Input.
+    """
 
     url: str = Field(
         description="Url for record store.",
     )
     dates: list[KeyOutputKey] = Field(
         description="list of dates to extract.",
+    )
+    request_timeout: int = Field(
+        default=15,
+        description="request time out.",
     )
 
 
@@ -53,36 +55,40 @@ iso19115_ns = {
 
 class ISO19115Extract(ExtractionMethod):
     """
-    .. list-table::
-
-    Processor Name: ``iso19115``
+    Method: ``iso19115``
 
     Description:
         Takes a URL and calls out to URL to retrieve the iso19115 record.
 
     Configuration Options:
+    .. list-table::
+
         - ``url``: ``REQUIRED`` URL to record store.
         - ``date_terms``: List of name, key, format of date terms to retrieve from the response.
 
     Example configuration:
-        .. code-block:: yaml
-            - method: iso19115
-              inputs:
-                url: $url
-                dates:
-                  - key: './/gml:beginPosition'
-                    output_key: start_datetime
+    .. code-block:: yaml
+
+        - method: iso19115
+          inputs:
+            url: $url
+            dates:
+              - key: './/gml:beginPosition'
+                output_key: start_datetime
     """
 
-    input_class = ISODateInput
+    input_class = ISO19115Input
 
     @update_input
-    def run(self, body: dict) -> dict:
+    def run(self, body: dict[str, Any]) -> dict[str, Any]:
+
         # Retrieve the ISO 19115 record
-        response = requests.get(self.input.url)
+        response = requests.get(self.input.url, timeout=self.input.request_timeout)
 
         if not response.status_code == 200:
-            LOGGER.debug("Request %s failed with response: %s", self.input.url, response.error)
+            LOGGER.debug(
+                "Request %s failed with response: %s", self.input.url, response.reason
+            )
             return body
 
         iso_record = ET.fromstring(response.text)

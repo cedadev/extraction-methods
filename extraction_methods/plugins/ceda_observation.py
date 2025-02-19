@@ -1,4 +1,10 @@
 # encoding: utf-8
+"""
+..  _ceda-observation:
+
+CEDA Observation Method
+-----------------------
+"""
 __author__ = "Richard Smith"
 __date__ = "11 Jun 2021"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -6,53 +12,62 @@ __license__ = "BSD - see LICENSE file in top-level package directory"
 __contact__ = "richard.d.smith@stfc.ac.uk"
 
 import logging
+from typing import Any
 
 # Third party imports
 import requests
 from pydantic import Field
 
-from extraction_methods.core.extraction_method import (
-    ExtractionMethod,
-    update_input,
-)
+from extraction_methods.core.extraction_method import ExtractionMethod, update_input
 from extraction_methods.core.types import Input
 
 LOGGER = logging.getLogger(__name__)
 
 
 class CEDAObservationInput(Input):
-    """CEDA Observation input model."""
+    """
+    Model for CEDA Observation Method Input.
+    """
 
     input_term: str = Field(
         default="$uri",
         description="term for method to run on.",
     )
+    request_timeout: int = Field(
+        default=15,
+        description="request time out.",
+    )
+    output_key: str = Field(
+        default="uuid",
+        description="key to output to.",
+    )
 
 
 class CEDAObservationExtract(ExtractionMethod):
     """
-    .. list-table::
-
-    Processor Name: ``ceda_observation``
+    Method: ``ceda_observation``
 
     Description:
-        Takes a file path and returns the ceda observation record.
+        Returns a ceda observation record for the ``input_term``.
 
     Configuration Options:
-        - ``input_term``: ``REQUIRED`` term for method to run on.
+    .. list-table::
+
+        - ``input_term``: ``REQUIRED`` term for method to run on
 
     Example Configuration:
-        .. code-block:: yaml
-            - method: ceda_observation
-                inputs:
-                input_term: $url
+    .. code-block:: yaml
+
+        - method: ceda_observation
+          inputs:
+            input_term: $url
     """
 
     input_class = CEDAObservationInput
 
     @update_input
-    def run(self, body: dict) -> dict:
-        r = requests.get(self.input.input_term)
+    def run(self, body: dict[str, Any]) -> dict[str, Any]:
+        r = requests.get(self.input.input_term, timeout=self.input.request_timeout)
 
         if r.status_code == 200:
             response = r.json()
@@ -60,6 +75,6 @@ class CEDAObservationExtract(ExtractionMethod):
             url = response.get("url")
 
             if record_type == "Dataset" and url:
-                body["uuid"] = url.split("/")[-1]
+                body[self.input.output_key] = url.split("/")[-1]
 
         return body

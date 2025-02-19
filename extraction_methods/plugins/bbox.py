@@ -1,3 +1,10 @@
+# encoding: utf-8
+"""
+..  _bbox:
+
+Bounding Box Method
+-------------------
+"""
 __author__ = "Richard Smith"
 __date__ = "28 May 2021"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -7,20 +14,21 @@ __contact__ = "richard.d.smith@stfc.ac.uk"
 
 import logging
 
+# Package imports
+from typing import Any
+
 from pydantic import Field
 
-# Package imports
-from extraction_methods.core.extraction_method import (
-    ExtractionMethod,
-    update_input,
-)
+from extraction_methods.core.extraction_method import ExtractionMethod, update_input
 from extraction_methods.core.types import Input
 
 LOGGER = logging.getLogger(__name__)
 
 
 class BboxInput(Input):
-    """BBox input model."""
+    """
+    Model for BBox Method Input.
+    """
 
     west: float | str = Field(
         description="west coordinate.",
@@ -35,55 +43,50 @@ class BboxInput(Input):
         description="north coordinate.",
     )
 
-    def update_attrs(self, body):
-        super().update_attrs(body)
-        self.west = float(self.west)
-        self.south = float(self.south)
-        self.east = float(self.east)
-        self.north = float(self.north)
-
 
 class BboxExtract(ExtractionMethod):
     """
-    .. list-table::
-
-    Processor Name: ``bbox``
+    Method: ``bbox``
 
     Description:
-        Accepts a dictionary of coordinate values and converts to `RFC 7946, section 5 <https://tools.ietf.org/html/rfc7946#section-5>`_
-        formatted bbox.
+        Converts a coordinate values to `RFC 7946,
+        section 5 <https://tools.ietf.org/html/rfc7946#section-5>`_ formatted bbox.
 
     Configuration Options:
-        - ``west``: ``REQUIRED`` Most westerly coordinate.
-        - ``south``: ``REQUIRED`` Most southernly coordinate.
-        - ``east``: ``REQUIRED`` Most easterly coordinate.
-        - ``north``: ``REQUIRED`` Most northernly coordinate.
+    .. list-table::
+
+        - ``west``: ``REQUIRED`` Most westerly coordinate
+        - ``south``: ``REQUIRED`` Most southernly coordinate
+        - ``east``: ``REQUIRED`` Most easterly coordinate
+        - ``north``: ``REQUIRED`` Most northernly coordinate
 
     Example Configuration:
-        .. code-block:: yaml
-            - method: bbox
-                inputs:
-                west: 0
-                south: 0
-                east: $east_variable
-                north: $north_variable
+    .. code-block:: yaml
+
+        - method: bbox
+          inputs:
+            west: 0
+            south: 0
+            east: $east_variable
+            north: $north_variable
     """
 
     input_class = BboxInput
 
     @update_input
-    def run(self, body: dict) -> dict:
+    def run(self, body: dict[str, Any]) -> dict[str, Any]:
+
         try:
             body["bbox"] = {
                 "type": "envelope",
                 "coordinates": [
                     [
-                        self.input.west,
-                        self.input.south,
+                        float(self.input.west),
+                        float(self.input.south),
                     ],
                     [
-                        self.input.east,
-                        self.input.north,
+                        float(self.input.east),
+                        float(self.input.north),
                     ],
                 ],
             }

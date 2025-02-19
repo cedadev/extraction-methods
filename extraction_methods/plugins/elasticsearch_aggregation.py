@@ -1,9 +1,9 @@
 # encoding: utf-8
 """
-..  _elasticsearch-extract:
+..  _elasticsearch-aggregation:
 
-Elasticsearch Extract
-------------------
+Elasticsearch Aggregation Method
+--------------------------------
 """
 __author__ = "Rhys Evans"
 __date__ = "24 May 2022"
@@ -19,18 +19,16 @@ from typing import Any
 from elasticsearch import Elasticsearch
 from pydantic import Field
 
-from extraction_methods.core.extraction_method import (
-    ExtractionMethod,
-    update_input,
-)
-
+from extraction_methods.core.extraction_method import ExtractionMethod
 from extraction_methods.core.types import Input, KeyOutputKey
 
 LOGGER = logging.getLogger(__name__)
 
 
 class ElasticsearchAggregationInput(Input):
-    """STAC Regex Label input model."""
+    """
+    Model for Elasticsearch Aggregation Input.
+    """
 
     index: str = Field(
         description="Name of the index holding the STAC entities.",
@@ -38,11 +36,11 @@ class ElasticsearchAggregationInput(Input):
     id_term: str = Field(
         description="Term used for agregating the STAC entities.",
     )
-    client_kwargs: dict = Field(
+    client_kwargs: dict[str, Any] = Field(
         default={},
         description="Parameters passed to elasticsearch client.",
     )
-    search_query: dict = Field(
+    search_query: dict[str, Any] = Field(
         default={
             "bool": {
                 "must_not": [{"term": {"categories.keyword": {"value": "hidden"}}}],
@@ -54,6 +52,10 @@ class ElasticsearchAggregationInput(Input):
     geo_bound: list[KeyOutputKey] = Field(
         default=[],
         description="list of terms for which the minimum of their aggregate should be returned.",
+    )
+    first: list[KeyOutputKey] = Field(
+        default=[],
+        description="list of terms for which the first record's value should be returned.",
     )
     min: list[KeyOutputKey] = Field(
         default=[],
@@ -91,59 +93,75 @@ class ElasticsearchAggregationInput(Input):
 
 class ElasticsearchAggregationExtract(ExtractionMethod):
     """
+    Method: ``elasticsearch_aggregation``
+
     Description:
         Using an ID. Generate a summary of information for higher level entities.
 
     Configuration Options:
+    .. list-table::
+
         - ``index``: Name of the index holding the STAC entities
         - ``id_term``: Term used for agregating the STAC entities
         - ``client_kwargs``: Session parameters passed to
         `elasticsearch.Elasticsearch<https://elasticsearch-py.readthedocs.io/en/7.10.0/api.html>`_
-        - ``bbox``: list of terms for which their aggregate bbox should be returned.
-        - ``min``: list of terms for which the minimum of their aggregate should be returned.
-        - ``max``: list of terms for which the maximum of their aggregate should be returned.
-        - ``sum``: list of terms for which the sum of their aggregate should be returned.
-        - ``list``: list of terms for which a list of their aggregage should be returned.
+        - ``bbox``: list of terms for which their aggregate bbox should be returned
+        - ``min``: list of terms for which the minimum of their aggregate should be returned
+        - ``max``: list of terms for which the maximum of their aggregate should be returned
+        - ``sum``: list of terms for which the sum of their aggregate should be returned
+        - ``list``: list of terms for which a list of their aggregage should be returned
 
     Configuration Example:
+    .. code-block:: yaml
 
-        .. code-block:: yaml
-
-                name: elasticsearch_aggregation
-                inputs:
-                    index: ceda-index
-                    id_term: item_id
-                    client_kwargs:
-                      hosts: ['host1:9200','host2:9200']
-                    bbox:
-                      - bbox
-                    min:
-                      - start_time
-                    max:
-                      - end_time
-                    sum:
-                      - size
-                    list:
-                      - term1
-                      - term2
+        - method: elasticsearch_aggregation
+          inputs:
+            index: ceda-index
+            id_term: item_id
+            client_kwargs:
+              hosts: ['host1:9200','host2:9200']
+            bbox:
+              - bbox
+            min:
+              - start_time
+            max:
+              - end_time
+            sum:
+              - size
+            list:
+              - term1
+              - term2
     """
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
         self.es = Elasticsearch(**self.input.client_kwargs)
 
     @staticmethod
-    def basic_aggregation(agg_type: str, facet: KeyOutputKey) -> dict:
+    def basic_aggregation(agg_type: str, facet: KeyOutputKey) -> dict[str, Any]:
         """
-        Query to retrieve the minimum value from docs
+        Query to retrieve the minimum value from docs.
+
+        :param agg_type: type of aggregation
+        :type agg_type: str
+        :param facet: facet to aggregate
+        :type facet: KeyOutputKey
+
+        :return: basic aggregation query
+        :rtype: dict
         """
         return {facet.key: {agg_type: {"field": facet.key}}}
 
     @staticmethod
-    def facet_composite_aggregation(facet: KeyOutputKey) -> dict:
+    def facet_composite_aggregation(facet: KeyOutputKey) -> dict[str, Any]:
         """
-        Generate the composite aggregation for the facet
-        :param facet: Facet to aggregate on
+        Generate the composite aggregation for the facet.
+
+        :param facet: facet to aggregate
+        :type facet: KeyOutputKey
+
+        :return: composite aggregation query
+        :rtype: dict
         """
         return {
             facet.key: {
@@ -154,9 +172,17 @@ class ElasticsearchAggregationExtract(ExtractionMethod):
             }
         }
 
-    def extract_facet(self, aggregations: dict, facet: KeyOutputKey) -> Any:
+    def extract_facet(self, aggregations: dict[str, Any], facet: KeyOutputKey) -> Any:
         """
-        Function to extract the given facets from the aggregation
+        Function to extract the given facets from the aggregation.
+
+        :param input_dict: aggregations
+        :type input_dict: dict
+        :param facet: facet to be extracted
+        :type body: KeyOutputKey
+
+        :return: extracted facet
+        :rtype: Any
         """
         if aggregation := aggregations.get(facet.key):
 
@@ -169,16 +195,41 @@ class ElasticsearchAggregationExtract(ExtractionMethod):
             if facet_value := aggregation.get("value"):
                 return facet_value
 
-    def extract_first_facet(self, properties: dict, facet: KeyOutputKey) -> Any:
+    def extract_first_facet(
+        self, properties: dict[str, Any], facet: KeyOutputKey
+    ) -> Any:
         """
-        Function to extract the given default facets from the first hit
+        Function to extract the given default facets from the first hit.
+
+        :param properties: properties from first record
+        :type properties: dict
+        :param facet: current facet to be extracted
+        :type KeyOutputKey: dict
+
+        :return: extracted facet
+        :rtype: Any
         """
         if facet_value := properties.get(facet.key):
             return facet_value
 
-    def extract_facet_lists(self, query: dict, aggregations: dict, facets: list) -> dict:
+    def extract_facet_lists(
+        self,
+        query: dict[str, Any],
+        aggregations: dict[str, Any],
+        facets: list[KeyOutputKey],
+    ) -> dict[str, Any]:
         """
-        Function to extract the lists of given facets from the aggregation
+        Function to extract the lists of given facets from the aggregation.
+
+        :param query: attribute dictionary to update
+        :type query: dict
+        :param aggregations: current generated properties
+        :type aggregations: dict
+        :param facets: facets to be extracted
+        :type facets: list
+
+        :return: extracted list facets
+        :rtype: dict
         """
         output = defaultdict(list)
         base_query = self.base_query()
@@ -187,15 +238,15 @@ class ElasticsearchAggregationExtract(ExtractionMethod):
             next_query = self.base_query()
             for facet in facets:
                 if aggregation := aggregations.get(facet.key):
-                    output[facet.ouput_key].extend(
+                    output[facet.output_key].extend(
                         [bucket["key"][facet.key] for bucket in aggregation["buckets"]]
                     )
 
                     if hasattr(aggregation, "after_key"):
                         next_query["aggs"] |= query["aggs"][facet.key]
-                        next_query["aggs"][facet.key]["composite"]["sources"]["after"] = {
-                            facet.key: aggregation["after_key"][facet.key]
-                        }
+                        next_query["aggs"][facet.key]["composite"]["sources"][
+                            "after"
+                        ] = {facet.key: aggregation["after_key"][facet.key]}
 
             if next_query == base_query:
                 break
@@ -205,9 +256,12 @@ class ElasticsearchAggregationExtract(ExtractionMethod):
 
         return output
 
-    def base_query(self) -> dict:
+    def base_query(self) -> dict[str, Any]:
         """
-        Base query to filter the results to a single collection
+        Base query to filter the results to a single collection.
+
+        :return: base query
+        :rtype: dict
         """
         return {
             "query": self.input.search_query,
@@ -215,9 +269,12 @@ class ElasticsearchAggregationExtract(ExtractionMethod):
             "size": 1,
         }
 
-    def construct_query(self):
+    def construct_query(self) -> dict[str, Any]:
         """
-        Function to create the initial elasticsearch query
+        Function to create the initial elasticsearch query.
+
+        :return: aggregation query
+        :rtype: dict
         """
         query = self.base_query()
 
@@ -238,20 +295,32 @@ class ElasticsearchAggregationExtract(ExtractionMethod):
 
         return query
 
-    def extract_metadata(self, query: dict, result: dict) -> dict:
+    def extract_metadata(
+        self, query: dict[str, Any], result: dict[str, Any]
+    ) -> dict[str, Any]:
         """
-        Function to extract the required metadata from the returned query result
+        Function to extract the required metadata from the returned query result.
+
+        :param query: previous query
+        :type query: dict
+        :param result: resutls from previous query
+        :type result: dict
+
+        :return: metadata
+        :rtype: dict
         """
         output = {}
 
         properties = result["hits"]["hits"][0]["_source"]["properties"]
         aggregations = result["aggregations"]
 
-        for facet in self.input.first_facets:
+        for facet in self.input.first:
             if facet_value := self.extract_first_facet(properties, facet):
                 output[facet.output_key] = facet_value
 
-        for facet in self.input.geo_bounds + self.input.min + self.input.max + self.input.sum:
+        for facet in (
+            self.input.geo_bounds + self.input.min + self.input.max + self.input.sum
+        ):
             if facet_value := self.extract_facet(aggregations, facet):
                 output[facet.output_key] = facet_value
 
@@ -261,7 +330,8 @@ class ElasticsearchAggregationExtract(ExtractionMethod):
 
         return output
 
-    def run(self, body: dict) -> dict:
+    def run(self, body: dict[str, Any]) -> dict[str, Any]:
+
         query = self.construct_query()
 
         LOGGER.info("Querying Elasticsearch: %s", query)

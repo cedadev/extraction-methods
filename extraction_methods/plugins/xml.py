@@ -1,9 +1,9 @@
 # encoding: utf-8
 """
-..  _xml-extract:
+..  _xml:
 
-XML Extract
-------------
+XML Method
+----------
 """
 __author__ = "Richard Smith"
 __date__ = "19 Aug 2021"
@@ -15,23 +15,24 @@ import logging
 
 # Python imports
 from collections import defaultdict
-from xml.etree import ElementTree
-from xml.etree.ElementTree import ParseError
-
-from pydantic import Field
 
 # Package imports
-from extraction_methods.core.extraction_method import (
-    ExtractionMethod,
-    update_input,
-)
+from typing import Any
+
+from lxml.etree import ElementTree  # nosec B410
+from pydantic import Field
+
+from extraction_methods.core.extraction_method import ExtractionMethod
 from extraction_methods.core.types import Input, KeyOutputKey
 
 LOGGER = logging.getLogger(__name__)
 
 
 class XMLProperty(KeyOutputKey):
-    """XML property model."""
+    """
+    Model for XML property.
+
+    """
 
     attribute: str = Field(
         default="",
@@ -40,7 +41,9 @@ class XMLProperty(KeyOutputKey):
 
 
 class XMLInput(Input):
-    """XML input model."""
+    """
+    Model for XML Input.
+    """
 
     input_term: str = Field(
         default="$uri",
@@ -55,21 +58,21 @@ class XMLInput(Input):
     # filter_expr: str = Field(
     #     description="Regex to match against files to limit the attempts to known files.",
     # )
-    namespaces: dict = Field(
+    namespaces: dict[str, str] = Field(
         description="Map of namespaces.",
     )
 
 
 class XMLExtract(ExtractionMethod):
     """
-    .. list-table::
-
-    Processor Name: ``xml``
+    Method: ``xml``
 
     Description:
         Processes XML documents to extract metadata
 
     Configuration Options:
+    .. list-table::
+
         - ``input_term``: Term for method to run on.
         - ``template``: ``REQUIRED`` Template to follow.
         - ``properties``: ``REQUIRED`` List of properties to retrieve from the document.
@@ -93,20 +96,22 @@ class XMLExtract(ExtractionMethod):
                 In some cases, you might want to access and attribute of the element.
 
     Example configuration:
-        .. code-block:: yaml
-            - method: xml
-              inputs:
-                properties:
-                  - name: start_datetime
-                    key: './/gml:beginPosition'
-                    attribute: start
+    .. code-block:: yaml
+
+        - method: xml
+          inputs:
+            properties:
+              - name: start_datetime
+                key: './/gml:beginPosition'
+                attribute: start
 
     # noqa: W605
     """
 
     input_class = XMLInput
 
-    def run(self, body: dict) -> dict:
+    def run(self, body: dict[str, Any]) -> dict[str, Any]:
+
         # Extract the keys
         try:
             if isinstance(self.input.input_term, str):
@@ -115,10 +120,10 @@ class XMLExtract(ExtractionMethod):
             else:
                 xml_file = ElementTree.XML(self.input.input_term)
 
-        except (ParseError, FileNotFoundError, TypeError):
+        except (ElementTree.ParseError, FileNotFoundError, TypeError):
             return body
 
-        output = defaultdict(list)
+        output: dict[str, list[str]] = defaultdict(list)
 
         for prop in self.input.properties:
             values = xml_file.findall(
@@ -138,12 +143,11 @@ class XMLExtract(ExtractionMethod):
                     if v and v not in output[prop.output_key]:
                         output[prop.output_key].append(v.strip())
 
-            if output[prop.output_key] and len(output[prop.output_key]) == 1:
-                output[prop.output_key] = output[prop.output_key][0]
-
-            if not output[prop.output_key]:
-                output[prop.output_key] = None
-
-        body |= output
+            if output[prop.output_key]:
+                body[prop.output_key] = (
+                    output[prop.output_key][0]
+                    if len(output[prop.output_key]) == 1
+                    else output[prop.output_key]
+                )
 
         return body

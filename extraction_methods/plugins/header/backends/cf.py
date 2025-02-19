@@ -1,6 +1,9 @@
 # encoding: utf-8
 """
-Collection of functions which can be used to extract metadata from file headers
+..  _cf-header:
+
+CF Header Backend
+-----------------
 """
 __author__ = "Richard Smith"
 __date__ = "27 May 2021"
@@ -9,73 +12,79 @@ __license__ = "BSD - see LICENSE file in top-level package directory"
 __contact__ = "richard.d.smith@stfc.ac.uk"
 
 import logging
+from typing import Any
 
 import cf
 from pydantic import Field
 
-from extraction_methods.core.extraction_method import (
-    Backend,
-    update_input,
-)
-from extraction_methods.core.types import Input, NameKeyTerm
+from extraction_methods.core.extraction_method import ExtractionMethod, update_input
+from extraction_methods.core.types import Input, KeyOutputKey
 
 LOGGER = logging.getLogger(__name__)
 
 
 class CfHeaderInput(Input):
-    """Intake backend input model."""
+    """
+    Model for CF Header Input.
+    """
 
     input_term: str = Field(
         default="$uri",
         description="term for method to run on.",
     )
-    read_kwargs: dict = Field(
+    read_kwargs: dict[str, Any] = Field(
         default={},
         description="kwargs for cf read.",
     )
-    attributes: list[NameKeyTerm] = Field(
-        default={},
+    attributes: list[KeyOutputKey] = Field(
+        default=[],
         description="attributes to be extracted.",
     )
 
 
-class CfHeader(Backend):
+class CfHeader(ExtractionMethod):
     """
-    CfHeader
-    ------
-
-    Backend Name: ``Cf``
+    Method: ``cf``
 
     Description:
-        Takes an input string and returns a boolean on whether this
-        backend can open that file.
+        CF backend for header method.
+
+    Configuration Options:
+    .. list-table::
+
+        - ``input_term``:term for method to run on
+        - ``read_kwargs``:kwargs for cf read
+        - ``attributes``:attributes to be extracted
+
+    Example configuration:
+    .. code-block:: yaml
+
+        - method: cf
+          inputs:
+            input_term: hello_world
     """
 
     input_class = CfHeaderInput
 
     @update_input
-    def run(self, body: dict) -> dict:
-        """
-        Takes a dictionary and list of attributes and extracts the metadata.
-
-        :param body: current extracted properties
-
-        :return: Dictionary of extracted attributes
-        """
-
+    def run(self, body: dict[str, Any]) -> dict[str, Any]:
         field_list = cf.read(self.input.input_term, **self.input.read_kwargs)
 
-        properties = {}
+        properties: dict[str, Any] = {}
         for field in field_list:
             properties |= field.properties()
             if field.nc_global_attributes():
                 properties["global_attributes"] = field.nc_global_attributes()
 
-        output = {}
         for attribute in self.input.attributes:
-            if "global_attributes" in properties and properties["global_attributes"][attribute.key]:
-                output[attribute.name] = properties["global_attributes"][attribute.key]
+            if (
+                "global_attributes" in properties
+                and properties["global_attributes"][attribute.key]
+            ):
+                body[attribute.output_key] = properties["global_attributes"][
+                    attribute.key
+                ]
             elif attribute in properties:
-                output[attribute.name] = properties[attribute.key]
+                body[attribute.output_key] = properties[attribute.key]
 
-        return output
+        return body

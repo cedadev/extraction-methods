@@ -1,3 +1,10 @@
+# encoding: utf-8
+"""
+..  _iso-date:
+
+ISO Date Method
+---------------
+"""
 __author__ = "Richard Smith"
 __date__ = "28 May 2021"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -7,20 +14,20 @@ __contact__ = "richard.d.smith@stfc.ac.uk"
 
 import logging
 from datetime import datetime
+from typing import Any
 
 from pydantic import BaseModel, Field
 
-from extraction_methods.core.extraction_method import (
-    ExtractionMethod,
-    update_input,
-)
+from extraction_methods.core.extraction_method import ExtractionMethod, update_input
 from extraction_methods.core.types import Input
 
 LOGGER = logging.getLogger(__name__)
 
 
 class DateTerm(BaseModel):
-    """Date  model with added format."""
+    """
+    Model for Date terms with format.
+    """
 
     input_term: str = Field(
         description="Term to run method on.",
@@ -36,7 +43,9 @@ class DateTerm(BaseModel):
 
 
 class ISODateInput(Input):
-    """path parts input model."""
+    """
+    Model for ISO Date Input.
+    """
 
     date_terms: list[DateTerm] = Field(
         default=[],
@@ -46,9 +55,7 @@ class ISODateInput(Input):
 
 class ISODateExtract(ExtractionMethod):
     """
-    .. list-table::
-
-    Processor Name: ``isodate``
+    Method: ``iso_date``
 
     Description:
         Takes the source dict and the key to access the date and
@@ -63,31 +70,29 @@ class ISODateExtract(ExtractionMethod):
         an error logged.
 
     Configuration Options:
+    .. list-table::
+
         - ``date_terms``: `REQUIRED` List keys to the date value. Using a list allows processing of multiple dates.
         - ``format``: Optional format string. Default behaviour uses `dateutil.parser.parse <https://dateutil.readthedocs.io/en/stable/parser.html#dateutil.parser.parse>`_.
           If a format string is supplied, this will change to use `datetime.datetime.strptime <https://docs.python.org/3/library/datetime.html#datetime.datetime.strptime>`_.
 
     Example Configuration:
-        .. code-block:: yaml
-            - method: isodate
-              inputs:
-                dates:
-                  - key: $datetime
-                    output_key: date
-                    format: "%Y-%m-%dT%H:%M:%S"
-                  - key: 2012-12-12
-                    format: "%Y-%m-%d"
+    .. code-block:: yaml
+
+        - method: iso_date
+          inputs:
+            dates:
+              - key: $datetime
+                output_key: date
+                format: "%Y-%m-%dT%H:%M:%S"
+              - key: 2012-12-12
+                format: "%Y-%m-%d"
     """
 
     input_class = ISODateInput
 
     @update_input
-    def run(self, body: dict) -> dict:
-        """
-        :param body: dict containing the date value
-
-        :return: the source dict with the date converted to ISO8601 format.
-        """
+    def run(self, body: dict[str, Any]) -> dict[str, Any]:
 
         for date_term in self.input.date_terms:
 
@@ -97,7 +102,9 @@ class ISODateExtract(ExtractionMethod):
             else:
 
                 try:
-                    date_iso = datetime.strptime(date_term.input_term, date_term.format).isoformat()
+                    date_iso = datetime.strptime(
+                        date_term.input_term, date_term.format
+                    ).isoformat()
                     body[date_term.output_key] = date_iso
 
                 except ValueError:

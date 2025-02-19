@@ -1,9 +1,9 @@
 # encoding: utf-8
 """
-..  _regex:
+..  _regex-assets:
 
-RegexAssets
-------
+Regex Assets Backend
+--------------------
 """
 __author__ = "Richard Smith"
 __date__ = "27 May 2021"
@@ -14,18 +14,20 @@ __contact__ = "richard.d.smith@stfc.ac.uk"
 
 import glob
 import logging
+from typing import Any, Iterator
 
 from pydantic import Field
 
 from extraction_methods.core.extraction_method import Backend, update_input
 from extraction_methods.core.types import Input
 
-
 LOGGER = logging.getLogger(__name__)
 
 
 class RegexAssetsInput(Input):
-    """Intake backend input model."""
+    """
+    Model for Regex Assets Backend Input.
+    """
 
     input_term: str = Field(
         default="$uri",
@@ -35,28 +37,22 @@ class RegexAssetsInput(Input):
 
 class RegexAssets(Backend):
     """
-
-    .. list-table::
-
-        * - Processor Name
-          - ``regex``
+    Method: ``regex_assets``
 
     Description:
-        Takes an input string and a regex with
-        named capture groups and returns a dictionary of the values
-        extracted using the named capture groups.
+        Takes a regex glob and yields a dictionary for each matching path.
 
     Configuration Options:
-        - ``glob``: The regular expression to match against the filepath
-        - ``glob_term``: The term to use for regular expression to match against the filepath
+    .. list-table::
 
+        - ``input_term``:The regular expression to match against the path
 
     Example configuration:
-        .. code-block:: yaml
+    .. code-block:: yaml
 
-            - method: glob_assets
-              inputs:
-                glob: ^(?:[^_]*_){2}(?P<datetime>\d*)
+        - method: regex
+          inputs:
+            input_term: ^(?:[^_]*_){2}(?P<datetime>\d*)
 
     # noqa: W605
     """
@@ -64,7 +60,7 @@ class RegexAssets(Backend):
     input_class = RegexAssetsInput
 
     @update_input
-    def run(self, body: dict):
+    def run(self, body: dict[str, Any]) -> Iterator[dict[str, Any]]:
 
         for path in glob.iglob(self.input.input_term):
             yield {

@@ -1,3 +1,10 @@
+# encoding: utf-8
+"""
+..  general-function:
+
+General Function Method
+-----------------------
+"""
 __author__ = "Richard Smith"
 __date__ = "28 May 2021"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -8,36 +15,39 @@ __contact__ = "richard.d.smith@stfc.ac.uk"
 import importlib
 import logging
 
+# Package imports
+from typing import Any
+
 from pydantic import BaseModel, Field
 
-# Package imports
-from extraction_methods.core.extraction_method import (
-    ExtractionMethod,
-    update_input,
-)
+from extraction_methods.core.extraction_method import ExtractionMethod, update_input
 from extraction_methods.core.types import Input
 
 LOGGER = logging.getLogger(__name__)
 
 
-class Function(BaseModel):
-    """Function  model."""
+class Function(BaseModel):  # type: ignore[no-redef]
+    """
+    Model for Fuction.
+    """
 
     name: str = Field(
         description="Name of function.",
     )
-    args: list = Field(
+    args: list[Any] = Field(
         default=[],
         description="list of arguments for function.",
     )
-    kwargs: dict = Field(
+    kwargs: dict[str, Any] = Field(
         default={},
         description="dictionary of key word arguments for function.",
     )
 
 
 class GeneralFunctionInput(Input):
-    """General Function input model."""
+    """
+    Model for General Fuction Input.
+    """
 
     function: Function = Field(
         description="Function to be run name maybe seperatated my delimieter.",
@@ -46,7 +56,6 @@ class GeneralFunctionInput(Input):
         default=".",
         description="text delimiter to put between module/function names.",
     )
-
     output_key: str = Field(
         default="",
         description="key to output to, else response will be merged with body.",
@@ -55,42 +64,45 @@ class GeneralFunctionInput(Input):
 
 class GeneralFunctionExtract(ExtractionMethod):
     """
-    .. list-table::
-
-    Processor Name: ``general_function``
+    Method: ``general_function``
 
     Description:
         Accepts a dictionary. String values are popped from the dictionary and
         are put back into the dictionary with the ``key`` specified.
 
     Configuration Options:
-        - ``function``: ``REQUIRED`` name of function.
+    .. list-table::
+
+        - ``function``: ``REQUIRED`` Function to be run ``name``, ``args``, and ``kwargs``.
         - ``delimiter``: Optional text delimiter to put between module/function
                         names ``Default`` "."
         - ``output_key``: Optional name of the key you would like to output else
                           response will be merged.
-        - ``args``: Optional list of arguments for function.
-        - ``kwargs``: Optional dictionary of key word arguments for function.
 
     Example Configuration:
-        .. code-block:: yaml
-            - method: general_function
-            funtion: import.path.to.the.fuction
-            args:
+    .. code-block:: yaml
+
+        - method: general_function
+          inputs:
+            funtion:
+              name: import.path.to.the.fuction
+              args:
                 - hello
                 - world
-            kwargs:
+              kwargs:
                 hello: world
-                goodbye: all
+                foo: bar
     """
 
     input_class = GeneralFunctionInput
 
     @update_input
-    def run(self, body: dict) -> dict:
+    def run(self, body: dict[str, Any]) -> dict[str, Any]:
         output_body = body.copy()
 
-        module_name, function_name = self.input.function.name.rsplit(self.input.delimiter, 1)
+        module_name, function_name = self.input.function.name.rsplit(
+            self.input.delimiter, 1
+        )
 
         module = importlib.import_module(module_name)
 

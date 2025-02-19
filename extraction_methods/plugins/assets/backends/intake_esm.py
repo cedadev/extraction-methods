@@ -1,46 +1,9 @@
 # encoding: utf-8
 """
-Intake Input
------------------
+..  _intake-assets:
 
-Uses an `Intake catalog <https://intake.readthedocs.io/>`_
-as a source for file objects.
-
-**Plugin name:** ``intake_esm``
-
-.. list-table::
-    :header-rows: 1
-
-    * - Option
-      - Value Type
-      - Description
-    * - ``uri``
-      - ``string``
-      - ``REQUIRED`` The URI of a path or URL to an ESM collection JSON file.
-    * - ``href_term``
-      - ``string``
-      - ``REQUIRED`` The column header which contains the URI to
-        the file object.
-    * - ``catalog_kwargs``
-      - ``dict``
-      - Optional kwargs to pass to
-        `intake.open_esm_datastore
-        <https://intake-esm.readthedocs.io/en/latest
-        /api.html#intake_esm.core.esm_datastore>`_
-    * - ``search_kwargs``
-      - ``dict``
-      - Optional kwargs to pass to `esm_datastore.search
-        <https://intake-esm.readthedocs.io/en/latest
-        /api.html#intake_esm.core.esm_datastore.search>`_
-
-
-Example Configuration:
-    .. code-block:: yaml
-
-        inputs:
-            - method: intake_catalog
-              uri: test_directory
-
+Intake Assets Backend
+---------------------
 """
 __author__ = "Richard Smith"
 __date__ = "23 Sep 2021"
@@ -50,6 +13,7 @@ __contact__ = "richard.d.smith@stfc.ac.uk"
 
 # Python imports
 import logging
+from typing import Any, Iterator
 
 # Thirdparty imports
 import intake
@@ -62,7 +26,9 @@ LOGGER = logging.getLogger(__name__)
 
 
 class IntakeESMAssetsInput(Input):
-    """Intake backend input model."""
+    """
+    Model for IntakeESM Assets Backend Input.
+    """
 
     input_term: str = Field(
         default="$uri",
@@ -72,11 +38,11 @@ class IntakeESMAssetsInput(Input):
         default="path",
         description="term to use for href.",
     )
-    datastore_kwargs: dict = Field(
+    datastore_kwargs: dict[str, Any] = Field(
         default={},
         description="kwargs to open datastore.",
     )
-    search_kwargs: dict = Field(
+    search_kwargs: dict[str, Any] = Field(
         default={},
         description="kwargs for search.",
     )
@@ -84,14 +50,55 @@ class IntakeESMAssetsInput(Input):
 
 class IntakeESMAssets(Backend):
     """
-    Performs Search on intake catalog to provide a stream of assets for procesing.
+    Method: ``intake_assets``
+
+    Description:
+        Performs Search on intake catalog to provide a stream of assets for procesing.
+        Uses an `Intake catalog <https://intake.readthedocs.io/>`_
+        as a source for file objects.
+
+    Configuration Options:
+    .. list-table::
+        :header-rows: 1
+
+        * - Option
+        - Type
+        - Description
+        * - ``input_term``
+        - ``string``
+        - The URI of a path or URL to an ESM collection JSON file. ``DEFAULT``: ``$uri``
+        * - ``href_term``
+        - ``string``
+        - The column header which contains the URI to
+            the file object. ``DEFAULT``: ``path``
+        * - ``catalog_kwargs``
+        - ``dict``
+        - Optional kwargs to pass to
+            `intake.open_esm_datastore
+            <https://intake-esm.readthedocs.io/en/latest
+            /api.html#intake_esm.core.esm_datastore>`_
+        * - ``search_kwargs``
+        - ``dict``
+        - Optional kwargs to pass to `esm_datastore.search
+            <https://intake-esm.readthedocs.io/en/latest
+            /api.html#intake_esm.core.esm_datastore.search>`_
+
+    Example Configuration:
+    .. code-block:: yaml
+
+        - method: intake_esm
+          inputs:
+            href_term: url
     """
 
     input_class = IntakeESMAssetsInput
 
     @update_input
-    def run(self, body: dict):
-        catalog = intake.open_esm_datastore(self.input.input_term, **self.input.datastore_kwargs)
+    def run(self, body: dict[str, Any]) -> Iterator[dict[str, Any]]:
+
+        catalog = intake.open_esm_datastore(
+            self.input.input_term, **self.input.datastore_kwargs
+        )
 
         if search_kwargs := self.input.search_kwargs:
             catalog = catalog.search(**search_kwargs)

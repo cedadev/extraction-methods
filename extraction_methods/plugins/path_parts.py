@@ -1,9 +1,9 @@
 # encoding: utf-8
 """
-..  _path_parts:
+..  _path-parts:
 
-Path Parts
-------
+Path Parts Method
+-----------------
 """
 __author__ = "Richard Smith"
 __date__ = "27 May 2021"
@@ -15,20 +15,20 @@ __contact__ = "richard.d.smith@stfc.ac.uk"
 # Python imports
 import logging
 from pathlib import Path
+from typing import Any
 
 from pydantic import Field
 
-from extraction_methods.core.extraction_method import (
-    ExtractionMethod,
-    update_input,
-)
+from extraction_methods.core.extraction_method import ExtractionMethod, update_input
 from extraction_methods.core.types import Input
 
 LOGGER = logging.getLogger(__name__)
 
 
 class PathPartsInput(Input):
-    """path parts input model."""
+    """
+    Model for Path Parts Input.
+    """
 
     path: str = Field(
         default="$uri",
@@ -42,34 +42,31 @@ class PathPartsInput(Input):
 
 class PathPartsExtract(ExtractionMethod):
     """
-
-    .. list-table::
-
-        * - Processor Name
-          - ``path_parts``
+    Method: ``path_parts``
 
     Description:
         Extracts the parts of a given path skipping ``skip`` number
         of top level parts.
 
     Configuration Options:
+    .. list-table::
+
         - ``skip``: The number of path parts to skip. ``default: 0``
 
-
     Example configuration:
-        .. code-block:: yaml
+    .. code-block:: yaml
 
-            - method: path_parts
-              inputs:
-                input_term: $uri
-                skip: 2
-
+        - method: path_parts
+          inputs:
+            input_term: $uri
+            skip: 2
     """
 
     input_class = PathPartsInput
 
     @update_input
-    def run(self, body: dict) -> list:
+    def run(self, body: dict[str, Any]) -> dict[str, Any]:
+
         path = Path(self.input.path)
 
         parts = list(path.parts)[self.input.skip :]

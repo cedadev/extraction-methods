@@ -1,3 +1,10 @@
+# encoding: utf-8
+"""
+..  _facet-map:
+
+Facet Map Method
+----------------
+"""
 __author__ = "Richard Smith"
 __date__ = "28 May 2021"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -7,22 +14,23 @@ __contact__ = "richard.d.smith@stfc.ac.uk"
 
 import logging
 
+# Package imports
+from typing import Any
+
 from pydantic import Field
 
-# Package imports
-from extraction_methods.core.extraction_method import (
-    ExtractionMethod,
-    update_input,
-)
+from extraction_methods.core.extraction_method import ExtractionMethod, update_input
 from extraction_methods.core.types import Input
 
 LOGGER = logging.getLogger(__name__)
 
 
 class FacetMapInput(Input):
-    """Facet Map input model."""
+    """
+    Model for Facet Map Input.
+    """
 
-    term_map: dict = Field(
+    term_map: dict[str, str] = Field(
         default={},
         description="Dictionary of terms to be mapped.",
     )
@@ -30,9 +38,7 @@ class FacetMapInput(Input):
 
 class FacetMapExtract(ExtractionMethod):
     """
-    .. list-table::
-
-    Processor Name: ``facet_map``
+    Method: ``facet_map``
 
     Description:
         In some cases, you may wish to map the header attributes to different
@@ -40,21 +46,25 @@ class FacetMapExtract(ExtractionMethod):
         specified.
 
     Configuration Options:
+    .. list-table::
+
         - ``term_map``: Dictionary of terms to map.
 
     Example Configuration:
-        .. code-block:: yaml
-            - method: facet_map
-              inputs:
-                term_map:
-                  old_key: new_key
-                  time_coverage_start: start_time
+    .. code-block:: yaml
+
+        - method: facet_map
+          inputs:
+            term_map:
+                old_key: new_key
+                time_coverage_start: start_time
     """
 
     input_class = FacetMapInput
 
     @update_input
-    def run(self, body: dict) -> dict:
+    def run(self, body: dict[str, Any]) -> dict[str, Any]:
+
         for old_key, new_key in self.input.term_map:
             try:
                 value = body.pop(old_key)
