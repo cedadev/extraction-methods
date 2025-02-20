@@ -1,8 +1,8 @@
 Extraction Methods
 ==============
 
-.. image:: https://github.com/cedadev/extraction-methods/actions/workflows/sphinx.yaml/badge.svg
-    :target: https://github.com/cedadev/extraction-methods/actions/workflows/sphinx.yaml
+.. image:: https://github.com/cedadev/extraction-methods/actions/workflows/sphinx.yml/badge.svg
+    :target: https://github.com/cedadev/extraction-methods/actions/workflows/sphinx.yml
     :alt: Documentation
 
 .. image:: https://img.shields.io/pypi/v/extraction-methods.svg
