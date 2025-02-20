@@ -55,9 +55,9 @@ class AssetExtract(SetEntryPointsMixin, ExtractionMethod):
     Configuration Options:
     .. list-table::
 
-        - ``backend``: Backend name and inputs.
-        - ``extraction_methods``: Extraction methods to run on assets.
-        - ``output_key``: key to output to.
+        - ``backend``: Backend name and inputs
+        - ``extraction_methods``: Extraction methods to run on assets
+        - ``output_key``: key to output to
 
     Configuration Example:
     .. code-block:: yaml

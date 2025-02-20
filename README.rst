@@ -1,16 +1,16 @@
 Extraction Methods
 ==============
 
-.. image:: https://readthedocs.org/projects/sphinx-autoapi/badge/?version=latest
-    :target: https://cedadev.github.io/extraction-methods/
+.. image:: https://github.com/cedadev/extraction-methods/actions/workflows/sphinx.yaml/badge.svg
+    :target: https://github.com/cedadev/extraction-methods/actions/workflows/sphinx.yaml
     :alt: Documentation
 
-.. image:: https://img.shields.io/pypi/v/sphinx-autoapi.svg
-    :target: https://pypi.org/project/extraction-methods/
+.. image:: https://img.shields.io/pypi/v/extraction-methods.svg
+    :target: https://pypi.org/p/extraction-methods/
     :alt: PyPI Version
 
-.. image:: https://img.shields.io/pypi/pyversions/sphinx-autoapi.svg
-    :target: https://pypi.org/project/extraction-methods/
+.. image:: https://img.shields.io/pypi/pyversions/extraction-methods.svg
+    :target: https://pypi.org/p/extraction-methods/
     :alt: Supported Python Versions
 
 .. image:: https://img.shields.io/badge/code%20style-ruff-000000.svg
