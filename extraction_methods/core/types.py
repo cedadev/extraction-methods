@@ -14,7 +14,7 @@ __contact__ = "rhys.r.evans@stfc.ac.uk"
 from typing import Any
 
 from pydantic import BaseModel, Extra, Field, model_validator
-from typing_extension import Self
+from typing_extensions import Self
 
 
 class KeyOutputKey(BaseModel):
