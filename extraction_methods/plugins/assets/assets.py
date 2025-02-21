@@ -65,7 +65,7 @@ class AssetExtract(SetEntryPointsMixin, ExtractionMethod):
         - method: assets
           inputs:
             backend:
-              name elasticsearch
+              name: elasticsearch
               inputs:
                 connection_kwargs:
                   hosts: ['host1:9200','host2:9200']

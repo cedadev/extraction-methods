@@ -1,5 +1,5 @@
 Extraction Methods
-==============
+==================
 
 .. image:: https://github.com/cedadev/extraction-methods/actions/workflows/sphinx.yml/badge.svg
     :target: https://github.com/cedadev/extraction-methods/actions/workflows/sphinx.yml

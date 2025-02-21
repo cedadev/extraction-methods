@@ -65,36 +65,16 @@ class ElasticsearchAssets(Backend):
 
     Configuration Options:
     .. list-table::
-        :header-rows: 1
 
-        * - Option
-        - Type
-        - Description
-        * - ``index``
-        - str
-        - Name of the index holding the STAC entities
-        * - ``id_term``
-        - str
-        - Term used for agregating the STAC entities
-        * - ``connection_kwargs``
-        - dict
-        - Connection parameters passed to
-        `elasticsearch.Elasticsearch<https://elasticsearch-py.readthedocs.io/en/7.10.0/api.html>`_
-        * - ``bbox``
-        - list
-        - list of terms for which their aggregate bbox should be returned.
-        * - ``min``
-        - list
-        - list of terms for which the minimum of their aggregate should be returned.
-        * - ``max``
-        - list
-        - list of terms for which the maximum of their aggregate should be returned.
-        * - ``sum``
-        - list
-        - list of terms for which the sum of their aggregate should be returned.
-        * - ``list``
-        - list
-        - list of terms for which a list of their aggregage should be returned.
+        - ``index``: Name of the index holding the STAC entities
+        - ``id_term``: Term used for agregating the STAC entities
+        - ``connection_kwargs``: Connection parameters passed to
+          `elasticsearch.Elasticsearch<https://elasticsearch-py.readthedocs.io/en/7.10.0/api.html>`_
+        - ``bbox``: list of terms for which their aggregate bbox should be returned.
+        - ``min``: list of terms for which the minimum of their aggregate should be returned.
+        - ``max``: list of terms for which the maximum of their aggregate should be returned.
+        - ``sum``: list of terms for which the sum of their aggregate should be returned.
+        - ``list``: list of terms for which a list of their aggregage should be returned.
 
     Configuration Example:
     .. code-block:: yaml

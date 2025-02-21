@@ -12,8 +12,9 @@ ESGF Playground Utils documentation
    :maxdepth: 1
    :caption: Contents:
 
+   core
+   plugins
    security
    contributing
    license
    changelog
-

@@ -19,11 +19,16 @@ release = "1.0.0"
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
-    "autoapi.extension",
-    "sphinx-pydantic",
     "sphinx_rtd_theme",
+    "sphinx.ext.autodoc",
+    "sphinx.ext.autosummary",
+    "sphinx.ext.githubpages",
+    "sphinx.ext.autosectionlabel",
+    "sphinx-pydantic",
     "sphinx_mdinclude",
 ]
+
+autosectionlabel_prefix_document = True
 
 templates_path = ["_templates"]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
@@ -35,6 +40,8 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 html_theme = "sphinx_rtd_theme"
 html_static_path = ["_static"]
 
-# Autoapi Configuration
-autoapi_dirs = ["../extraction_methods"]
-master_doc = "index"
+html_favicon = "_static/favicon.ico"
+html_logo = (
+    "https://artefacts.ceda.ac.uk/themes/orgtheme_ceda_div"
+    "/0.3.2/_assets/img/ceda_logo_transp_white_h80.png"
+)
