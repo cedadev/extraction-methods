@@ -1,5 +1,7 @@
 Plugins
 =======
 
-.. automodule:: extraction_methods.plugins
-  :members:
+.. toctree::
+   :maxdepth: 3
+
+   extraction_methods.plugins

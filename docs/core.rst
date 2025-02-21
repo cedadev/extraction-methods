@@ -1,5 +1,7 @@
 Core Models
 ===========
 
-.. automodule:: extraction_methods.core
-  :members:
+.. toctree::
+   :maxdepth: 1
+
+   extraction_methods.core
