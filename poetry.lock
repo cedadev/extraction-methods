@@ -227,22 +227,6 @@ files = [
 ]
 
 [[package]]
-name = "astroid"
-version = "3.3.8"
-description = "An abstract syntax tree for Python with inference support."
-optional = false
-python-versions = ">=3.9.0"
-groups = ["docs"]
-markers = "python_version <= \"3.11\" or python_version >= \"3.12\""
-files = [
-    {file = "astroid-3.3.8-py3-none-any.whl", hash = "sha256:187ccc0c248bfbba564826c26f070494f7bc964fd286b6d9fff4420e55de828c"},
-    {file = "astroid-3.3.8.tar.gz", hash = "sha256:a88c7994f914a4ea8572fac479459f4955eeccc877be3f2d959a33273b0cf40b"},
-]
-
-[package.dependencies]
-typing-extensions = {version = ">=4.0.0", markers = "python_version < \"3.11\""}
-
-[[package]]
 name = "async-timeout"
 version = "4.0.3"
 description = "Timeout context manager for asyncio programs"
@@ -3555,28 +3539,6 @@ lint = ["flake8 (>=6.0)", "importlib-metadata (>=6.0)", "mypy (==1.10.1)", "pyte
 test = ["cython (>=3.0)", "defusedxml (>=0.7.1)", "pytest (>=8.0)", "setuptools (>=70.0)", "typing_extensions (>=4.9)"]
 
 [[package]]
-name = "sphinx-autoapi"
-version = "3.5.0"
-description = "Sphinx API documentation generator"
-optional = false
-python-versions = ">=3.8"
-groups = ["docs"]
-markers = "python_version <= \"3.11\" or python_version >= \"3.12\""
-files = [
-    {file = "sphinx_autoapi-3.5.0-py3-none-any.whl", hash = "sha256:8676db32dded669dc6be9100696652640dc1e883e45b74710d74eb547a310114"},
-    {file = "sphinx_autoapi-3.5.0.tar.gz", hash = "sha256:10dcdf86e078ae1fb144f653341794459e86f5b23cf3e786a735def71f564089"},
-]
-
-[package.dependencies]
-astroid = [
-    {version = ">=2.7", markers = "python_version < \"3.12\""},
-    {version = ">=3", markers = "python_version >= \"3.12\""},
-]
-Jinja2 = "*"
-PyYAML = "*"
-sphinx = ">=6.1.0"
-
-[[package]]
 name = "sphinx-jsonschema"
 version = "1.19.1"
 description = "Sphinx extension to display JSON Schema"
@@ -4209,4 +4171,4 @@ intake-esm = ["intake-esm"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.10, <4"
-content-hash = "7875ff84166cd72bb66f18713e5eea2be589eb53dcaf2ab59769e9bf206fe0bb"
+content-hash = "e5b15b422bb5306ac52d03df2e0141f04a1b2c5a590cfe616dcd755ea1cd66a5"
