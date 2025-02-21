@@ -55,9 +55,9 @@ class AssetExtract(SetEntryPointsMixin, ExtractionMethod):
     Configuration Options:
     .. list-table::
 
-        - ``backend``: Backend name and inputs.
-        - ``extraction_methods``: Extraction methods to run on assets.
-        - ``output_key``: key to output to.
+        - ``backend``: Backend name and inputs
+        - ``extraction_methods``: Extraction methods to run on assets
+        - ``output_key``: key to output to
 
     Configuration Example:
     .. code-block:: yaml
@@ -65,7 +65,7 @@ class AssetExtract(SetEntryPointsMixin, ExtractionMethod):
         - method: assets
           inputs:
             backend:
-              name elasticsearch
+              name: elasticsearch
               inputs:
                 connection_kwargs:
                   hosts: ['host1:9200','host2:9200']

@@ -59,29 +59,17 @@ class IntakeESMAssets(Backend):
 
     Configuration Options:
     .. list-table::
-        :header-rows: 1
 
-        * - Option
-        - Type
-        - Description
-        * - ``input_term``
-        - ``string``
-        - The URI of a path or URL to an ESM collection JSON file. ``DEFAULT``: ``$uri``
-        * - ``href_term``
-        - ``string``
-        - The column header which contains the URI to
-            the file object. ``DEFAULT``: ``path``
-        * - ``catalog_kwargs``
-        - ``dict``
-        - Optional kwargs to pass to
-            `intake.open_esm_datastore
-            <https://intake-esm.readthedocs.io/en/latest
-            /api.html#intake_esm.core.esm_datastore>`_
-        * - ``search_kwargs``
-        - ``dict``
-        - Optional kwargs to pass to `esm_datastore.search
-            <https://intake-esm.readthedocs.io/en/latest
-            /api.html#intake_esm.core.esm_datastore.search>`_
+        - ``input_term``: The URI of a path or URL to an ESM collection JSON
+          file. ``DEFAULT``: ``$uri``
+        - ``href_term``: The column header which contains the URI to the file
+          object. ``DEFAULT``: ``path``
+        - ``catalog_kwargs``: Optional kwargs to pass to `intake.open_esm_datastore
+          <https://intake-esm.readthedocs.io/en/latest
+          /api.html#intake_esm.core.esm_datastore>`_
+        - ``search_kwargs``: Optional kwargs to pass to `esm_datastore.search
+          <https://intake-esm.readthedocs.io/en/latest
+          /api.html#intake_esm.core.esm_datastore.search>`_
 
     Example Configuration:
     .. code-block:: yaml

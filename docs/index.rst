@@ -6,14 +6,15 @@
 ESGF Playground Utils documentation
 ===================================
 
-.. mdinclude:: ../README.md
+.. include:: ../README.rst
 
 .. toctree::
    :maxdepth: 1
    :caption: Contents:
 
+   core
+   plugins
    security
    contributing
    license
    changelog
-
