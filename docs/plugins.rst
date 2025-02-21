@@ -1,5 +1,5 @@
-Core Models
-===========
+Plugins
+=======
 
-.. automodule:: extraction_methods.core
+.. automodule:: extraction_methods.plugins
   :members:
