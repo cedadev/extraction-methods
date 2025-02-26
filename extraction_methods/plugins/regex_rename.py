@@ -47,7 +47,7 @@ class RegexRenameInput(Input):
     regex_swaps: list[RegexOutputKey] = Field(
         description="Regex and output key combinations.",
     )
-    nest_delimiter: str = Field(
+    delimiter: str = Field(
         default="",
         description="delimiter for nested term.",
     )
@@ -128,12 +128,12 @@ class RegexRenameExtract(ExtractionMethod):
     def run(self, body: dict[str, Any]) -> dict[str, Any]:
 
         for swap in self.input.regex_swaps:
-            nest = (
+            key_parts = (
                 swap.regex.split(self.input.delimiter)
                 if self.input.delimiter
                 else [swap.regex]
             )
 
-            body = self.rename(body, nest, swap.output_key)
+            body = self.rename(body, key_parts, swap.output_key)
 
         return body
