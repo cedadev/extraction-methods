@@ -12,7 +12,6 @@ __license__ = "BSD - see LICENSE file in top-level package directory"
 __contact__ = "richard.d.smith@stfc.ac.uk"
 
 
-import ast
 import logging
 from typing import Any
 
@@ -86,7 +85,7 @@ class LambdaExtract(ExtractionMethod):
 
         output_body = body.copy()
 
-        function = ast.literal_eval(self.input.function)
+        function = eval(self.input.function)  # nosec B307
 
         result = function(*self.input.args, **self.input.kwargs)
 
