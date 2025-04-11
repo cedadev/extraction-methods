@@ -108,10 +108,10 @@ class GeneralFunctionExtract(ExtractionMethod):
 
         function = getattr(module, function_name)
 
-        result = function(*self.input.args, **self.input.kwargs)
+        result = function(*self.input.function.args, **self.input.function.kwargs)
 
         if self.input.output_key:
-            output_body[self.input.output_term] = result
+            output_body[self.input.output_key] = result
 
         elif isinstance(result, dict):
             output_body |= result

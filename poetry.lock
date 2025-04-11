@@ -1655,15 +1655,15 @@ colors = ["colorama (>=0.4.6)"]
 
 [[package]]
 name = "jinja2"
-version = "3.1.3"
+version = "3.1.6"
 description = "A very fast and expressive template engine."
 optional = false
 python-versions = ">=3.7"
 groups = ["main", "docs"]
 markers = "python_version <= \"3.11\" or python_version >= \"3.12\""
 files = [
-    {file = "Jinja2-3.1.3-py3-none-any.whl", hash = "sha256:7d6d50dd97d52cbc355597bd845fabfbac3f551e1f99619e39a35ce8c370b5fa"},
-    {file = "Jinja2-3.1.3.tar.gz", hash = "sha256:ac8bd6544d4bb2c9792bf3a159e80bba8fda7f07e81bc3aed565432d5925ba90"},
+    {file = "jinja2-3.1.6-py3-none-any.whl", hash = "sha256:85ece4451f492d0c13c5dd7c13a64681a86afae63a5f347908daf103ce6d2f67"},
+    {file = "jinja2-3.1.6.tar.gz", hash = "sha256:0137fb05990d35f1275a587e9aee6d56da821fc83491a0fb838183be43f66d6d"},
 ]
 
 [package.dependencies]
@@ -4501,9 +4501,8 @@ type = ["pytest-mypy"]
 
 [extras]
 docs = ["sphinx", "sphinx-rtd-theme", "sphinxcontrib-programoutput"]
-intake-esm = ["intake-esm"]
 
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.10, <4"
-content-hash = "6ccc14d2cbf197ece54351fd8bf7a21ce8607f0aec726e5be37e6aed1c9bc90b"
+content-hash = "c40fd2da5ce70e57ad1786e7be683a82f4adf007cd43f6644b413b8016868142"
