@@ -111,7 +111,7 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.group.black.dependencies]
-black = "^24.4.2"
+black = "^25.9.0"
 pre-commit = "^3.7.1"
 
 [tool.poetry.group.mypy.dependencies]
