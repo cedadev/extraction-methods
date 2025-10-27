@@ -18,3 +18,4 @@ Extraction Methods documentation
    contributing
    license
    changelog
+   modules

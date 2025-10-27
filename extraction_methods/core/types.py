@@ -77,9 +77,7 @@ class DummyInput(Input, extra=Extra.allow):
 
         return value
 
-    def update_dict_attr(
-        self, input_dict: dict[str, Any], body: dict[str, Any]
-    ) -> dict[str, Any]:
+    def update_dict_attr(self, input_dict: dict[str, Any], body: dict[str, Any]) -> dict[str, Any]:
         """
         Update nested dictionary attributes.
 
@@ -96,9 +94,7 @@ class DummyInput(Input, extra=Extra.allow):
 
         return input_dict
 
-    def update_list_attr(
-        self, input_list: list[Any], body: dict[str, Any]
-    ) -> list[Any]:
+    def update_list_attr(self, input_list: list[Any], body: dict[str, Any]) -> list[Any]:
         """
         Update list of attributes.
 
@@ -122,7 +118,7 @@ class DummyInput(Input, extra=Extra.allow):
         :param body: current generated properties
         :type body: dict
         """
-        for key, value in self.dict(exclude={"exists_key"}).items():
+        for key, value in self.model_dump(exclude={"exists_key"}).items():
             setattr(self, key, self.update_attr(value, body))
 
 

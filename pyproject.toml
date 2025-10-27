@@ -56,6 +56,8 @@ Homepage = "https://github.com/cedadev/extraction-methods"
 docs = [
     "sphinx",
     "sphinx-rtd-theme",
+    "sphinx-pydantic",
+    "sphinx_mdinclude",
     "sphinxcontrib-programoutput",
 ]
 intake-esm = ["intake-esm"]
@@ -65,6 +67,7 @@ assets = "extraction_methods.plugins.assets.assets:AssetExtract"
 bbox = "extraction_methods.plugins.bbox:BboxExtract"
 ceda_observation = "extraction_methods.plugins.ceda_observation:CEDAObservationExtract"
 ceda_vocabulary = "extraction_methods.plugins.ceda_vocabulary:CEDAVocabularyExtract"
+conditional = "extraction_methods.plugins.conditional:ConditionalExtract"
 controlled_vocabulary = "extraction_methods.plugins.controlled_vocabulary:ControlledVocabularyExtract"
 datetime_bound_to_centroid = "extraction_methods.plugins.datetime_bound_to_centroid:DatetimeBoundToCentroidExtract"
 default = "extraction_methods.plugins.default:DefaultExtract"
