@@ -85,7 +85,7 @@ class ConditionalExtract(ExtractionMethod):
 
             conditional += term
 
-        extraction_methods = self.input.true_methods if conditional else self.input.false_methods
+        extraction_methods = self.input.true_methods if eval(conditional) else self.input.false_methods
 
         for extraction_method in extraction_methods:
             body = extraction_method._run(body)
