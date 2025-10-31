@@ -19,7 +19,7 @@ from elasticsearch import Elasticsearch as Elasticsearch_client
 from pydantic import Field
 
 from extraction_methods.core.extraction_method import Backend, update_input
-from extraction_methods.core.types import Input, KeyOutputKey
+from extraction_methods.core.types import Input
 
 LOGGER = logging.getLogger(__name__)
 
@@ -107,7 +107,11 @@ class ElasticsearchAssets(Backend):
         }
 
         # Run search
-        result = es.search(index=self.input.index, body=es_body, timeout=f"{self.input.request_timeout}s")
+        result = es.search(
+            index=self.input.index,
+            body=es_body,
+            timeout=f"{self.input.request_timeout}s",
+        )
 
         for hit in result["hits"]["hits"]:
             source = hit["_source"]

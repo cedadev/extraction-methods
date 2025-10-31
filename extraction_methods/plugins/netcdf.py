@@ -15,7 +15,6 @@ __contact__ = "richard.d.smith@stfc.ac.uk"
 import logging
 from typing import Any
 
-import cf_xarray
 import xarray
 from pydantic import Field
 

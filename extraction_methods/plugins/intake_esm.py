@@ -13,7 +13,7 @@ __contact__ = "richard.d.smith@stfc.ac.uk"
 
 # Python imports
 import logging
-from typing import Any, Iterator
+from typing import Any
 
 # Thirdparty imports
 import intake
@@ -84,9 +84,13 @@ class IntakeESMExtract(ExtractionMethod):
     @update_input
     def run(self, body: dict[str, Any]) -> dict[str, Any]:
 
-        catalog = intake.open_esm_datastore(self.input.input_term, **self.input.datastore_kwargs)
+        catalog = intake.open_esm_datastore(
+            self.input.input_term, **self.input.datastore_kwargs
+        )
 
         if search_kwargs := self.input.search_kwargs:
             catalog = catalog.search(**search_kwargs)
 
         body[self.input.output_key] = catalog.df.items()
+
+        return body

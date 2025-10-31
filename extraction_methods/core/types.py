@@ -77,7 +77,9 @@ class DummyInput(Input, extra="allow"):
 
         return value
 
-    def update_dict_attr(self, input_dict: dict[str, Any], body: dict[str, Any]) -> dict[str, Any]:
+    def update_dict_attr(
+        self, input_dict: dict[str, Any], body: dict[str, Any]
+    ) -> dict[str, Any]:
         """
         Update nested dictionary attributes.
 
@@ -94,7 +96,9 @@ class DummyInput(Input, extra="allow"):
 
         return input_dict
 
-    def update_list_attr(self, input_list: list[Any], body: dict[str, Any]) -> list[Any]:
+    def update_list_attr(
+        self, input_list: list[Any], body: dict[str, Any]
+    ) -> list[Any]:
         """
         Update list of attributes.
 

@@ -92,7 +92,9 @@ class ElasticsearchSearchExtract(ExtractionMethod):
         es = Elasticsearch_client(**self.input.client_kwargs)
 
         # Run search
-        result = es.search(index=self.input.index, body=self.input.body, **self.input.search_kwargs)
+        result = es.search(
+            index=self.input.index, body=self.input.body, **self.input.search_kwargs
+        )
 
         body[self.input.output_key] = result["hits"]["hits"]
 

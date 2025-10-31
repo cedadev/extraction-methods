@@ -110,7 +110,9 @@ class NcMLHeader(ExtractionMethod):
         """Return NcML file description using `ncdump` utility."""
 
         cmd = ["ncdump", "-hx", self.input.input_term]
-        proc = subprocess.Popen(cmd, stderr=subprocess.PIPE, stdout=subprocess.PIPE)  # nosec B603
+        proc = subprocess.Popen(
+            cmd, stderr=subprocess.PIPE, stdout=subprocess.PIPE
+        )  # nosec B603
         if proc.stdout:
             return proc.stdout.read()
         else:
@@ -120,7 +122,9 @@ class NcMLHeader(ExtractionMethod):
     def run(self, body: dict[str, Any]) -> dict[str, Any]:
         # Convert response to an XML etree.Element
         content = self.get_ncml()
-        elemement = fromstring(content, parser=XMLParser(encoding="UTF-8"))  # nosec B320
+        elemement = fromstring(
+            content, parser=XMLParser(encoding="UTF-8")
+        )  # nosec B320
 
         for attribute in self.input.attributes:
 

@@ -93,7 +93,11 @@ class ConditionalExtract(ExtractionMethod):
 
             condition += f" {term}"
 
-        extraction_methods = self.input.true_methods if bool(eval(condition)) else self.input.false_methods
+        extraction_methods = (
+            self.input.true_methods
+            if bool(eval(condition))  # nosec B307
+            else self.input.false_methods
+        )
 
         for extraction_method in extraction_methods:
             body = extraction_method._run(body)

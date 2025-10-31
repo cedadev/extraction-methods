@@ -41,4 +41,7 @@ html_theme = "sphinx_rtd_theme"
 html_static_path = ["_static"]
 
 html_favicon = "_static/favicon.ico"
-html_logo = "https://artefacts.ceda.ac.uk/themes/orgtheme_ceda_div" "/0.3.2/_assets/img/ceda_logo_transp_white_h80.png"
+html_logo = (
+    "https://artefacts.ceda.ac.uk/themes/orgtheme_ceda_div"
+    "/0.3.2/_assets/img/ceda_logo_transp_white_h80.png"
+)
