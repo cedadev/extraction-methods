@@ -34,7 +34,7 @@ repos:
         types: [ file, python ]
       - id: mypy
         name: mypy
-        entry: poetry run mypy --no-namespace-packages
+        entry: poetry run mypy --no-namespace-packages --install-types
         language: system
         types: [ file, python ]
       - id: docs
