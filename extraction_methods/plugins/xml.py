@@ -12,6 +12,7 @@ __license__ = "BSD - see LICENSE file in top-level package directory"
 __contact__ = "richard.d.smith@stfc.ac.uk"
 
 import logging
+import os.path
 
 # Python imports
 from collections import defaultdict
@@ -19,7 +20,7 @@ from collections import defaultdict
 # Package imports
 from typing import Any
 
-from lxml.etree import ElementTree  # nosec B410
+from lxml import etree  # nosec B410
 from pydantic import Field
 
 from extraction_methods.core.extraction_method import ExtractionMethod
@@ -114,13 +115,14 @@ class XMLExtract(ExtractionMethod):
 
         # Extract the keys
         try:
-            if isinstance(self.input.input_term, str):
-                xml_file = ElementTree.parse(self.input.input_term)
+
+            if os.path.isfile(self.input.input_term):
+                xml_file = etree.parse(self.input.input_term)
 
             else:
-                xml_file = ElementTree.XML(self.input.input_term)
+                xml_file = etree.XML(self.input.input_term.encode("ascii", "ignore"))
 
-        except (ElementTree.ParseError, FileNotFoundError, TypeError):
+        except (etree.ParseError, FileNotFoundError, TypeError):
             return body
 
         output: dict[str, list[str]] = defaultdict(list)

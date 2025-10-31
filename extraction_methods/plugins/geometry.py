@@ -40,7 +40,7 @@ class GeometryInput(Input):
     ] = Field(
         description="Type of geometry to be produced.",
     )
-    coordinates: list[str | float] = Field(
+    coordinates: list[Any] = Field(
         description="list of coordinates to convert to geometry. Ordering is respected.",
     )
     output_key: str = Field(

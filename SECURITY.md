@@ -6,7 +6,7 @@ No version is currently supported as this package is for experimentation.
 
 | Version | Supported             |
 |---------|-----------------------|
-| 1.0.0   | In development        |
+| 1.0.2   | In development        |
 
 ## Reporting a Vulnerability
 
