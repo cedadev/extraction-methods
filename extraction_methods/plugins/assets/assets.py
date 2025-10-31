@@ -19,6 +19,7 @@ from pydantic import Field
 
 from extraction_methods.core.extraction_method import (
     ExtractionMethod,
+    ExtractionMethodConf,
     SetEntryPointsMixin,
     update_input,
 )
@@ -35,13 +36,17 @@ class AssetInput(Input):
     backend: Backend = Field(
         description="Backend and inputs to run.",
     )
-    extraction_methods: list[Any] = Field(
+    extraction_methods: list[ExtractionMethodConf] = Field(
         default=[],
         description="Extraction methods to run on assets.",
     )
     output_key: str = Field(
         default="assets",
         description="term for method to output to.",
+    )
+    href_term: str = Field(
+        default="path",
+        description="term to use for href.",
     )
 
 

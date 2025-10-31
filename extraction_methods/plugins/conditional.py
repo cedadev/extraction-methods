@@ -2,8 +2,8 @@
 """
 ..  _conditional:
 
-STAC Conditional Extraction
----------------------------
+Conditional Extraction
+----------------------
 """
 __author__ = "Rhys Evans"
 __date__ = "27 Oct 2025"
@@ -17,7 +17,11 @@ from typing import Any
 # Third party imports
 from pydantic import Field
 
-from extraction_methods.core.extraction_method import ExtractionMethod, update_input
+from extraction_methods.core.extraction_method import (
+    ExtractionMethod,
+    ExtractionMethodConf,
+    update_input,
+)
 from extraction_methods.core.types import Input
 
 LOGGER = logging.getLogger(__name__)
@@ -31,11 +35,11 @@ class ConditionalInput(Input):
     condition: str = Field(
         description="Condition to decide on which methods are run.",
     )
-    true_methods: list[dict] = Field(
+    true_methods: list[ExtractionMethodConf] = Field(
         default=[],
         description="Extraction methods to run if contition is true.",
     )
-    false_methods: list[dict] = Field(
+    false_methods: list[ExtractionMethodConf] = Field(
         default=[],
         description="Extraction methods to run if contition is false.",
     )
@@ -46,7 +50,7 @@ class ConditionalExtract(ExtractionMethod):
     Method: ``conditional``
 
     Description:
-        Method to run extraction methods given a condition.
+        Method to run set of extraction methods given a condition.
 
     Configuration Options:
     .. list-table::
@@ -78,14 +82,18 @@ class ConditionalExtract(ExtractionMethod):
     @update_input
     def run(self, body: dict[str, Any]) -> dict[str, Any]:
 
-        conditional = ""
-        for term in self.input.conditional.split(" "):
+        condition = ""
+        for term in self.input.condition.split(" "):
+
             if term[0] == self.input.exists_key:
-                term = body[term[1:]]
+                term = body.get(term[1:], term)
 
-            conditional += term
+                if isinstance(term, str):
+                    term = f"'{term}'"
 
-        extraction_methods = self.input.true_methods if eval(conditional) else self.input.false_methods
+            condition += f" {term}"
+
+        extraction_methods = self.input.true_methods if bool(eval(condition)) else self.input.false_methods
 
         for extraction_method in extraction_methods:
             body = extraction_method._run(body)

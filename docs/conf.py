@@ -13,7 +13,7 @@ sys.path.insert(0, os.path.abspath(".."))
 project = "Extraction Methods"
 copyright = "2025, Rhys Evans"
 author = "Rhys Evans"
-release = "1.0.0"
+release = "1.1.0"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -41,7 +41,4 @@ html_theme = "sphinx_rtd_theme"
 html_static_path = ["_static"]
 
 html_favicon = "_static/favicon.ico"
-html_logo = (
-    "https://artefacts.ceda.ac.uk/themes/orgtheme_ceda_div"
-    "/0.3.2/_assets/img/ceda_logo_transp_white_h80.png"
-)
+html_logo = "https://artefacts.ceda.ac.uk/themes/orgtheme_ceda_div" "/0.3.2/_assets/img/ceda_logo_transp_white_h80.png"

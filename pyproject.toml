@@ -1,6 +1,6 @@
 [project]
 name = "extraction-methods"
-version = "1.0.0"
+version = "1.1.0"
 description = "Methods to enable the extraction of metadata"
 authors = [
     {"name" = "rhysrevans3", "email" = "<rhys.r.evans3@gmail.com>"},
@@ -73,6 +73,7 @@ datetime_bound_to_centroid = "extraction_methods.plugins.datetime_bound_to_centr
 default = "extraction_methods.plugins.default:DefaultExtract"
 dict_aggregator = "extraction_methods.plugins.dict_aggregator:DictAggregatorExtract"
 elasticsearch_aggregation = "extraction_methods.plugins.elasticsearch_aggregation:ElasticsearchAggregationExtract"
+elasticsearch_search = "extraction_methods.plugins.elasticsearch_search:ElasticsearchSearchExtract"
 facet_map = "extraction_methods.plugins.facet_map:FacetMapExtract"
 facet_prefix = "extraction_methods.plugins.facet_prefix:FacetPrefixExtract"
 general_function = "extraction_methods.plugins.general_function:GeneralFunctionExtract"
@@ -80,6 +81,7 @@ geometry = "extraction_methods.plugins.geometry:GeometryExtract"
 geometry_to_bbox = "extraction_methods.plugins.geometry_to_bbox:GeometryToBboxExtract"
 hash = "extraction_methods.plugins.hash:HashExtract"
 header = "extraction_methods.plugins.header.header:HeaderExtract"
+intake = "extraction_methods.plugins.intake_esm:IntakeESMExtract"
 iso19115 = "extraction_methods.plugins.iso19115:ISO19115Extract"
 iso_date = "extraction_methods.plugins.iso_date:ISODateExtract"
 json_file = "extraction_methods.plugins.json_file:JsonFileExtract"
