@@ -1,32 +1,13 @@
 extraction\_methods.plugins.header.backends package
 ===================================================
 
-Submodules
-----------
+Subpackages
+-----------
 
-extraction\_methods.plugins.header.backends.cf module
------------------------------------------------------
+.. toctree::
+   :maxdepth: 2
 
-.. automodule:: extraction_methods.plugins.header.backends.cf
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-extraction\_methods.plugins.header.backends.ncml module
--------------------------------------------------------
-
-.. automodule:: extraction_methods.plugins.header.backends.ncml
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-extraction\_methods.plugins.header.backends.xarray module
----------------------------------------------------------
-
-.. automodule:: extraction_methods.plugins.header.backends.xarray
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   extraction_methods.plugins.header.backends
 
 Module contents
 ---------------
@@ -35,3 +16,4 @@ Module contents
    :members:
    :undoc-members:
    :show-inheritance:
+
