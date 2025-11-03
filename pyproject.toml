@@ -141,7 +141,7 @@ xenon = "^0.9.1"
 pre-commit = "^3.7.1"
 
 [tool.poetry.group.test.dependencies]
-coverage = { extras = ["toml"], version = "^7.6.0" }
+coverage = { extras = ["toml"], version = "^7.11.0" }
 
 [tool.poetry.group.docs.dependencies]
 sphinx = "^7.4.7"
