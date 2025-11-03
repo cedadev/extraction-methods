@@ -13,7 +13,7 @@ __contact__ = "rhys.r.evans@stfc.ac.uk"
 
 from typing import Any
 
-from pydantic import BaseModel, Extra, Field, model_validator
+from pydantic import BaseModel, Field, model_validator
 from typing_extensions import Self
 
 
@@ -49,7 +49,7 @@ class Input(BaseModel):
     )
 
 
-class DummyInput(Input, extra=Extra.allow):
+class DummyInput(Input, extra="allow"):
     """
     Dummy input used before attributes are updated.
     """
@@ -67,7 +67,7 @@ class DummyInput(Input, extra=Extra.allow):
         :rtype: Any
         """
         if isinstance(value, str) and value and value[0] == self.exists_key:
-            return body[value[1:]]
+            return body.get(value[1:], value)
 
         if isinstance(value, dict):
             return self.update_dict_attr(value, body)

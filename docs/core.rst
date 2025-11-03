@@ -2,6 +2,7 @@ Core Models
 ===========
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
+   :caption: Contents:
 
    extraction_methods.core

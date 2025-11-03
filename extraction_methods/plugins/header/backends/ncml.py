@@ -79,24 +79,6 @@ class NcMLHeader(ExtractionMethod):
 
     input_class = NcMLHeaderInput
 
-    @update_input
-    def run(self, body: dict[str, Any]) -> dict[str, Any]:
-        # Convert response to an XML etree.Element
-        content = self.get_ncml()
-        elemement = fromstring(
-            content, parser=XMLParser(encoding="UTF-8")
-        )  # nosec B320
-
-        for attribute in self.input.attributes:
-
-            # Execute xpath expression
-            value = elemement.xpath(attribute.key, namespaces=self.input.namespaces)
-
-            if value:
-                body[attribute.output_key] = value[0]
-
-        return body
-
     def get_ncml(self) -> bytes:
         """Get the NcML file description."""
 
@@ -135,3 +117,21 @@ class NcMLHeader(ExtractionMethod):
             return proc.stdout.read()
         else:
             return b""
+
+    @update_input
+    def run(self, body: dict[str, Any]) -> dict[str, Any]:
+        # Convert response to an XML etree.Element
+        content = self.get_ncml()
+        elemement = fromstring(
+            content, parser=XMLParser(encoding="UTF-8")
+        )  # nosec B320
+
+        for attribute in self.input.attributes:
+
+            # Execute xpath expression
+            value = elemement.xpath(attribute.key, namespaces=self.input.namespaces)
+
+            if value:
+                body[attribute.output_key] = value[0]
+
+        return body

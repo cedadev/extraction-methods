@@ -1,6 +1,6 @@
 [project]
 name = "extraction-methods"
-version = "1.0.2"
+version = "1.1.0"
 description = "Methods to enable the extraction of metadata"
 authors = [
     {"name" = "rhysrevans3", "email" = "<rhys.r.evans3@gmail.com>"},
@@ -42,7 +42,7 @@ dependencies = [
     "python-dateutil == 2.8.2",
     "python-magic == 0.4.25",
     "pytz == 2021.1",
-    "pyyaml == 6.0.1",
+    "pyyaml (==6.0.1)",
     "rioxarray (>=0.17.0,<0.18.0)",
     "s3transfer == 0.5.0",
     "siphon == 0.9",
@@ -51,6 +51,7 @@ dependencies = [
     "tqdm == 4.62.3",
     "typing-extensions (>=4.7.1,<5.0.0)",
     "urllib3 == 1.26.18",
+    "types-pyyaml (>=6.0.12.20250915,<7.0.0.0)",
 ]
 
 [project.urls]
@@ -60,6 +61,8 @@ Homepage = "https://github.com/cedadev/extraction-methods"
 docs = [
     "sphinx",
     "sphinx-rtd-theme",
+    "sphinx-pydantic",
+    "sphinx_mdinclude",
     "sphinxcontrib-programoutput",
 ]
 
@@ -68,11 +71,13 @@ assets = "extraction_methods.plugins.assets.assets:AssetExtract"
 bbox = "extraction_methods.plugins.bbox:BboxExtract"
 ceda_observation = "extraction_methods.plugins.ceda_observation:CEDAObservationExtract"
 ceda_vocabulary = "extraction_methods.plugins.ceda_vocabulary:CEDAVocabularyExtract"
+conditional = "extraction_methods.plugins.conditional:ConditionalExtract"
 controlled_vocabulary = "extraction_methods.plugins.controlled_vocabulary:ControlledVocabularyExtract"
 datetime_bound_to_centroid = "extraction_methods.plugins.datetime_bound_to_centroid:DatetimeBoundToCentroidExtract"
 default = "extraction_methods.plugins.default:DefaultExtract"
 dict_aggregator = "extraction_methods.plugins.dict_aggregator:DictAggregatorExtract"
 elasticsearch_aggregation = "extraction_methods.plugins.elasticsearch_aggregation:ElasticsearchAggregationExtract"
+elasticsearch_search = "extraction_methods.plugins.elasticsearch_search:ElasticsearchSearchExtract"
 facet_map = "extraction_methods.plugins.facet_map:FacetMapExtract"
 facet_prefix = "extraction_methods.plugins.facet_prefix:FacetPrefixExtract"
 general_function = "extraction_methods.plugins.general_function:GeneralFunctionExtract"
@@ -80,6 +85,7 @@ geometry = "extraction_methods.plugins.geometry:GeometryExtract"
 geometry_to_bbox = "extraction_methods.plugins.geometry_to_bbox:GeometryToBboxExtract"
 hash = "extraction_methods.plugins.hash:HashExtract"
 header = "extraction_methods.plugins.header.header:HeaderExtract"
+intake = "extraction_methods.plugins.intake_esm:IntakeESMExtract"
 iso19115 = "extraction_methods.plugins.iso19115:ISO19115Extract"
 iso_date = "extraction_methods.plugins.iso_date:ISODateExtract"
 json_file = "extraction_methods.plugins.json_file:JsonFileExtract"

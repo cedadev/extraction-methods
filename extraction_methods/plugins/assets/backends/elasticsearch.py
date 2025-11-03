@@ -19,7 +19,7 @@ from elasticsearch import Elasticsearch as Elasticsearch_client
 from pydantic import Field
 
 from extraction_methods.core.extraction_method import Backend, update_input
-from extraction_methods.core.types import Input, KeyOutputKey
+from extraction_methods.core.types import Input
 
 LOGGER = logging.getLogger(__name__)
 
@@ -40,19 +40,12 @@ class ElasticsearchAssetsInput(Input):
         default=60,
         description="Request timeout for search.",
     )
-    regex: str = Field(
-        description="Regex to test against.",
-    )
-    search_field: str = Field(
-        description="Term to search for regex on.",
+    body: dict[str, Any] = Field(
+        description="Body for Elasticsearch search request.",
     )
     href_term: str = Field(
         default="path",
         description="term to use for href.",
-    )
-    extra_fields: list[KeyOutputKey] = Field(
-        default=[],
-        description="term for method to output to.",
     )
 
 
@@ -67,14 +60,11 @@ class ElasticsearchAssets(Backend):
     .. list-table::
 
         - ``index``: Name of the index holding the STAC entities
-        - ``id_term``: Term used for agregating the STAC entities
-        - ``connection_kwargs``: Connection parameters passed to
+        - ``client_kwargs``: Parameters to pass to
           `elasticsearch.Elasticsearch<https://elasticsearch-py.readthedocs.io/en/7.10.0/api.html>`_
-        - ``bbox``: list of terms for which their aggregate bbox should be returned.
-        - ``min``: list of terms for which the minimum of their aggregate should be returned.
-        - ``max``: list of terms for which the maximum of their aggregate should be returned.
-        - ``sum``: list of terms for which the sum of their aggregate should be returned.
-        - ``list``: list of terms for which a list of their aggregage should be returned.
+        - ``request_timeout``: Timeout for the Elasticsearch request.
+        - ``body``: list of terms for which their aggregate bbox should be returned.
+        - ``id_term``: Term used for agregating the STAC entities
 
     Configuration Example:
     .. code-block:: yaml
@@ -96,21 +86,31 @@ class ElasticsearchAssets(Backend):
 
         es = Elasticsearch_client(**self.input.client_kwargs)
 
-        query = {
+        es_body = {
             "query": {
-                "regexp": {
-                    f"{self.input.search_field}.keyword": {
-                        "value": self.input.regex,
-                    }
+                "bool": {
+                    "must": [
+                        {
+                            "regexp": {
+                                f"{self.input.search_field}.keyword": {
+                                    "value": self.input.regex,
+                                }
+                            }
+                        },
+                        {"exists": {"field": "md5"}},
+                    ],
+                    "must_not": [{"exists": {"field": "removed"}}],
                 },
             },
-            "_source": [self.input.search_field]
+            "_source": [self.input.href_term, self.input.search_field]
             + [extra_field.key for extra_field in self.input.extra_fields],
         }
 
-        # Run query
+        # Run search
         result = es.search(
-            index=self.input.index, body=query, timeout=f"{self.input.request_timeout}s"
+            index=self.input.index,
+            body=es_body,
+            timeout=f"{self.input.request_timeout}s",
         )
 
         for hit in result["hits"]["hits"]:
