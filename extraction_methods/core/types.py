@@ -122,7 +122,7 @@ class DummyInput(Input, extra="allow"):
         :param body: current generated properties
         :type body: dict
         """
-        for key, value in self.dict(exclude={"exists_key"}).items():
+        for key, value in self.model_dump(exclude={"exists_key"}).items():
             setattr(self, key, self.update_attr(value, body))
 
 
@@ -131,7 +131,7 @@ class Backend(BaseModel):
     Model for Backend configuration.
     """
 
-    name: str = Field(
+    method: str = Field(
         description="Name of backend.",
     )
     inputs: dict[str, Any] = Field(
