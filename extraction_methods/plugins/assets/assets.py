@@ -44,10 +44,6 @@ class AssetInput(Input):
         default="assets",
         description="term for method to output to.",
     )
-    href_term: str = Field(
-        default="path",
-        description="term to use for href.",
-    )
 
 
 class AssetExtract(SetEntryPointsMixin, ExtractionMethod):
@@ -88,8 +84,8 @@ class AssetExtract(SetEntryPointsMixin, ExtractionMethod):
     def run(self, body: dict[str, Any]) -> dict[str, Any]:
 
         output = {}
-        backend_entry_point = self.entry_points[self.input.backend.name].load()
-        backend = backend_entry_point(**self.input.backend.inputs)
+        backend_entry_point = self.entry_points[self.input.backend.method].load()
+        backend = backend_entry_point(self.input.backend)
         assets = backend._run(body)
 
         for asset in assets:
