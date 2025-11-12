@@ -26,6 +26,24 @@ LOGGER = logging.getLogger(__name__)
 extraction_method_defaults = {}
 
 
+class ExtractionMethodConf(BaseModel):
+    """STAC extraction method model."""
+
+    method: str
+    inputs: Optional[dict[str, Any]] = {}
+
+    _extraction_methods: EntryPoints = entry_points(group="extraction_methods")
+
+    def __repr__(self) -> str:
+        return yaml.dump(self.model_dump())
+
+    def _run(self, body: dict[str, Any]) -> dict[str, Any]:
+        extraction_method = self._extraction_methods[self.method].load()
+        extraction_method = extraction_method(self)
+
+        return extraction_method._run(body)  # type: ignore[no-any-return]
+
+
 def update_input(
     func: Callable[[Any, dict[str, Any]], Any],
 ) -> Callable[[Any, dict[str, Any]], Any]:
@@ -46,7 +64,7 @@ def update_input(
     return wrapper
 
 
-def set_extraction_method_defaults(conf_defaults: dict):
+def set_extraction_method_defaults(conf_defaults: dict[str, Any]) -> None:
     """
     Function to set global extraction_method_defaults variable.
     """
@@ -62,7 +80,9 @@ class SetInput:
     input_class: Any = Input
     dummy_input_class: Any = DummyInput
 
-    def __init__(self, extraction_method_conf: dict, *args: Any, **kwargs: Any) -> None:
+    def __init__(
+        self, extraction_method_conf: ExtractionMethodConf, *args: Any, **kwargs: Any
+    ) -> None:
         """
         Set ``input`` attribute to instance of ``dummy_input_class`` with
         default values overrided by kwargs.
@@ -180,21 +200,3 @@ class Backend(SetInput, ABC):
         :return: updated body dict
         :rtype: dict
         """
-
-
-class ExtractionMethodConf(BaseModel):
-    """STAC extraction method model."""
-
-    method: str
-    inputs: Optional[dict] = {}
-
-    _extraction_methods: EntryPoints = entry_points(group="extraction_methods")
-
-    def __repr__(self):
-        return yaml.dump(self.model_dump())
-
-    def _run(self, body: dict[str, Any]) -> dict[str, Any]:
-        extraction_method = self._extraction_methods[self.method].load()
-        extraction_method = extraction_method(self)
-
-        return extraction_method._run(body)
