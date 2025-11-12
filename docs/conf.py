@@ -13,7 +13,7 @@ sys.path.insert(0, os.path.abspath(".."))
 project = "Extraction Methods"
 copyright = "2025, Rhys Evans"
 author = "Rhys Evans"
-release = "1.1.1"
+release = "1.1.2"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration

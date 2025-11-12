@@ -86,7 +86,7 @@ class ConditionalExtract(ExtractionMethod):
         for term in self.input.condition.split(" "):
 
             if term[0] == self.input.exists_key:
-                term = body.get(term[1:], term)
+                term = body.get(term[1:], None)
 
                 if isinstance(term, str):
                     term = f"'{term}'"
