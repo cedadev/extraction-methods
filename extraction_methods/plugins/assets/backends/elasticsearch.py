@@ -86,41 +86,15 @@ class ElasticsearchAssets(Backend):
 
         es = Elasticsearch_client(**self.input.client_kwargs)
 
-        es_body = {
-            "query": {
-                "bool": {
-                    "must": [
-                        {
-                            "regexp": {
-                                f"{self.input.search_field}.keyword": {
-                                    "value": self.input.regex,
-                                }
-                            }
-                        },
-                        {"exists": {"field": "md5"}},
-                    ],
-                    "must_not": [{"exists": {"field": "removed"}}],
-                },
-            },
-            "_source": [self.input.href_term, self.input.search_field]
-            + [extra_field.key for extra_field in self.input.extra_fields],
-        }
-
         # Run search
         result = es.search(
             index=self.input.index,
-            body=es_body,
+            body=self.input.body,
             timeout=f"{self.input.request_timeout}s",
         )
 
         for hit in result["hits"]["hits"]:
             source = hit["_source"]
-            asset = {
-                "href": source[self.input.href_term],
-            }
+            source["href"] = source.pop(self.input.href_term)
 
-            for field in self.input.extra_fields:
-                if value := source.get(field.key):
-                    asset[field.output_key] = value
-
-            yield asset
+            yield source
