@@ -14,6 +14,7 @@ __contact__ = "richard.d.smith@stfc.ac.uk"
 
 import json
 import logging
+from collections import defaultdict
 
 # Python imports
 from pathlib import Path
@@ -90,27 +91,21 @@ class JsonFileExtract(ExtractionMethod):
 
         return output
 
-    def find_and_extract(self) -> dict[str, Any]:
-        """
-        Find and extract from JSON files.
-
-        :return: extracted terms
-        :rtype: dict
-        """
-
-        path = Path(self.input.path)
-        output: dict[str, Any] = {}
-
-        if path.is_dir():
-            for child in path.iterdir():
-                output |= self.extract_terms(child)
-
-        if path.is_file():
-            return {path.name: self.extract_terms(path)}
-
-        return output
-
     @update_input
     def run(self, body: dict[str, Any]) -> dict[str, Any]:
 
-        return body | self.find_and_extract()
+        path = Path(self.input.path)
+
+        if path.is_dir():
+            output: dict[str, Any] = defaultdict(list)
+            for child in path.rglob("*.json"):
+                for k, v in self.extract_terms(child):
+                    if isinstance(v, list):
+                        output[k].extend(v)
+                    else:
+                        output[k].append(v)
+
+        if path.is_file():
+            output = {path.name: self.extract_terms(path)}
+
+        return body | output

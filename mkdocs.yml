@@ -1,0 +1,14 @@
+site_name: Extraction Methods
+
+nav:
+- Code Reference: reference/
+
+plugins:
+- search
+- gen-files:
+    scripts:
+    - tools/gen_ref_pages.py
+- literate-nav:
+    nav_file: SUMMARY.md
+- section-index
+- mkdocstrings

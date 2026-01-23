@@ -37,8 +37,8 @@ repos:
         entry: poetry run mypy --no-namespace-packages
         language: system
         types: [ file, python ]
-      - id: docs
-        name: docs
-        entry: bash -c "poetry run sphinx-build -M dummy ./docs ./docs/_build -W -q -a"
-        language: system
-        types_or: [ file, python, rst, toml, markdown ]
+      # - id: docs
+      #   name: docs
+      #   entry: bash -c "poetry run sphinx-build -M dummy ./docs ./docs/_build -W -q -a"
+        # language: system
+        # types_or: [ file, python, rst, toml, markdown ]

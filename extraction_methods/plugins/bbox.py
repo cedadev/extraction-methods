@@ -48,26 +48,25 @@ class BboxExtract(ExtractionMethod):
     Method: ``bbox``
 
     Description:
-        Converts a coordinate values to `RFC 7946,
-        section 5 <https://tools.ietf.org/html/rfc7946#section-5>`_ formatted bbox.
+      Converts a coordinate values to `RFC 7946,
+      section 5 <https://tools.ietf.org/html/rfc7946#section-5>`_ formatted bbox.
 
     Configuration Options:
-    .. list-table::
-
-        - ``west``: ``REQUIRED`` Most westerly coordinate
-        - ``south``: ``REQUIRED`` Most southernly coordinate
-        - ``east``: ``REQUIRED`` Most easterly coordinate
-        - ``north``: ``REQUIRED`` Most northernly coordinate
+        +-----------+-----------------------------------------+
+        | ``west``  | ``REQUIRED`` Most westerly coordinate.  |
+        | ``south`` | ``REQUIRED`` Most southernly coordinate |
+        | ``east``  | ``REQUIRED`` Most easterly coordinate.  |
+        | ``north`` | ``REQUIRED`` Most northernly coordinate |
+        +-----------+-----------------------------------------+
 
     Example Configuration:
-    .. code-block:: yaml
-
-        - method: bbox
-          inputs:
-            west: 0
-            south: 0
-            east: $east_variable
-            north: $north_variable
+        .. code-block:: yaml
+            - method: bbox
+                inputs:
+                west: 0
+                south: 0
+                east: $east_variable
+                north: $north_variable
     """
 
     input_class = BboxInput

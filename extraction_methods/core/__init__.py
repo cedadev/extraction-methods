@@ -1,3 +1,5 @@
+# encoding: utf-8
+"""CORE"""
 __author__ = "Richard Smith"
 __date__ = "27 May 2021"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
