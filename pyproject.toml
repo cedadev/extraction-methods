@@ -10,50 +10,50 @@ readme = "README.rst"
 keywords = ['metadata', 'plugin', 'extraction']
 requires-python = ">=3.10, <4"
 dependencies = [
-    "aiohttp == 3.9.2",
-    "alabaster == 0.7.14",
-    "anytree == 2.8.0",
-    "async-timeout == 4.0.3",
-    "babel == 2.13.0",
-    "boto3 == 1.18.44",
-    "botocore == 1.21.44",
-    "cachetools == 4.2.4",
-    "certifi == 2023.7.22",
-    "cf-xarray (>=0.10.0,<0.11.0)",
-    "chardet == 4.0.0",
-    "docutils == 0.20",
-    "elasticsearch == 7.17.12",
-    "fsspec (==2025.2)",
+    "aiohttp (>=3.9.2,<4.0.0)",
+    "alabaster (>=0.7.14,<1.0.0)",
+    "anytree (>=2.8.0,<3.0.0)",
+    "async-timeout (>=4.0.3,<5.0.0)",
+    "babel (>=2.13.0,<3.0.0)",
+    "boto3 (>=1.18.44,<2.0.0)",
+    "botocore (>=1.21.44,<2.0.0)",
+    "cachetools (>=4.2.4,<5.0.0)",
+    "certifi (>=2023.7.22,<2024.0.0)",
+    "cf-xarray (>=0.10.0,<1.0.0)",
+    "chardet (>=4.0.0,<5.0.0)",
+    "docutils (>=0.20,<1.0)",
+    "elasticsearch (>=7.17.12,<8.0.0)",
+    "fsspec (>=2025.2,<2026.0)",
     "gcsfs (>=2025.2.0,<2026.0.0)",
-    "httpx (>=0.28.1,<0.29.0)",
-    "idna == 2.10",
-    "imagesize == 1.3.0",
+    "httpx (>=0.28.1,<1.0.0)",
+    "idna (>=2.10,<3.0)",
+    "imagesize (>=1.3.0,<2.0)",
     "intake-esm (>=2025.2.3,<2026.0.0)",
     "jinja2 (>=3.1.5,<4.0.0)",
-    "jmespath == 0.10.0",
+    "jmespath (>=0.10.0,<1.0.0)",
     "jsonschema (>=4.23.0,<5.0.0)",
     "lxml (>=5.3.1,<6.0.0)",
-    "multidict == 5.1.0",
-    "packaging == 24.1",
-    "pika == 1.2.0",
+    "multidict (>=5.1.0,<6.0.0)",
+    "packaging (>=25.0,<26.0)",
+    "pika (>=1.2.0,<2.0.0)",
     "pydantic (>=2.1.1,<3.0.0)",
-    "pygments == 2.17.0",
-    "pyparsing == 2.4.7",
-    "python-dateutil == 2.8.2",
-    "python-magic == 0.4.25",
-    "pytz == 2021.1",
-    "pyyaml (==6.0.1)",
-    "rioxarray (>=0.17.0,<0.18.0)",
-    "s3transfer == 0.5.0",
-    "siphon == 0.9",
-    "six == 1.16.0",
-    "snowballstemmer == 2.2.0",
-    "tqdm == 4.62.3",
+    "pygments (>=2.17.0,<3.0.0)",
+    "pyparsing (>=2.4.7,<3.0.0)",
+    "python-dateutil (>=2.8.2,<3.0.0)",
+    "python-magic (>=0.4.25,<1.0.0)",
+    "pytz (>=2021.1,<2022.0)",
+    "pyyaml (>=6.0.1,<7.0.0)",
+    "rioxarray (>=0.17.0,<1.0.0)",
+    "s3transfer (>=0.5.0,<1.0.0)",
+    "siphon (>=0.9,<1.0)",
+    "six (>=1.16.0,<2.0.0)",
+    "snowballstemmer (>=2.2.0,<3.0.0)",
+    "tqdm (>=4.62.3,<5.0.0)",
     "typing-extensions (>=4.7.1,<5.0.0)",
-    "urllib3 == 1.26.18",
+    "urllib3 (>=1.26.18,<2.0.0)",
     "types-pyyaml (>=6.0.12.20250915,<7.0.0.0)",
     "pre-commit (>=4.3.0,<5.0.0)",
-    "h11 (>=0.16.0,<0.17.0)",
+    "h11 (>=0.16.0,<1.0.0)",
 ]
 
 [project.urls]
@@ -61,11 +61,10 @@ Homepage = "https://github.com/cedadev/extraction-methods"
 
 [project.optional-dependencies]
 docs = [
-    "sphinx",
-    "sphinx-rtd-theme",
-    "sphinx-pydantic",
-    "sphinx_mdinclude",
-    "sphinxcontrib-programoutput",
+    "mkdocstrings[python] (>=0.30.1,<0.31.0)",
+    "mkdocs-gen-files (>=0.5.0,<0.6.0)",
+    "mkdocs-literate-nav (>=0.6.2,<0.7.0)",
+    "mkdocs-section-index (>=0.3.10,<0.4.0)",
 ]
 
 [project.entry-points."extraction_methods"]
@@ -146,10 +145,11 @@ pre-commit = "^4.3.0"
 coverage = { extras = ["toml"], version = "^7.6.0" }
 
 [tool.poetry.group.docs.dependencies]
-sphinx = "^7.4.7"
-sphinx-pydantic = "^0.1.1"
-sphinx-rtd-theme = "^2.0.0"
-sphinx-mdinclude = "^0.6.2"
+mkdocstrings = "^0.30.1"
+mkdocstrings-python = "^1.19.0"
+mkdocs-gen-files  = "^0.5.0"
+mkdocs-literate-nav = "^0.6.2"
+mkdocs-section-index = "^0.3.10"
 
 [tool.mypy]
 plugins = [
