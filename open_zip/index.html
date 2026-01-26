@@ -907,23 +907,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="open_zip">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#extraction_methods.plugins.open_zip--open-zip-method" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Open Zip Method
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1691,23 +1674,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="open_zip">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#extraction_methods.plugins.open_zip--open-zip-method" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Open Zip Method
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1775,9 +1741,6 @@
 <a id="extraction_methods.plugins.open_zip"></a>
     <div class="doc doc-contents first">
 
-        <p>..  _open-zip:</p>
-<h3 id="extraction_methods.plugins.open_zip--open-zip-method">Open Zip Method</h3>
-
 
 
 
@@ -1814,20 +1777,13 @@
 
 
 
-        <p>Method: <code>open_zip</code></p>
+        <p><strong>Method name:</strong> <code>open_zip</code></p>
+<p>Open a zip file and read inner files</p>
 
 
-<details class="description" open>
-  <summary>Description</summary>
-  <p>Open a zip file and read inner files</p>
-</details>        <p>Configuration Options:
-.. list-table::</p>
-<pre><code>- ``input_term``: List of keys to retrieve from the document.
-- ``inner_files``: Lost of inner zipped files to be read.
-- ``output_key``: key to output to.
-</code></pre>
-<p>Example configuration:
-.. code-block:: yaml</p>
+<details class="example-configuration" open>
+  <summary>Example configuration</summary>
+  <p>.. code-block:: yaml</p>
 <pre><code>- method: open_zip
   inputs:
     input_term: /path/to/a/file
@@ -1835,7 +1791,7 @@
       - key: hello.txt
         output_key: world
 </code></pre>
-<h3 id="extraction_methods.plugins.open_zip.ZipExtract--noqa-w605">noqa: W605</h3>
+</details>        <h3 id="extraction_methods.plugins.open_zip.ZipExtract--noqa-w605">noqa: W605</h3>
 
 
 
@@ -1846,78 +1802,62 @@
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>extraction_methods/plugins/open_zip.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 52</span>
-<span class="normal"> 53</span>
-<span class="normal"> 54</span>
-<span class="normal"> 55</span>
-<span class="normal"> 56</span>
-<span class="normal"> 57</span>
-<span class="normal"> 58</span>
-<span class="normal"> 59</span>
-<span class="normal"> 60</span>
-<span class="normal"> 61</span>
-<span class="normal"> 62</span>
-<span class="normal"> 63</span>
-<span class="normal"> 64</span>
-<span class="normal"> 65</span>
-<span class="normal"> 66</span>
-<span class="normal"> 67</span>
-<span class="normal"> 68</span>
-<span class="normal"> 69</span>
-<span class="normal"> 70</span>
-<span class="normal"> 71</span>
-<span class="normal"> 72</span>
-<span class="normal"> 73</span>
-<span class="normal"> 74</span>
-<span class="normal"> 75</span>
-<span class="normal"> 76</span>
-<span class="normal"> 77</span>
-<span class="normal"> 78</span>
-<span class="normal"> 79</span>
-<span class="normal"> 80</span>
-<span class="normal"> 81</span>
-<span class="normal"> 82</span>
-<span class="normal"> 83</span>
-<span class="normal"> 84</span>
-<span class="normal"> 85</span>
-<span class="normal"> 86</span>
-<span class="normal"> 87</span>
-<span class="normal"> 88</span>
-<span class="normal"> 89</span>
-<span class="normal"> 90</span>
-<span class="normal"> 91</span>
-<span class="normal"> 92</span>
-<span class="normal"> 93</span>
-<span class="normal"> 94</span>
-<span class="normal"> 95</span>
-<span class="normal"> 96</span>
-<span class="normal"> 97</span>
-<span class="normal"> 98</span>
-<span class="normal"> 99</span>
-<span class="normal">100</span>
-<span class="normal">101</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">ZipExtract</span><span class="p">(</span><span class="n">ExtractionMethod</span><span class="p">):</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span>
+<span class="normal">80</span>
+<span class="normal">81</span>
+<span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span>
+<span class="normal">88</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">ZipExtract</span><span class="p">(</span><span class="n">ExtractionMethod</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Method: ``open_zip``</span>
+<span class="sd">    **Method name:** ``open_zip``</span>
 
-<span class="sd">    Description:</span>
-<span class="sd">        Open a zip file and read inner files</span>
-
-<span class="sd">    Configuration Options:</span>
-<span class="sd">    .. list-table::</span>
-
-<span class="sd">        - ``input_term``: List of keys to retrieve from the document.</span>
-<span class="sd">        - ``inner_files``: Lost of inner zipped files to be read.</span>
-<span class="sd">        - ``output_key``: key to output to.</span>
+<span class="sd">    Open a zip file and read inner files</span>
 
 <span class="sd">    Example configuration:</span>
-<span class="sd">    .. code-block:: yaml</span>
+<span class="sd">        .. code-block:: yaml</span>
 
-<span class="sd">        - method: open_zip</span>
-<span class="sd">          inputs:</span>
-<span class="sd">            input_term: /path/to/a/file</span>
-<span class="sd">            inner_files:</span>
-<span class="sd">              - key: hello.txt</span>
-<span class="sd">                output_key: world</span>
+<span class="sd">            - method: open_zip</span>
+<span class="sd">              inputs:</span>
+<span class="sd">                input_term: /path/to/a/file</span>
+<span class="sd">                inner_files:</span>
+<span class="sd">                  - key: hello.txt</span>
+<span class="sd">                    output_key: world</span>
 
 <span class="sd">    # noqa: W605</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -2060,7 +2000,12 @@
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>extraction_methods/plugins/open_zip.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">27</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
 <span class="normal">28</span>
 <span class="normal">29</span>
 <span class="normal">30</span>
@@ -2077,12 +2022,7 @@
 <span class="normal">41</span>
 <span class="normal">42</span>
 <span class="normal">43</span>
-<span class="normal">44</span>
-<span class="normal">45</span>
-<span class="normal">46</span>
-<span class="normal">47</span>
-<span class="normal">48</span>
-<span class="normal">49</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">ZipInput</span><span class="p">(</span><span class="n">Input</span><span class="p">):</span>
+<span class="normal">44</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">ZipInput</span><span class="p">(</span><span class="n">Input</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Model for Zip Input.</span>
 <span class="sd">    &quot;&quot;&quot;</span>

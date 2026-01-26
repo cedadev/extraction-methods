@@ -313,23 +313,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="bbox">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#extraction_methods.plugins.bbox--bounding-box-method" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Bounding Box Method
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1674,23 +1657,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="bbox">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#extraction_methods.plugins.bbox--bounding-box-method" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Bounding Box Method
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1741,9 +1707,6 @@
 <a id="extraction_methods.plugins.bbox"></a>
     <div class="doc doc-contents first">
 
-        <p>..  _bbox:</p>
-<h3 id="extraction_methods.plugins.bbox--bounding-box-method">Bounding Box Method</h3>
-
 
 
 
@@ -1780,34 +1743,21 @@
 
 
 
-        <p>Method: <code>bbox</code></p>
-
-
-<details class="description" open>
-  <summary>Description</summary>
-  <p>Converts a coordinate values to <code>RFC 7946,
+        <p><strong>Method name:</strong> <code>bbox</code></p>
+<p>Converts a coordinate values to <code>RFC 7946,
 section 5 &lt;https://tools.ietf.org/html/rfc7946#section-5&gt;</code>_ formatted bbox.</p>
-</details>
 
-<details class="configuration-options" open>
-  <summary>Configuration Options</summary>
-  <p>+-----------+-----------------------------------------+
-| <code>west</code>  | <code>REQUIRED</code> Most westerly coordinate.  |
-| <code>south</code> | <code>REQUIRED</code> Most southernly coordinate |
-| <code>east</code>  | <code>REQUIRED</code> Most easterly coordinate.  |
-| <code>north</code> | <code>REQUIRED</code> Most northernly coordinate |
-+-----------+-----------------------------------------+</p>
-</details>
 
 <details class="example-configuration" open>
   <summary>Example Configuration</summary>
-  <p>.. code-block:: yaml
-    - method: bbox
-        inputs:
-        west: 0
-        south: 0
-        east: $east_variable
-        north: $north_variable</p>
+  <p>.. code-block:: yaml</p>
+<pre><code>- method: bbox
+  inputs:
+    west: 0
+    south: 0
+    east: $east_variable
+    north: $north_variable
+</code></pre>
 </details>
 
 
@@ -1818,7 +1768,12 @@ section 5 &lt;https://tools.ietf.org/html/rfc7946#section-5&gt;</code>_ formatte
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>extraction_methods/plugins/bbox.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">46</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
 <span class="normal">47</span>
 <span class="normal">48</span>
 <span class="normal">49</span>
@@ -1855,38 +1810,19 @@ section 5 &lt;https://tools.ietf.org/html/rfc7946#section-5&gt;</code>_ formatte
 <span class="normal">80</span>
 <span class="normal">81</span>
 <span class="normal">82</span>
-<span class="normal">83</span>
-<span class="normal">84</span>
-<span class="normal">85</span>
-<span class="normal">86</span>
-<span class="normal">87</span>
-<span class="normal">88</span>
-<span class="normal">89</span>
-<span class="normal">90</span>
-<span class="normal">91</span>
-<span class="normal">92</span>
-<span class="normal">93</span>
-<span class="normal">94</span>
-<span class="normal">95</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">BboxExtract</span><span class="p">(</span><span class="n">ExtractionMethod</span><span class="p">):</span>
+<span class="normal">83</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">BboxExtract</span><span class="p">(</span><span class="n">ExtractionMethod</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Method: ``bbox``</span>
 
-<span class="sd">    Description:</span>
-<span class="sd">      Converts a coordinate values to `RFC 7946,</span>
-<span class="sd">      section 5 &lt;https://tools.ietf.org/html/rfc7946#section-5&gt;`_ formatted bbox.</span>
+<span class="sd">    **Method name:** ``bbox``</span>
 
-<span class="sd">    Configuration Options:</span>
-<span class="sd">        +-----------+-----------------------------------------+</span>
-<span class="sd">        | ``west``  | ``REQUIRED`` Most westerly coordinate.  |</span>
-<span class="sd">        | ``south`` | ``REQUIRED`` Most southernly coordinate |</span>
-<span class="sd">        | ``east``  | ``REQUIRED`` Most easterly coordinate.  |</span>
-<span class="sd">        | ``north`` | ``REQUIRED`` Most northernly coordinate |</span>
-<span class="sd">        +-----------+-----------------------------------------+</span>
+<span class="sd">    Converts a coordinate values to `RFC 7946,</span>
+<span class="sd">    section 5 &lt;https://tools.ietf.org/html/rfc7946#section-5&gt;`_ formatted bbox.</span>
 
 <span class="sd">    Example Configuration:</span>
 <span class="sd">        .. code-block:: yaml</span>
+
 <span class="sd">            - method: bbox</span>
-<span class="sd">                inputs:</span>
+<span class="sd">              inputs:</span>
 <span class="sd">                west: 0</span>
 <span class="sd">                south: 0</span>
 <span class="sd">                east: $east_variable</span>
@@ -2048,7 +1984,12 @@ section 5 &lt;https://tools.ietf.org/html/rfc7946#section-5&gt;</code>_ formatte
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>extraction_methods/plugins/bbox.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">27</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
 <span class="normal">28</span>
 <span class="normal">29</span>
 <span class="normal">30</span>
@@ -2059,12 +2000,7 @@ section 5 &lt;https://tools.ietf.org/html/rfc7946#section-5&gt;</code>_ formatte
 <span class="normal">35</span>
 <span class="normal">36</span>
 <span class="normal">37</span>
-<span class="normal">38</span>
-<span class="normal">39</span>
-<span class="normal">40</span>
-<span class="normal">41</span>
-<span class="normal">42</span>
-<span class="normal">43</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">BboxInput</span><span class="p">(</span><span class="n">Input</span><span class="p">):</span>
+<span class="normal">38</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">BboxInput</span><span class="p">(</span><span class="n">Input</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Model for BBox Method Input.</span>
 <span class="sd">    &quot;&quot;&quot;</span>

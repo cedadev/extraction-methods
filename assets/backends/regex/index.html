@@ -1359,23 +1359,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="regex">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#extraction_methods.plugins.assets.backends.regex--regex-assets-backend" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Regex Assets Backend
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1695,23 +1678,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="regex">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#extraction_methods.plugins.assets.backends.regex--regex-assets-backend" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Regex Assets Backend
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1779,9 +1745,6 @@
 <a id="extraction_methods.plugins.assets.backends.regex"></a>
     <div class="doc doc-contents first">
 
-        <p>..  _regex-assets:</p>
-<h3 id="extraction_methods.plugins.assets.backends.regex--regex-assets-backend">Regex Assets Backend</h3>
-
 
 
 
@@ -1818,23 +1781,19 @@
 
 
 
-        <p>Method: <code>regex_assets</code></p>
+        <p><strong>Method name:</strong> <code>regex_assets</code></p>
+<p>Takes a regex glob and yields a dictionary for each matching path.</p>
 
 
-<details class="description" open>
-  <summary>Description</summary>
-  <p>Takes a regex glob and yields a dictionary for each matching path.</p>
-</details>        <p>Configuration Options:
-.. list-table::</p>
-<pre><code>- ``input_term``:The regular expression to match against the path
-</code></pre>
-<p>Example configuration:
-.. code-block:: yaml</p>
-<pre><code>- method: regex
+<details class="example-configuration" open>
+  <summary>Example configuration</summary>
+  <p>.. code-block:: yaml</p>
+<ul>
+<li>method: regex
   inputs:
-    input_term: ^(?:[^_]*_){2}(?P&lt;datetime&gt;\d*)
-</code></pre>
-<h3 id="extraction_methods.plugins.assets.backends.regex.RegexAssets--noqa-w605">noqa: W605</h3>
+    input_term: ^(?:[^_]<em>_){2}(?P<datetime>\d</em>)</li>
+</ul>
+</details>        <h3 id="extraction_methods.plugins.assets.backends.regex.RegexAssets--noqa-w605">noqa: W605</h3>
 
 
 
@@ -1845,7 +1804,12 @@
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>extraction_methods/plugins/assets/backends/regex.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">38</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
 <span class="normal">39</span>
 <span class="normal">40</span>
 <span class="normal">41</span>
@@ -1864,31 +1828,14 @@
 <span class="normal">54</span>
 <span class="normal">55</span>
 <span class="normal">56</span>
-<span class="normal">57</span>
-<span class="normal">58</span>
-<span class="normal">59</span>
-<span class="normal">60</span>
-<span class="normal">61</span>
-<span class="normal">62</span>
-<span class="normal">63</span>
-<span class="normal">64</span>
-<span class="normal">65</span>
-<span class="normal">66</span>
-<span class="normal">67</span>
-<span class="normal">68</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">RegexAssets</span><span class="p">(</span><span class="n">Backend</span><span class="p">):</span>
+<span class="normal">57</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">RegexAssets</span><span class="p">(</span><span class="n">Backend</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Method: ``regex_assets``</span>
+<span class="sd">    **Method name:** ``regex_assets``</span>
 
-<span class="sd">    Description:</span>
-<span class="sd">        Takes a regex glob and yields a dictionary for each matching path.</span>
-
-<span class="sd">    Configuration Options:</span>
-<span class="sd">    .. list-table::</span>
-
-<span class="sd">        - ``input_term``:The regular expression to match against the path</span>
+<span class="sd">    Takes a regex glob and yields a dictionary for each matching path.</span>
 
 <span class="sd">    Example configuration:</span>
-<span class="sd">    .. code-block:: yaml</span>
+<span class="sd">        .. code-block:: yaml</span>
 
 <span class="sd">        - method: regex</span>
 <span class="sd">          inputs:</span>
@@ -1989,15 +1936,15 @@
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>extraction_methods/plugins/assets/backends/regex.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">27</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
 <span class="normal">28</span>
 <span class="normal">29</span>
-<span class="normal">30</span>
-<span class="normal">31</span>
-<span class="normal">32</span>
-<span class="normal">33</span>
-<span class="normal">34</span>
-<span class="normal">35</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">RegexAssetsInput</span><span class="p">(</span><span class="n">Input</span><span class="p">):</span>
+<span class="normal">30</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">RegexAssetsInput</span><span class="p">(</span><span class="n">Input</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Model for Regex Assets Backend Input.</span>
 <span class="sd">    &quot;&quot;&quot;</span>

@@ -610,23 +610,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="facet_prefix">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#extraction_methods.plugins.facet_prefix--facet-prefix-method" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Facet Prefix Method
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1674,23 +1657,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="facet_prefix">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#extraction_methods.plugins.facet_prefix--facet-prefix-method" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Facet Prefix Method
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1741,9 +1707,6 @@
 <a id="extraction_methods.plugins.facet_prefix"></a>
     <div class="doc doc-contents first">
 
-        <p>..  _facet-prefix:</p>
-<h3 id="extraction_methods.plugins.facet_prefix--facet-prefix-method">Facet Prefix Method</h3>
-
 
 
 
@@ -1780,28 +1743,22 @@
 
 
 
-        <p>Method: <code>facet_prefix</code></p>
-
-
-<details class="description" open>
-  <summary>Description</summary>
-  <p>In some cases, you may wish add a prefix to some or all of the facets
+        <p><strong>Method name:</strong> <code>facet_prefix</code></p>
+<p>In some cases, you may wish add a prefix to some or all of the facets
 based on the vocabulary they're from.</p>
-</details>        <p>Configuration Options:
-.. list-table::</p>
-<pre><code>- ``prefix``: Prefix to be added.
-- ``keys``: List of keys that require prefix.
-</code></pre>
-<p>Example Configuration:
-.. code-block:: yaml</p>
+
+
+<details class="example-configuration" open>
+  <summary>Example Configuration</summary>
+  <p>.. code-block:: yaml</p>
 <pre><code>- method: facet_prefix
   inputs:
     prefix: cmip6
     keys:
-      - start_time
-      - model
+    - start_time
+    - model
 </code></pre>
-
+</details>
 
 
 
@@ -1811,7 +1768,12 @@ based on the vocabulary they're from.</p>
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>extraction_methods/plugins/facet_prefix.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">41</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
 <span class="normal">42</span>
 <span class="normal">43</span>
 <span class="normal">44</span>
@@ -1837,41 +1799,22 @@ based on the vocabulary they're from.</p>
 <span class="normal">64</span>
 <span class="normal">65</span>
 <span class="normal">66</span>
-<span class="normal">67</span>
-<span class="normal">68</span>
-<span class="normal">69</span>
-<span class="normal">70</span>
-<span class="normal">71</span>
-<span class="normal">72</span>
-<span class="normal">73</span>
-<span class="normal">74</span>
-<span class="normal">75</span>
-<span class="normal">76</span>
-<span class="normal">77</span>
-<span class="normal">78</span>
-<span class="normal">79</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">FacetPrefixExtract</span><span class="p">(</span><span class="n">ExtractionMethod</span><span class="p">):</span>
+<span class="normal">67</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">FacetPrefixExtract</span><span class="p">(</span><span class="n">ExtractionMethod</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Method: ``facet_prefix``</span>
+<span class="sd">    **Method name:** ``facet_prefix``</span>
 
-<span class="sd">    Description:</span>
-<span class="sd">        In some cases, you may wish add a prefix to some or all of the facets</span>
-<span class="sd">        based on the vocabulary they&#39;re from.</span>
-
-<span class="sd">    Configuration Options:</span>
-<span class="sd">    .. list-table::</span>
-
-<span class="sd">        - ``prefix``: Prefix to be added.</span>
-<span class="sd">        - ``keys``: List of keys that require prefix.</span>
+<span class="sd">    In some cases, you may wish add a prefix to some or all of the facets</span>
+<span class="sd">    based on the vocabulary they&#39;re from.</span>
 
 <span class="sd">    Example Configuration:</span>
-<span class="sd">    .. code-block:: yaml</span>
+<span class="sd">        .. code-block:: yaml</span>
 
-<span class="sd">        - method: facet_prefix</span>
-<span class="sd">          inputs:</span>
-<span class="sd">            prefix: cmip6</span>
-<span class="sd">            keys:</span>
-<span class="sd">              - start_time</span>
-<span class="sd">              - model</span>
+<span class="sd">            - method: facet_prefix</span>
+<span class="sd">              inputs:</span>
+<span class="sd">                prefix: cmip6</span>
+<span class="sd">                keys:</span>
+<span class="sd">                - start_time</span>
+<span class="sd">                - model</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">input_class</span> <span class="o">=</span> <span class="n">FacetPrefixInput</span>
@@ -1987,17 +1930,17 @@ based on the vocabulary they're from.</p>
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>extraction_methods/plugins/facet_prefix.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">28</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
 <span class="normal">29</span>
 <span class="normal">30</span>
 <span class="normal">31</span>
 <span class="normal">32</span>
-<span class="normal">33</span>
-<span class="normal">34</span>
-<span class="normal">35</span>
-<span class="normal">36</span>
-<span class="normal">37</span>
-<span class="normal">38</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">FacetPrefixInput</span><span class="p">(</span><span class="n">Input</span><span class="p">):</span>
+<span class="normal">33</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">FacetPrefixInput</span><span class="p">(</span><span class="n">Input</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Model for Facet Prefix Input.</span>
 <span class="sd">    &quot;&quot;&quot;</span>

@@ -1150,23 +1150,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="xml">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#extraction_methods.plugins.xml--xml-method" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        XML Method
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1702,23 +1685,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="xml">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#extraction_methods.plugins.xml--xml-method" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        XML Method
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1797,9 +1763,6 @@
 <a id="extraction_methods.plugins.xml"></a>
     <div class="doc doc-contents first">
 
-        <p>..  _xml:</p>
-<h3 id="extraction_methods.plugins.xml--xml-method">XML Method</h3>
-
 
 
 
@@ -1836,39 +1799,13 @@
 
 
 
-        <p>Method: <code>xml</code></p>
+        <p><strong>Method name:</strong> <code>xml</code></p>
+<p>Processes XML documents to extract metadata</p>
 
 
-<details class="description" open>
-  <summary>Description</summary>
-  <p>Processes XML documents to extract metadata</p>
-</details>        <p>Configuration Options:
-.. list-table::</p>
-<pre><code>- ``input_term``: Term for method to run on.
-- ``template``: ``REQUIRED`` Template to follow.
-- ``properties``: ``REQUIRED`` List of properties to retrieve from the document.
-- ``namespaces``: ``REQUIRED`` Map of namespaces.
-</code></pre>
-
-
-<details class="extraction-keys" open>
-  <summary>Extraction Keys</summary>
-  <p>Extraction keys should be a map.</p>
-<p>.. list-table::</p>
-<pre><code>* - Name
-  - Description
-* - ``key``
-  - Key of the property. Passed to
-    `xml.etree.ElementTree.find() &lt;https://docs.python.org/3/library/xml.etree.elementtree.html?highlight=find#xml.etree.ElementTree.ElementTree.find&gt;`_
-    and also supports `xpath formatted &lt;https://docs.python.org/3/library/xml.etree.elementtree.html#xpath-support&gt;`_ accessors
-* - ``output_key``
-  - Key to output to.
-* - ``attribute``
-  - Allows you to select from the element attribute. In the absence of this value, the default behaviour is to access the text value of the key.
-    In some cases, you might want to access and attribute of the element.
-</code></pre>
-</details>        <p>Example configuration:
-.. code-block:: yaml</p>
+<details class="example-configuration" open>
+  <summary>Example configuration</summary>
+  <p>.. code-block:: yaml</p>
 <pre><code>- method: xml
   inputs:
     properties:
@@ -1876,7 +1813,7 @@
         key: './/gml:beginPosition'
         attribute: start
 </code></pre>
-<h3 id="extraction_methods.plugins.xml.XMLExtract--noqa-w605">noqa: W605</h3>
+</details>        <h3 id="extraction_methods.plugins.xml.XMLExtract--noqa-w605">noqa: W605</h3>
 
 
 
@@ -1887,7 +1824,12 @@
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>extraction_methods/plugins/xml.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 67</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
 <span class="normal"> 68</span>
 <span class="normal"> 69</span>
 <span class="normal"> 70</span>
@@ -1944,78 +1886,21 @@
 <span class="normal">121</span>
 <span class="normal">122</span>
 <span class="normal">123</span>
-<span class="normal">124</span>
-<span class="normal">125</span>
-<span class="normal">126</span>
-<span class="normal">127</span>
-<span class="normal">128</span>
-<span class="normal">129</span>
-<span class="normal">130</span>
-<span class="normal">131</span>
-<span class="normal">132</span>
-<span class="normal">133</span>
-<span class="normal">134</span>
-<span class="normal">135</span>
-<span class="normal">136</span>
-<span class="normal">137</span>
-<span class="normal">138</span>
-<span class="normal">139</span>
-<span class="normal">140</span>
-<span class="normal">141</span>
-<span class="normal">142</span>
-<span class="normal">143</span>
-<span class="normal">144</span>
-<span class="normal">145</span>
-<span class="normal">146</span>
-<span class="normal">147</span>
-<span class="normal">148</span>
-<span class="normal">149</span>
-<span class="normal">150</span>
-<span class="normal">151</span>
-<span class="normal">152</span>
-<span class="normal">153</span>
-<span class="normal">154</span>
-<span class="normal">155</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">XMLExtract</span><span class="p">(</span><span class="n">ExtractionMethod</span><span class="p">):</span>
+<span class="normal">124</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">XMLExtract</span><span class="p">(</span><span class="n">ExtractionMethod</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Method: ``xml``</span>
+<span class="sd">    **Method name:** ``xml``</span>
 
-<span class="sd">    Description:</span>
-<span class="sd">        Processes XML documents to extract metadata</span>
-
-<span class="sd">    Configuration Options:</span>
-<span class="sd">    .. list-table::</span>
-
-<span class="sd">        - ``input_term``: Term for method to run on.</span>
-<span class="sd">        - ``template``: ``REQUIRED`` Template to follow.</span>
-<span class="sd">        - ``properties``: ``REQUIRED`` List of properties to retrieve from the document.</span>
-<span class="sd">        - ``namespaces``: ``REQUIRED`` Map of namespaces.</span>
-
-<span class="sd">    Extraction Keys:</span>
-<span class="sd">        Extraction keys should be a map.</span>
-
-<span class="sd">        .. list-table::</span>
-
-<span class="sd">            * - Name</span>
-<span class="sd">              - Description</span>
-<span class="sd">            * - ``key``</span>
-<span class="sd">              - Key of the property. Passed to</span>
-<span class="sd">                `xml.etree.ElementTree.find() &lt;https://docs.python.org/3/library/xml.etree.elementtree.html?highlight=find#xml.etree.ElementTree.ElementTree.find&gt;`_</span>
-<span class="sd">                and also supports `xpath formatted &lt;https://docs.python.org/3/library/xml.etree.elementtree.html#xpath-support&gt;`_ accessors</span>
-<span class="sd">            * - ``output_key``</span>
-<span class="sd">              - Key to output to.</span>
-<span class="sd">            * - ``attribute``</span>
-<span class="sd">              - Allows you to select from the element attribute. In the absence of this value, the default behaviour is to access the text value of the key.</span>
-<span class="sd">                In some cases, you might want to access and attribute of the element.</span>
+<span class="sd">    Processes XML documents to extract metadata</span>
 
 <span class="sd">    Example configuration:</span>
-<span class="sd">    .. code-block:: yaml</span>
+<span class="sd">        .. code-block:: yaml</span>
 
-<span class="sd">        - method: xml</span>
-<span class="sd">          inputs:</span>
-<span class="sd">            properties:</span>
-<span class="sd">              - name: start_datetime</span>
-<span class="sd">                key: &#39;.//gml:beginPosition&#39;</span>
-<span class="sd">                attribute: start</span>
+<span class="sd">            - method: xml</span>
+<span class="sd">              inputs:</span>
+<span class="sd">                properties:</span>
+<span class="sd">                  - name: start_datetime</span>
+<span class="sd">                    key: &#39;.//gml:beginPosition&#39;</span>
+<span class="sd">                    attribute: start</span>
 
 <span class="sd">    # noqa: W605</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -2179,7 +2064,12 @@
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>extraction_methods/plugins/xml.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">44</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
 <span class="normal">45</span>
 <span class="normal">46</span>
 <span class="normal">47</span>
@@ -2194,12 +2084,7 @@
 <span class="normal">56</span>
 <span class="normal">57</span>
 <span class="normal">58</span>
-<span class="normal">59</span>
-<span class="normal">60</span>
-<span class="normal">61</span>
-<span class="normal">62</span>
-<span class="normal">63</span>
-<span class="normal">64</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">XMLInput</span><span class="p">(</span><span class="n">Input</span><span class="p">):</span>
+<span class="normal">59</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">XMLInput</span><span class="p">(</span><span class="n">Input</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Model for XML Input.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -2303,16 +2188,16 @@
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>extraction_methods/plugins/xml.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">32</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
 <span class="normal">33</span>
 <span class="normal">34</span>
 <span class="normal">35</span>
-<span class="normal">36</span>
-<span class="normal">37</span>
-<span class="normal">38</span>
-<span class="normal">39</span>
-<span class="normal">40</span>
-<span class="normal">41</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">XMLProperty</span><span class="p">(</span><span class="n">KeyOutputKey</span><span class="p">):</span>
+<span class="normal">36</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">XMLProperty</span><span class="p">(</span><span class="n">KeyOutputKey</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Model for XML property.</span>
 

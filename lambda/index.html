@@ -853,23 +853,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="lambda">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#extraction_methods.plugins.lambda--lambda-method" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Lambda Method
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1674,23 +1657,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="lambda">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#extraction_methods.plugins.lambda--lambda-method" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Lambda Method
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1741,9 +1707,6 @@
 <a id="extraction_methods.plugins.lambda"></a>
     <div class="doc doc-contents first">
 
-        <p>..  _lambda:</p>
-<h3 id="extraction_methods.plugins.lambda--lambda-method">Lambda Method</h3>
-
 
 
 
@@ -1780,25 +1743,14 @@
 
 
 
-        <p>Method: <code>lambda</code></p>
-
-
-<details class="description" open>
-  <summary>Description</summary>
-  <p>Accepts a dictionary. String values are popped from the dictionary and
+        <p><strong>Method name:</strong> <code>lambda</code></p>
+<p>Accepts a dictionary. String values are popped from the dictionary and
 are put back into the dictionary with the <code>key</code> specified.</p>
-</details>        <p>Configuration Options:
-.. list-table::</p>
-<pre><code>- ``function``: ``REQUIRED`` lambda function to be run.
-- ``output_key``: Optional name of the key you would like to output else
-                  response will be merged.
-- ``args``: Optional list of arguments for function.
-            Use $ for previously extracted terms
-- ``kwargs``: Optional dictionary of key word arguments for function.
-              Use $ for previously extracted terms
-</code></pre>
-<p>Example Configuration:
-.. code-block:: yaml</p>
+
+
+<details class="example-configuration" open>
+  <summary>Example Configuration</summary>
+  <p>.. code-block:: yaml</p>
 <pre><code>- method: lambda
   inputs:
     function: 'lambda x: x * x'
@@ -1809,7 +1761,7 @@ are put back into the dictionary with the <code>key</code> specified.</p>
       hello: world
       goodbye: all
 </code></pre>
-
+</details>
 
 
 
@@ -1819,7 +1771,12 @@ are put back into the dictionary with the <code>key</code> specified.</p>
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>extraction_methods/plugins/lambda.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">48</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
 <span class="normal">49</span>
 <span class="normal">50</span>
 <span class="normal">51</span>
@@ -1852,54 +1809,25 @@ are put back into the dictionary with the <code>key</code> specified.</p>
 <span class="normal">78</span>
 <span class="normal">79</span>
 <span class="normal">80</span>
-<span class="normal">81</span>
-<span class="normal">82</span>
-<span class="normal">83</span>
-<span class="normal">84</span>
-<span class="normal">85</span>
-<span class="normal">86</span>
-<span class="normal">87</span>
-<span class="normal">88</span>
-<span class="normal">89</span>
-<span class="normal">90</span>
-<span class="normal">91</span>
-<span class="normal">92</span>
-<span class="normal">93</span>
-<span class="normal">94</span>
-<span class="normal">95</span>
-<span class="normal">96</span>
-<span class="normal">97</span>
-<span class="normal">98</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">LambdaExtract</span><span class="p">(</span><span class="n">ExtractionMethod</span><span class="p">):</span>
+<span class="normal">81</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">LambdaExtract</span><span class="p">(</span><span class="n">ExtractionMethod</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Method: ``lambda``</span>
+<span class="sd">    **Method name:** ``lambda``</span>
 
-<span class="sd">    Description:</span>
-<span class="sd">        Accepts a dictionary. String values are popped from the dictionary and</span>
-<span class="sd">        are put back into the dictionary with the ``key`` specified.</span>
-
-<span class="sd">    Configuration Options:</span>
-<span class="sd">    .. list-table::</span>
-
-<span class="sd">        - ``function``: ``REQUIRED`` lambda function to be run.</span>
-<span class="sd">        - ``output_key``: Optional name of the key you would like to output else</span>
-<span class="sd">                          response will be merged.</span>
-<span class="sd">        - ``args``: Optional list of arguments for function.</span>
-<span class="sd">                    Use $ for previously extracted terms</span>
-<span class="sd">        - ``kwargs``: Optional dictionary of key word arguments for function.</span>
-<span class="sd">                      Use $ for previously extracted terms</span>
+<span class="sd">    Accepts a dictionary. String values are popped from the dictionary and</span>
+<span class="sd">    are put back into the dictionary with the ``key`` specified.</span>
 
 <span class="sd">    Example Configuration:</span>
-<span class="sd">    .. code-block:: yaml</span>
+<span class="sd">        .. code-block:: yaml</span>
 
-<span class="sd">        - method: lambda</span>
-<span class="sd">          inputs:</span>
-<span class="sd">            function: &#39;lambda x: x * x&#39;</span>
-<span class="sd">            args:</span>
-<span class="sd">              - hello</span>
-<span class="sd">              - $world</span>
-<span class="sd">            kwargs:</span>
-<span class="sd">              hello: world</span>
-<span class="sd">              goodbye: all</span>
+<span class="sd">            - method: lambda</span>
+<span class="sd">              inputs:</span>
+<span class="sd">                function: &#39;lambda x: x * x&#39;</span>
+<span class="sd">                args:</span>
+<span class="sd">                  - hello</span>
+<span class="sd">                  - $world</span>
+<span class="sd">                kwargs:</span>
+<span class="sd">                  hello: world</span>
+<span class="sd">                  goodbye: all</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">input_class</span> <span class="o">=</span> <span class="n">LambdaInput</span>
@@ -2051,7 +1979,12 @@ are put back into the dictionary with the <code>key</code> specified.</p>
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>extraction_methods/plugins/lambda.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">26</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
 <span class="normal">27</span>
 <span class="normal">28</span>
 <span class="normal">29</span>
@@ -2065,12 +1998,7 @@ are put back into the dictionary with the <code>key</code> specified.</p>
 <span class="normal">37</span>
 <span class="normal">38</span>
 <span class="normal">39</span>
-<span class="normal">40</span>
-<span class="normal">41</span>
-<span class="normal">42</span>
-<span class="normal">43</span>
-<span class="normal">44</span>
-<span class="normal">45</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">LambdaInput</span><span class="p">(</span><span class="n">Input</span><span class="p">):</span>  <span class="c1"># type: ignore[no-redef]</span>
+<span class="normal">40</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">LambdaInput</span><span class="p">(</span><span class="n">Input</span><span class="p">):</span>  <span class="c1"># type: ignore[no-redef]</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Model for Lambda Input.</span>
 <span class="sd">    &quot;&quot;&quot;</span>

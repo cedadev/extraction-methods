@@ -880,23 +880,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="netcdf">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#extraction_methods.plugins.netcdf--netcdf-method" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        NetCDF Method
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1691,23 +1674,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="netcdf">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#extraction_methods.plugins.netcdf--netcdf-method" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        NetCDF Method
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1775,9 +1741,6 @@
 <a id="extraction_methods.plugins.netcdf"></a>
     <div class="doc doc-contents first">
 
-        <p>..  _netcdf:</p>
-<h3 id="extraction_methods.plugins.netcdf--netcdf-method">NetCDF Method</h3>
-
 
 
 
@@ -1814,34 +1777,13 @@
 
 
 
-        <p>Method: <code>netcdf</code></p>
+        <p><strong>Method name:</strong> <code>netcdf</code></p>
 <p>Description:  Processes XML documents to extract metadata</p>
-<p>Configuration Options:
-.. list-table::</p>
-<pre><code>- ``extraction_keys``: List of keys to retrieve from the document.
-- ``filter_expr``: Regex to match against files to limit the attempts to known files
-- ``namespaces``: Map of namespaces
-</code></pre>
 
 
-<details class="extraction-keys" open>
-  <summary>Extraction Keys</summary>
-  <p>Extraction keys should be a map.</p>
-<p>.. list-table::</p>
-<pre><code>* - Name
-  - Description
-* - ``output_key``
-  - Name of the outputted attribute
-* - ``key``
-  - Access key to extract the required data. Passed to
-    `xml.etree.ElementTree.find() &lt;https://docs.python.org/3/library/xml.etree.elementtree.html?highlight=find#xml.etree.ElementTree.ElementTree.find&gt;`_
-    and also supports `xpath formatted &lt;https://docs.python.org/3/library/xml.etree.elementtree.html#xpath-support&gt;`_ accessors
-* - ``attribute``
-  - Allows you to select from the element attribute. In the absence of this value, the default behaviour is to access the text value of the key.
-    In some cases, you might want to access and attribute of the element
-</code></pre>
-</details>        <p>Example configuration:
-.. code-block:: yaml</p>
+<details class="example-configuration" open>
+  <summary>Example configuration</summary>
+  <p>.. code-block:: yaml</p>
 <pre><code>- method: xml
   inputs:
     filter_expr: '\.manifest$'
@@ -1850,7 +1792,7 @@
         key: './/gml:beginPosition'
         attribute: start
 </code></pre>
-<h3 id="extraction_methods.plugins.netcdf.NetCDFExtract--noqa-w605">noqa: W605</h3>
+</details>        <h3 id="extraction_methods.plugins.netcdf.NetCDFExtract--noqa-w605">noqa: W605</h3>
 
 
 
@@ -1861,7 +1803,12 @@
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>extraction_methods/plugins/netcdf.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 61</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 56</span>
+<span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
 <span class="normal"> 62</span>
 <span class="normal"> 63</span>
 <span class="normal"> 64</span>
@@ -1918,75 +1865,22 @@
 <span class="normal">115</span>
 <span class="normal">116</span>
 <span class="normal">117</span>
-<span class="normal">118</span>
-<span class="normal">119</span>
-<span class="normal">120</span>
-<span class="normal">121</span>
-<span class="normal">122</span>
-<span class="normal">123</span>
-<span class="normal">124</span>
-<span class="normal">125</span>
-<span class="normal">126</span>
-<span class="normal">127</span>
-<span class="normal">128</span>
-<span class="normal">129</span>
-<span class="normal">130</span>
-<span class="normal">131</span>
-<span class="normal">132</span>
-<span class="normal">133</span>
-<span class="normal">134</span>
-<span class="normal">135</span>
-<span class="normal">136</span>
-<span class="normal">137</span>
-<span class="normal">138</span>
-<span class="normal">139</span>
-<span class="normal">140</span>
-<span class="normal">141</span>
-<span class="normal">142</span>
-<span class="normal">143</span>
-<span class="normal">144</span>
-<span class="normal">145</span>
-<span class="normal">146</span>
-<span class="normal">147</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">NetCDFExtract</span><span class="p">(</span><span class="n">ExtractionMethod</span><span class="p">):</span>
+<span class="normal">118</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">NetCDFExtract</span><span class="p">(</span><span class="n">ExtractionMethod</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Method: ``netcdf``</span>
+<span class="sd">    **Method name:** ``netcdf``</span>
 
 <span class="sd">    Description:  Processes XML documents to extract metadata</span>
 
-<span class="sd">    Configuration Options:</span>
-<span class="sd">    .. list-table::</span>
-
-<span class="sd">        - ``extraction_keys``: List of keys to retrieve from the document.</span>
-<span class="sd">        - ``filter_expr``: Regex to match against files to limit the attempts to known files</span>
-<span class="sd">        - ``namespaces``: Map of namespaces</span>
-
-<span class="sd">    Extraction Keys:</span>
-<span class="sd">        Extraction keys should be a map.</span>
-
-<span class="sd">        .. list-table::</span>
-
-<span class="sd">            * - Name</span>
-<span class="sd">              - Description</span>
-<span class="sd">            * - ``output_key``</span>
-<span class="sd">              - Name of the outputted attribute</span>
-<span class="sd">            * - ``key``</span>
-<span class="sd">              - Access key to extract the required data. Passed to</span>
-<span class="sd">                `xml.etree.ElementTree.find() &lt;https://docs.python.org/3/library/xml.etree.elementtree.html?highlight=find#xml.etree.ElementTree.ElementTree.find&gt;`_</span>
-<span class="sd">                and also supports `xpath formatted &lt;https://docs.python.org/3/library/xml.etree.elementtree.html#xpath-support&gt;`_ accessors</span>
-<span class="sd">            * - ``attribute``</span>
-<span class="sd">              - Allows you to select from the element attribute. In the absence of this value, the default behaviour is to access the text value of the key.</span>
-<span class="sd">                In some cases, you might want to access and attribute of the element</span>
-
 <span class="sd">    Example configuration:</span>
-<span class="sd">    .. code-block:: yaml</span>
+<span class="sd">        .. code-block:: yaml</span>
 
-<span class="sd">        - method: xml</span>
-<span class="sd">          inputs:</span>
-<span class="sd">            filter_expr: &#39;\.manifest$&#39;</span>
-<span class="sd">            extraction_keys:</span>
-<span class="sd">              - name: start_datetime</span>
-<span class="sd">                key: &#39;.//gml:beginPosition&#39;</span>
-<span class="sd">                attribute: start</span>
+<span class="sd">            - method: xml</span>
+<span class="sd">              inputs:</span>
+<span class="sd">                filter_expr: &#39;\.manifest$&#39;</span>
+<span class="sd">                extraction_keys:</span>
+<span class="sd">                  - name: start_datetime</span>
+<span class="sd">                    key: &#39;.//gml:beginPosition&#39;</span>
+<span class="sd">                    attribute: start</span>
 
 <span class="sd">    # noqa: W605</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -2197,7 +2091,12 @@
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>extraction_methods/plugins/netcdf.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">27</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
 <span class="normal">28</span>
 <span class="normal">29</span>
 <span class="normal">30</span>
@@ -2220,12 +2119,7 @@
 <span class="normal">47</span>
 <span class="normal">48</span>
 <span class="normal">49</span>
-<span class="normal">50</span>
-<span class="normal">51</span>
-<span class="normal">52</span>
-<span class="normal">53</span>
-<span class="normal">54</span>
-<span class="normal">55</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">NetCDFInput</span><span class="p">(</span><span class="n">Input</span><span class="p">):</span>
+<span class="normal">50</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">NetCDFInput</span><span class="p">(</span><span class="n">Input</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Model for NetCDF Input.</span>
 <span class="sd">    &quot;&quot;&quot;</span>

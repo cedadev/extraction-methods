@@ -1331,23 +1331,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="intake_esm">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#extraction_methods.plugins.assets.backends.intake_esm--intake-assets-backend" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Intake Assets Backend
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1678,23 +1661,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="intake_esm">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#extraction_methods.plugins.assets.backends.intake_esm--intake-assets-backend" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Intake Assets Backend
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1745,9 +1711,6 @@
 <a id="extraction_methods.plugins.assets.backends.intake_esm"></a>
     <div class="doc doc-contents first">
 
-        <p>..  _intake-assets:</p>
-<h3 id="extraction_methods.plugins.assets.backends.intake_esm--intake-assets-backend">Intake Assets Backend</h3>
-
 
 
 
@@ -1784,34 +1747,21 @@
 
 
 
-        <p>Method: <code>intake_assets</code></p>
-
-
-<details class="description" open>
-  <summary>Description</summary>
-  <p>Performs Search on intake catalog to provide a stream of assets for procesing.
+        <p><strong>Method name:</strong> <code>intake_assets</code></p>
+<p>Performs Search on intake catalog to provide a stream of assets for procesing.
 Uses an <code>Intake catalog &lt;https://intake.readthedocs.io/&gt;</code>_
 as a source for file objects.</p>
-</details>        <p>Configuration Options:
-.. list-table::</p>
-<pre><code>- ``input_term``: The URI of a path or URL to an ESM collection JSON
-  file. ``DEFAULT``: ``$uri``
-- ``href_term``: The column header which contains the URI to the file
-  object. ``DEFAULT``: ``path``
-- ``catalog_kwargs``: Optional kwargs to pass to `intake.open_esm_datastore
-  &lt;https://intake-esm.readthedocs.io/en/latest
-  /api.html#intake_esm.core.esm_datastore&gt;`_
-- ``search_kwargs``: Optional kwargs to pass to `esm_datastore.search
-  &lt;https://intake-esm.readthedocs.io/en/latest
-  /api.html#intake_esm.core.esm_datastore.search&gt;`_
-</code></pre>
-<p>Example Configuration:
-.. code-block:: yaml</p>
-<pre><code>- method: intake_esm
-  inputs:
-    href_term: url
-</code></pre>
 
+
+<details class="example-configuration" open>
+  <summary>Example Configuration</summary>
+  <p>.. code-block:: yaml</p>
+<ul>
+<li>method: intake_esm
+  inputs:
+    href_term: url</li>
+</ul>
+</details>
 
 
 
@@ -1821,7 +1771,12 @@ as a source for file objects.</p>
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>extraction_methods/plugins/assets/backends/intake_esm.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">51</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
 <span class="normal">52</span>
 <span class="normal">53</span>
 <span class="normal">54</span>
@@ -1848,51 +1803,16 @@ as a source for file objects.</p>
 <span class="normal">75</span>
 <span class="normal">76</span>
 <span class="normal">77</span>
-<span class="normal">78</span>
-<span class="normal">79</span>
-<span class="normal">80</span>
-<span class="normal">81</span>
-<span class="normal">82</span>
-<span class="normal">83</span>
-<span class="normal">84</span>
-<span class="normal">85</span>
-<span class="normal">86</span>
-<span class="normal">87</span>
-<span class="normal">88</span>
-<span class="normal">89</span>
-<span class="normal">90</span>
-<span class="normal">91</span>
-<span class="normal">92</span>
-<span class="normal">93</span>
-<span class="normal">94</span>
-<span class="normal">95</span>
-<span class="normal">96</span>
-<span class="normal">97</span>
-<span class="normal">98</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">IntakeESMAssets</span><span class="p">(</span><span class="n">Backend</span><span class="p">):</span>
+<span class="normal">78</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">IntakeESMAssets</span><span class="p">(</span><span class="n">Backend</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Method: ``intake_assets``</span>
+<span class="sd">    **Method name:** ``intake_assets``</span>
 
-<span class="sd">    Description:</span>
-<span class="sd">        Performs Search on intake catalog to provide a stream of assets for procesing.</span>
-<span class="sd">        Uses an `Intake catalog &lt;https://intake.readthedocs.io/&gt;`_</span>
-<span class="sd">        as a source for file objects.</span>
-
-<span class="sd">    Configuration Options:</span>
-<span class="sd">    .. list-table::</span>
-
-<span class="sd">        - ``input_term``: The URI of a path or URL to an ESM collection JSON</span>
-<span class="sd">          file. ``DEFAULT``: ``$uri``</span>
-<span class="sd">        - ``href_term``: The column header which contains the URI to the file</span>
-<span class="sd">          object. ``DEFAULT``: ``path``</span>
-<span class="sd">        - ``catalog_kwargs``: Optional kwargs to pass to `intake.open_esm_datastore</span>
-<span class="sd">          &lt;https://intake-esm.readthedocs.io/en/latest</span>
-<span class="sd">          /api.html#intake_esm.core.esm_datastore&gt;`_</span>
-<span class="sd">        - ``search_kwargs``: Optional kwargs to pass to `esm_datastore.search</span>
-<span class="sd">          &lt;https://intake-esm.readthedocs.io/en/latest</span>
-<span class="sd">          /api.html#intake_esm.core.esm_datastore.search&gt;`_</span>
+<span class="sd">    Performs Search on intake catalog to provide a stream of assets for procesing.</span>
+<span class="sd">    Uses an `Intake catalog &lt;https://intake.readthedocs.io/&gt;`_</span>
+<span class="sd">    as a source for file objects.</span>
 
 <span class="sd">    Example Configuration:</span>
-<span class="sd">    .. code-block:: yaml</span>
+<span class="sd">        .. code-block:: yaml</span>
 
 <span class="sd">        - method: intake_esm</span>
 <span class="sd">          inputs:</span>
@@ -2047,7 +1967,12 @@ as a source for file objects.</p>
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>extraction_methods/plugins/assets/backends/intake_esm.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">28</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
 <span class="normal">29</span>
 <span class="normal">30</span>
 <span class="normal">31</span>
@@ -2062,12 +1987,7 @@ as a source for file objects.</p>
 <span class="normal">40</span>
 <span class="normal">41</span>
 <span class="normal">42</span>
-<span class="normal">43</span>
-<span class="normal">44</span>
-<span class="normal">45</span>
-<span class="normal">46</span>
-<span class="normal">47</span>
-<span class="normal">48</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">IntakeESMAssetsInput</span><span class="p">(</span><span class="n">Input</span><span class="p">):</span>
+<span class="normal">43</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">IntakeESMAssetsInput</span><span class="p">(</span><span class="n">Input</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Model for IntakeESM Assets Backend Input.</span>
 <span class="sd">    &quot;&quot;&quot;</span>

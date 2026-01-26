@@ -1226,23 +1226,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="assets">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#extraction_methods.plugins.assets.assets--stac-assets-extraction" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        STAC Assets Extraction
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1676,23 +1659,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="assets">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#extraction_methods.plugins.assets.assets--stac-assets-extraction" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        STAC Assets Extraction
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1743,9 +1709,6 @@
 <a id="extraction_methods.plugins.assets.assets"></a>
     <div class="doc doc-contents first">
 
-        <p>..  _assets:</p>
-<h3 id="extraction_methods.plugins.assets.assets--stac-assets-extraction">STAC Assets Extraction</h3>
-
 
 
 
@@ -1782,20 +1745,13 @@
 
 
 
-        <p>Method: <code>assets</code></p>
+        <p><strong>Method name:</strong> <code>assets</code></p>
+<p>Method to generate a dictionary of STAC Assets.</p>
 
 
-<details class="description" open>
-  <summary>Description</summary>
-  <p>Method to generate a dictionary of STAC Assets.</p>
-</details>        <p>Configuration Options:
-.. list-table::</p>
-<pre><code>- ``backend``: Backend name and inputs
-- ``extraction_methods``: Extraction methods to run on assets
-- ``output_key``: key to output to
-</code></pre>
-<p>Configuration Example:
-.. code-block:: yaml</p>
+<details class="example-configuration" open>
+  <summary>Example Configuration</summary>
+  <p>.. code-block:: yaml</p>
 <pre><code>- method: assets
   inputs:
     backend:
@@ -1809,7 +1765,7 @@
           defaults:
             hello: world
 </code></pre>
-
+</details>
 
 
 
@@ -1819,7 +1775,12 @@
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>extraction_methods/plugins/assets/assets.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">49</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
 <span class="normal">50</span>
 <span class="normal">51</span>
 <span class="normal">52</span>
@@ -1856,47 +1817,28 @@
 <span class="normal">83</span>
 <span class="normal">84</span>
 <span class="normal">85</span>
-<span class="normal">86</span>
-<span class="normal">87</span>
-<span class="normal">88</span>
-<span class="normal">89</span>
-<span class="normal">90</span>
-<span class="normal">91</span>
-<span class="normal">92</span>
-<span class="normal">93</span>
-<span class="normal">94</span>
-<span class="normal">95</span>
-<span class="normal">96</span>
-<span class="normal">97</span>
-<span class="normal">98</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">AssetExtract</span><span class="p">(</span><span class="n">SetEntryPointsMixin</span><span class="p">,</span> <span class="n">ExtractionMethod</span><span class="p">):</span>
+<span class="normal">86</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">AssetExtract</span><span class="p">(</span><span class="n">SetEntryPointsMixin</span><span class="p">,</span> <span class="n">ExtractionMethod</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Method: ``assets``</span>
+<span class="sd">    **Method name:** ``assets``</span>
 
-<span class="sd">    Description:</span>
-<span class="sd">        Method to generate a dictionary of STAC Assets.</span>
+<span class="sd">    Method to generate a dictionary of STAC Assets.</span>
 
-<span class="sd">    Configuration Options:</span>
-<span class="sd">    .. list-table::</span>
 
-<span class="sd">        - ``backend``: Backend name and inputs</span>
-<span class="sd">        - ``extraction_methods``: Extraction methods to run on assets</span>
-<span class="sd">        - ``output_key``: key to output to</span>
+<span class="sd">    Example Configuration:</span>
+<span class="sd">        .. code-block:: yaml</span>
 
-<span class="sd">    Configuration Example:</span>
-<span class="sd">    .. code-block:: yaml</span>
-
-<span class="sd">        - method: assets</span>
-<span class="sd">          inputs:</span>
-<span class="sd">            backend:</span>
-<span class="sd">              name: elasticsearch</span>
+<span class="sd">            - method: assets</span>
 <span class="sd">              inputs:</span>
-<span class="sd">                connection_kwargs:</span>
-<span class="sd">                  hosts: [&#39;host1:9200&#39;,&#39;host2:9200&#39;]</span>
-<span class="sd">            extraction_methods:</span>
-<span class="sd">              - method: default</span>
-<span class="sd">                inputs:</span>
-<span class="sd">                  defaults:</span>
-<span class="sd">                    hello: world</span>
+<span class="sd">                backend:</span>
+<span class="sd">                  name: elasticsearch</span>
+<span class="sd">                  inputs:</span>
+<span class="sd">                    connection_kwargs:</span>
+<span class="sd">                      hosts: [&#39;host1:9200&#39;,&#39;host2:9200&#39;]</span>
+<span class="sd">                extraction_methods:</span>
+<span class="sd">                  - method: default</span>
+<span class="sd">                    inputs:</span>
+<span class="sd">                      defaults:</span>
+<span class="sd">                        hello: world</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">input_class</span> <span class="o">=</span> <span class="n">AssetInput</span>
@@ -2033,7 +1975,12 @@
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>extraction_methods/plugins/assets/assets.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">31</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
 <span class="normal">32</span>
 <span class="normal">33</span>
 <span class="normal">34</span>
@@ -2043,12 +1990,7 @@
 <span class="normal">38</span>
 <span class="normal">39</span>
 <span class="normal">40</span>
-<span class="normal">41</span>
-<span class="normal">42</span>
-<span class="normal">43</span>
-<span class="normal">44</span>
-<span class="normal">45</span>
-<span class="normal">46</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">AssetInput</span><span class="p">(</span><span class="n">Input</span><span class="p">):</span>
+<span class="normal">41</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">AssetInput</span><span class="p">(</span><span class="n">Input</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Model for Asset Method Input.</span>
 <span class="sd">    &quot;&quot;&quot;</span>

@@ -988,23 +988,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="regex_label">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#extraction_methods.plugins.regex_label--regex-label-method" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Regex Label Method
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1691,23 +1674,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="regex_label">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#extraction_methods.plugins.regex_label--regex-label-method" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Regex Label Method
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1775,9 +1741,6 @@
 <a id="extraction_methods.plugins.regex_label"></a>
     <div class="doc doc-contents first">
 
-        <p>..  _regex-label:</p>
-<h3 id="extraction_methods.plugins.regex_label--regex-label-method">Regex Label Method</h3>
-
 
 
 
@@ -1814,29 +1777,20 @@
 
 
 
-        <p>Method: <code>regex_label</code></p>
+        <p><strong>Method name:</strong> <code>regex_label</code></p>
+<p>Adds label if full match of regex.</p>
 
 
-<details class="description" open>
-  <summary>Description</summary>
-  <p>Adds label if full match of regex.</p>
-</details>        <p>Configuration Options:
-.. list-table::</p>
-<pre><code>- ``input_term``: term for method to run on.
-- ``label``: ``REQUIRED`` Label to add if regex passes.
-- ``regex``: ``REQUIRED`` Regex to test against.
-- ``allow_multiple``: True if multiple labels are allowed.
-- ``output_key``: Term for method to output to.
-</code></pre>
-<p>Example configuration:
-.. code-block:: yaml</p>
+<details class="example-configuration" open>
+  <summary>Example configuration</summary>
+  <p>.. code-block:: yaml</p>
 <pre><code>- method: regex_label
   inputs:
     label: metadata
     regex: README
     allow_multiple: true
 </code></pre>
-<h3 id="extraction_methods.plugins.regex_label.RegexLabelExtract--noqa-w605">noqa: W605</h3>
+</details>        <h3 id="extraction_methods.plugins.regex_label.RegexLabelExtract--noqa-w605">noqa: W605</h3>
 
 
 
@@ -1847,7 +1801,12 @@
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>extraction_methods/plugins/regex_label.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">53</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
 <span class="normal">54</span>
 <span class="normal">55</span>
 <span class="normal">56</span>
@@ -1872,45 +1831,20 @@
 <span class="normal">75</span>
 <span class="normal">76</span>
 <span class="normal">77</span>
-<span class="normal">78</span>
-<span class="normal">79</span>
-<span class="normal">80</span>
-<span class="normal">81</span>
-<span class="normal">82</span>
-<span class="normal">83</span>
-<span class="normal">84</span>
-<span class="normal">85</span>
-<span class="normal">86</span>
-<span class="normal">87</span>
-<span class="normal">88</span>
-<span class="normal">89</span>
-<span class="normal">90</span>
-<span class="normal">91</span>
-<span class="normal">92</span>
-<span class="normal">93</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">RegexLabelExtract</span><span class="p">(</span><span class="n">ExtractionMethod</span><span class="p">):</span>
+<span class="normal">78</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">RegexLabelExtract</span><span class="p">(</span><span class="n">ExtractionMethod</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Method: ``regex_label``</span>
+<span class="sd">    **Method name:** ``regex_label``</span>
 
-<span class="sd">    Description:</span>
-<span class="sd">        Adds label if full match of regex.</span>
-
-<span class="sd">    Configuration Options:</span>
-<span class="sd">    .. list-table::</span>
-
-<span class="sd">        - ``input_term``: term for method to run on.</span>
-<span class="sd">        - ``label``: ``REQUIRED`` Label to add if regex passes.</span>
-<span class="sd">        - ``regex``: ``REQUIRED`` Regex to test against.</span>
-<span class="sd">        - ``allow_multiple``: True if multiple labels are allowed.</span>
-<span class="sd">        - ``output_key``: Term for method to output to.</span>
+<span class="sd">    Adds label if full match of regex.</span>
 
 <span class="sd">    Example configuration:</span>
-<span class="sd">    .. code-block:: yaml</span>
+<span class="sd">        .. code-block:: yaml</span>
 
-<span class="sd">        - method: regex_label</span>
-<span class="sd">          inputs:</span>
-<span class="sd">            label: metadata</span>
-<span class="sd">            regex: README</span>
-<span class="sd">            allow_multiple: true</span>
+<span class="sd">            - method: regex_label</span>
+<span class="sd">              inputs:</span>
+<span class="sd">                label: metadata</span>
+<span class="sd">                regex: README</span>
+<span class="sd">                allow_multiple: true</span>
 
 <span class="sd">    # noqa: W605</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -2075,7 +2009,12 @@
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>extraction_methods/plugins/regex_label.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">28</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
 <span class="normal">29</span>
 <span class="normal">30</span>
 <span class="normal">31</span>
@@ -2092,12 +2031,7 @@
 <span class="normal">42</span>
 <span class="normal">43</span>
 <span class="normal">44</span>
-<span class="normal">45</span>
-<span class="normal">46</span>
-<span class="normal">47</span>
-<span class="normal">48</span>
-<span class="normal">49</span>
-<span class="normal">50</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">RegexLabelInput</span><span class="p">(</span><span class="n">Input</span><span class="p">):</span>
+<span class="normal">45</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">RegexLabelInput</span><span class="p">(</span><span class="n">Input</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Model for Regex Label Input.</span>
 <span class="sd">    &quot;&quot;&quot;</span>

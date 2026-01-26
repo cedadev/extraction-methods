@@ -961,23 +961,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="regex">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#extraction_methods.plugins.regex--regex-method" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Regex Method
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1691,23 +1674,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="regex">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#extraction_methods.plugins.regex--regex-method" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Regex Method
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1775,9 +1741,6 @@
 <a id="extraction_methods.plugins.regex"></a>
     <div class="doc doc-contents first">
 
-        <p>..  _regex:</p>
-<h3 id="extraction_methods.plugins.regex--regex-method">Regex Method</h3>
-
 
 
 
@@ -1814,26 +1777,20 @@
 
 
 
-        <p>Method: <code>regex</code></p>
-
-
-<details class="description" open>
-  <summary>Description</summary>
-  <p>Takes an input string and a regex with
+        <p><strong>Method name:</strong> <code>regex</code></p>
+<p>Takes an input string and a regex with
 named capture groups and returns a dictionary of the values
 extracted using the named capture groups.</p>
-</details>        <p>Configuration Options:
-.. list-table::</p>
-<pre><code>- ``input_term``: Term for regex to be ran on.
-- ``regex``: ``REQUIRED`` The regular expression to match against.
-</code></pre>
-<p>Example configuration:
-.. code-block:: yaml</p>
+
+
+<details class="example-configuration" open>
+  <summary>Example configuration</summary>
+  <p>.. code-block:: yaml</p>
 <pre><code>- method: regex
   inputs:
     regex: ^(?:[^_]*_){2}(?P&lt;datetime&gt;\d*)
 </code></pre>
-<h3 id="extraction_methods.plugins.regex.RegexExtract--noqa-w605">noqa: W605</h3>
+</details>        <h3 id="extraction_methods.plugins.regex.RegexExtract--noqa-w605">noqa: W605</h3>
 
 
 
@@ -1844,7 +1801,12 @@ extracted using the named capture groups.</p>
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>extraction_methods/plugins/regex.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">42</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
 <span class="normal">43</span>
 <span class="normal">44</span>
 <span class="normal">45</span>
@@ -1870,39 +1832,20 @@ extracted using the named capture groups.</p>
 <span class="normal">65</span>
 <span class="normal">66</span>
 <span class="normal">67</span>
-<span class="normal">68</span>
-<span class="normal">69</span>
-<span class="normal">70</span>
-<span class="normal">71</span>
-<span class="normal">72</span>
-<span class="normal">73</span>
-<span class="normal">74</span>
-<span class="normal">75</span>
-<span class="normal">76</span>
-<span class="normal">77</span>
-<span class="normal">78</span>
-<span class="normal">79</span>
-<span class="normal">80</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">RegexExtract</span><span class="p">(</span><span class="n">ExtractionMethod</span><span class="p">):</span>
+<span class="normal">68</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">RegexExtract</span><span class="p">(</span><span class="n">ExtractionMethod</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Method: ``regex``</span>
+<span class="sd">    **Method name:** ``regex``</span>
 
-<span class="sd">    Description:</span>
-<span class="sd">        Takes an input string and a regex with</span>
-<span class="sd">        named capture groups and returns a dictionary of the values</span>
-<span class="sd">        extracted using the named capture groups.</span>
-
-<span class="sd">    Configuration Options:</span>
-<span class="sd">    .. list-table::</span>
-
-<span class="sd">        - ``input_term``: Term for regex to be ran on.</span>
-<span class="sd">        - ``regex``: ``REQUIRED`` The regular expression to match against.</span>
+<span class="sd">    Takes an input string and a regex with</span>
+<span class="sd">    named capture groups and returns a dictionary of the values</span>
+<span class="sd">    extracted using the named capture groups.</span>
 
 <span class="sd">    Example configuration:</span>
-<span class="sd">    .. code-block:: yaml</span>
+<span class="sd">        .. code-block:: yaml</span>
 
-<span class="sd">        - method: regex</span>
-<span class="sd">          inputs:</span>
-<span class="sd">            regex: ^(?:[^_]*_){2}(?P&lt;datetime&gt;\d*)</span>
+<span class="sd">            - method: regex</span>
+<span class="sd">              inputs:</span>
+<span class="sd">                regex: ^(?:[^_]*_){2}(?P&lt;datetime&gt;\d*)</span>
 
 <span class="sd">    # noqa: W605</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -2020,18 +1963,18 @@ extracted using the named capture groups.</p>
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>extraction_methods/plugins/regex.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">28</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
 <span class="normal">29</span>
 <span class="normal">30</span>
 <span class="normal">31</span>
 <span class="normal">32</span>
 <span class="normal">33</span>
-<span class="normal">34</span>
-<span class="normal">35</span>
-<span class="normal">36</span>
-<span class="normal">37</span>
-<span class="normal">38</span>
-<span class="normal">39</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">RegexInput</span><span class="p">(</span><span class="n">Input</span><span class="p">):</span>
+<span class="normal">34</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">RegexInput</span><span class="p">(</span><span class="n">Input</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Model for Regex Input.</span>
 <span class="sd">    &quot;&quot;&quot;</span>

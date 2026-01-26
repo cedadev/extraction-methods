@@ -1447,23 +1447,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="header">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#extraction_methods.plugins.header.header--header-method" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Header Method
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1676,23 +1659,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="header">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#extraction_methods.plugins.header.header--header-method" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Header Method
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1743,9 +1709,6 @@
 <a id="extraction_methods.plugins.header.header"></a>
     <div class="doc doc-contents first">
 
-        <p>..  _header:</p>
-<h3 id="extraction_methods.plugins.header.header--header-method">Header Method</h3>
-
 
 
 
@@ -1782,20 +1745,16 @@
 
 
 
-        <p>Method: <code>header</code></p>
-
-
-<details class="description" open>
-  <summary>Description</summary>
-  <p>Takes a header backend to run and returns the updated body
+        <p><strong>Method name:</strong> <code>header</code></p>
+<p>Takes a header backend to run and returns the updated body
 from the configured backend.</p>
-</details>        <p>Configuration Options:
-.. list-table::</p>
-<pre><code>- ``backend``: Specify which backend
-</code></pre>
-<p>Example configuration:
-.. code-block:: yaml</p>
-<pre><code>- method: header
+
+
+<details class="example-configuration" open>
+  <summary>Example configuration</summary>
+  <p>.. code-block:: yaml</p>
+<ul>
+<li>method: header
   inputs:
     backend:
         name: xarray
@@ -1804,9 +1763,9 @@ from the configured backend.</p>
             decode_times: False
           attributes:
             - name: institution
-            - name: sensor
-</code></pre>
-
+            - name: sensor</li>
+</ul>
+</details>
 
 
 
@@ -1816,7 +1775,12 @@ from the configured backend.</p>
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>extraction_methods/plugins/header/header.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">39</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
 <span class="normal">40</span>
 <span class="normal">41</span>
 <span class="normal">42</span>
@@ -1843,32 +1807,15 @@ from the configured backend.</p>
 <span class="normal">63</span>
 <span class="normal">64</span>
 <span class="normal">65</span>
-<span class="normal">66</span>
-<span class="normal">67</span>
-<span class="normal">68</span>
-<span class="normal">69</span>
-<span class="normal">70</span>
-<span class="normal">71</span>
-<span class="normal">72</span>
-<span class="normal">73</span>
-<span class="normal">74</span>
-<span class="normal">75</span>
-<span class="normal">76</span>
-<span class="normal">77</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">HeaderExtract</span><span class="p">(</span><span class="n">ExtractionMethod</span><span class="p">,</span> <span class="n">SetEntryPointsMixin</span><span class="p">):</span>
+<span class="normal">66</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">HeaderExtract</span><span class="p">(</span><span class="n">ExtractionMethod</span><span class="p">,</span> <span class="n">SetEntryPointsMixin</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Method: ``header``</span>
+<span class="sd">    **Method name:** ``header``</span>
 
-<span class="sd">    Description:</span>
-<span class="sd">        Takes a header backend to run and returns the updated body</span>
-<span class="sd">        from the configured backend.</span>
-
-<span class="sd">    Configuration Options:</span>
-<span class="sd">    .. list-table::</span>
-
-<span class="sd">        - ``backend``: Specify which backend</span>
+<span class="sd">    Takes a header backend to run and returns the updated body</span>
+<span class="sd">    from the configured backend.</span>
 
 <span class="sd">    Example configuration:</span>
-<span class="sd">    .. code-block:: yaml</span>
+<span class="sd">        .. code-block:: yaml</span>
 
 <span class="sd">        - method: header</span>
 <span class="sd">          inputs:</span>
@@ -1976,14 +1923,14 @@ from the configured backend.</p>
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>extraction_methods/plugins/header/header.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">29</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
 <span class="normal">30</span>
-<span class="normal">31</span>
-<span class="normal">32</span>
-<span class="normal">33</span>
-<span class="normal">34</span>
-<span class="normal">35</span>
-<span class="normal">36</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">HeaderInput</span><span class="p">(</span><span class="n">Input</span><span class="p">):</span>
+<span class="normal">31</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">HeaderInput</span><span class="p">(</span><span class="n">Input</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Model for Header Method Input.</span>
 <span class="sd">    &quot;&quot;&quot;</span>

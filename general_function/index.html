@@ -637,23 +637,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="general_function">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#extraction_methods.plugins.general_function--general-function-method" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        General Function Method
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1685,23 +1668,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="general_function">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#extraction_methods.plugins.general_function--general-function-method" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        General Function Method
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1762,9 +1728,6 @@
 
 <a id="extraction_methods.plugins.general_function"></a>
     <div class="doc doc-contents first">
-
-        <p>..  general-function:</p>
-<h3 id="extraction_methods.plugins.general_function--general-function-method">General Function Method</h3>
 
 
 
@@ -1876,7 +1839,12 @@
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>extraction_methods/plugins/general_function.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">29</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
 <span class="normal">30</span>
 <span class="normal">31</span>
 <span class="normal">32</span>
@@ -1886,12 +1854,7 @@
 <span class="normal">36</span>
 <span class="normal">37</span>
 <span class="normal">38</span>
-<span class="normal">39</span>
-<span class="normal">40</span>
-<span class="normal">41</span>
-<span class="normal">42</span>
-<span class="normal">43</span>
-<span class="normal">44</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Function</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>  <span class="c1"># type: ignore[no-redef]</span>
+<span class="normal">39</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Function</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>  <span class="c1"># type: ignore[no-redef]</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Model for Fuction.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -1948,23 +1911,14 @@
 
 
 
-        <p>Method: <code>general_function</code></p>
-
-
-<details class="description" open>
-  <summary>Description</summary>
-  <p>Accepts a dictionary. String values are popped from the dictionary and
+        <p><strong>Method name:</strong> <code>general_function</code></p>
+<p>Accepts a dictionary. String values are popped from the dictionary and
 are put back into the dictionary with the <code>key</code> specified.</p>
-</details>        <p>Configuration Options:
-.. list-table::</p>
-<pre><code>- ``function``: ``REQUIRED`` Function to be run ``name``, ``args``, and ``kwargs``.
-- ``delimiter``: Optional text delimiter to put between module/function
-                names ``Default`` "."
-- ``output_key``: Optional name of the key you would like to output else
-                  response will be merged.
-</code></pre>
-<p>Example Configuration:
-.. code-block:: yaml</p>
+
+
+<details class="example-configuration" open>
+  <summary>Example Configuration</summary>
+  <p>.. code-block:: yaml</p>
 <pre><code>- method: general_function
   inputs:
     funtion:
@@ -1976,7 +1930,7 @@ are put back into the dictionary with the <code>key</code> specified.</p>
         hello: world
         foo: bar
 </code></pre>
-
+</details>
 
 
 
@@ -1986,7 +1940,12 @@ are put back into the dictionary with the <code>key</code> specified.</p>
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>extraction_methods/plugins/general_function.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 65</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
 <span class="normal"> 66</span>
 <span class="normal"> 67</span>
 <span class="normal"> 68</span>
@@ -2025,51 +1984,26 @@ are put back into the dictionary with the <code>key</code> specified.</p>
 <span class="normal">101</span>
 <span class="normal">102</span>
 <span class="normal">103</span>
-<span class="normal">104</span>
-<span class="normal">105</span>
-<span class="normal">106</span>
-<span class="normal">107</span>
-<span class="normal">108</span>
-<span class="normal">109</span>
-<span class="normal">110</span>
-<span class="normal">111</span>
-<span class="normal">112</span>
-<span class="normal">113</span>
-<span class="normal">114</span>
-<span class="normal">115</span>
-<span class="normal">116</span>
-<span class="normal">117</span>
-<span class="normal">118</span>
-<span class="normal">119</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">GeneralFunctionExtract</span><span class="p">(</span><span class="n">ExtractionMethod</span><span class="p">):</span>
+<span class="normal">104</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">GeneralFunctionExtract</span><span class="p">(</span><span class="n">ExtractionMethod</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Method: ``general_function``</span>
+<span class="sd">    **Method name:** ``general_function``</span>
 
-<span class="sd">    Description:</span>
-<span class="sd">        Accepts a dictionary. String values are popped from the dictionary and</span>
-<span class="sd">        are put back into the dictionary with the ``key`` specified.</span>
-
-<span class="sd">    Configuration Options:</span>
-<span class="sd">    .. list-table::</span>
-
-<span class="sd">        - ``function``: ``REQUIRED`` Function to be run ``name``, ``args``, and ``kwargs``.</span>
-<span class="sd">        - ``delimiter``: Optional text delimiter to put between module/function</span>
-<span class="sd">                        names ``Default`` &quot;.&quot;</span>
-<span class="sd">        - ``output_key``: Optional name of the key you would like to output else</span>
-<span class="sd">                          response will be merged.</span>
+<span class="sd">    Accepts a dictionary. String values are popped from the dictionary and</span>
+<span class="sd">    are put back into the dictionary with the ``key`` specified.</span>
 
 <span class="sd">    Example Configuration:</span>
-<span class="sd">    .. code-block:: yaml</span>
+<span class="sd">        .. code-block:: yaml</span>
 
-<span class="sd">        - method: general_function</span>
-<span class="sd">          inputs:</span>
-<span class="sd">            funtion:</span>
-<span class="sd">              name: import.path.to.the.fuction</span>
-<span class="sd">              args:</span>
-<span class="sd">                - hello</span>
-<span class="sd">                - world</span>
-<span class="sd">              kwargs:</span>
-<span class="sd">                hello: world</span>
-<span class="sd">                foo: bar</span>
+<span class="sd">            - method: general_function</span>
+<span class="sd">              inputs:</span>
+<span class="sd">                funtion:</span>
+<span class="sd">                  name: import.path.to.the.fuction</span>
+<span class="sd">                  args:</span>
+<span class="sd">                    - hello</span>
+<span class="sd">                    - world</span>
+<span class="sd">                  kwargs:</span>
+<span class="sd">                    hello: world</span>
+<span class="sd">                    foo: bar</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">input_class</span> <span class="o">=</span> <span class="n">GeneralFunctionInput</span>
@@ -2210,7 +2144,12 @@ are put back into the dictionary with the <code>key</code> specified.</p>
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>extraction_methods/plugins/general_function.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">47</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
 <span class="normal">48</span>
 <span class="normal">49</span>
 <span class="normal">50</span>
@@ -2220,12 +2159,7 @@ are put back into the dictionary with the <code>key</code> specified.</p>
 <span class="normal">54</span>
 <span class="normal">55</span>
 <span class="normal">56</span>
-<span class="normal">57</span>
-<span class="normal">58</span>
-<span class="normal">59</span>
-<span class="normal">60</span>
-<span class="normal">61</span>
-<span class="normal">62</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">GeneralFunctionInput</span><span class="p">(</span><span class="n">Input</span><span class="p">):</span>
+<span class="normal">57</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">GeneralFunctionInput</span><span class="p">(</span><span class="n">Input</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Model for General Fuction Input.</span>
 <span class="sd">    &quot;&quot;&quot;</span>

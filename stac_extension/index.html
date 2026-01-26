@@ -1096,23 +1096,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="stac_extension">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#extraction_methods.plugins.stac_extension--stac-extension-method" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        STAC Extension Method
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1685,23 +1668,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="stac_extension">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#extraction_methods.plugins.stac_extension--stac-extension-method" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        STAC Extension Method
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1762,9 +1728,6 @@
 
 <a id="extraction_methods.plugins.stac_extension"></a>
     <div class="doc doc-contents first">
-
-        <p>..  _stac-extension:</p>
-<h3 id="extraction_methods.plugins.stac_extension--stac-extension-method">STAC Extension Method</h3>
 
 
 
@@ -1876,7 +1839,12 @@
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>extraction_methods/plugins/stac_extension.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">28</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
 <span class="normal">29</span>
 <span class="normal">30</span>
 <span class="normal">31</span>
@@ -1884,12 +1852,7 @@
 <span class="normal">33</span>
 <span class="normal">34</span>
 <span class="normal">35</span>
-<span class="normal">36</span>
-<span class="normal">37</span>
-<span class="normal">38</span>
-<span class="normal">39</span>
-<span class="normal">40</span>
-<span class="normal">41</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">STACExtension</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="normal">36</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">STACExtension</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Model for STAC Extension.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -1944,19 +1907,14 @@
 
 
 
-        <p>Method: <code>stac_extension</code></p>
-
-
-<details class="description" open>
-  <summary>Description</summary>
-  <p>Accepts a list of extensions which contain url, prefix and
+        <p><strong>Method name:</strong> <code>stac_extension</code></p>
+<p>Accepts a list of extensions which contain url, prefix and
 list of properties.</p>
-</details>        <p>Configuration Options:
-.. list-table::</p>
-<pre><code>- ``extensions``: ``REQUIRED`` List of extensions.
-</code></pre>
-<p>Example Configuration:
-.. code-block:: yaml</p>
+
+
+<details class="example-configuration" open>
+  <summary>Example Configuration</summary>
+  <p>.. code-block:: yaml</p>
 <pre><code>- method: stac_extension
   inputs:
     extensions:
@@ -1966,7 +1924,7 @@ list of properties.</p>
           - foo
           - bar
 </code></pre>
-
+</details>
 
 
 
@@ -1976,7 +1934,12 @@ list of properties.</p>
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>extraction_methods/plugins/stac_extension.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">54</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
 <span class="normal">55</span>
 <span class="normal">56</span>
 <span class="normal">57</span>
@@ -2007,41 +1970,24 @@ list of properties.</p>
 <span class="normal">82</span>
 <span class="normal">83</span>
 <span class="normal">84</span>
-<span class="normal">85</span>
-<span class="normal">86</span>
-<span class="normal">87</span>
-<span class="normal">88</span>
-<span class="normal">89</span>
-<span class="normal">90</span>
-<span class="normal">91</span>
-<span class="normal">92</span>
-<span class="normal">93</span>
-<span class="normal">94</span>
-<span class="normal">95</span>
-<span class="normal">96</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">STACExtensionExtract</span><span class="p">(</span><span class="n">ExtractionMethod</span><span class="p">):</span>
+<span class="normal">85</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">STACExtensionExtract</span><span class="p">(</span><span class="n">ExtractionMethod</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Method: ``stac_extension``</span>
+<span class="sd">    **Method name:** ``stac_extension``</span>
 
-<span class="sd">    Description:</span>
-<span class="sd">        Accepts a list of extensions which contain url, prefix and</span>
-<span class="sd">        list of properties.</span>
-
-<span class="sd">    Configuration Options:</span>
-<span class="sd">    .. list-table::</span>
-
-<span class="sd">        - ``extensions``: ``REQUIRED`` List of extensions.</span>
+<span class="sd">    Accepts a list of extensions which contain url, prefix and</span>
+<span class="sd">    list of properties.</span>
 
 <span class="sd">    Example Configuration:</span>
-<span class="sd">    .. code-block:: yaml</span>
+<span class="sd">        .. code-block:: yaml</span>
 
-<span class="sd">        - method: stac_extension</span>
-<span class="sd">          inputs:</span>
-<span class="sd">            extensions:</span>
-<span class="sd">              - url: hello.com/v1.0.0/world.json</span>
-<span class="sd">                prefix: hello</span>
-<span class="sd">                properties:</span>
-<span class="sd">                  - foo</span>
-<span class="sd">                  - bar</span>
+<span class="sd">            - method: stac_extension</span>
+<span class="sd">              inputs:</span>
+<span class="sd">                extensions:</span>
+<span class="sd">                  - url: hello.com/v1.0.0/world.json</span>
+<span class="sd">                    prefix: hello</span>
+<span class="sd">                    properties:</span>
+<span class="sd">                      - foo</span>
+<span class="sd">                      - bar</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">input_class</span> <span class="o">=</span> <span class="n">STACExtensionInput</span>
@@ -2144,14 +2090,14 @@ list of properties.</p>
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>extraction_methods/plugins/stac_extension.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">44</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
 <span class="normal">45</span>
-<span class="normal">46</span>
-<span class="normal">47</span>
-<span class="normal">48</span>
-<span class="normal">49</span>
-<span class="normal">50</span>
-<span class="normal">51</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">STACExtensionInput</span><span class="p">(</span><span class="n">Input</span><span class="p">):</span>
+<span class="normal">46</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">STACExtensionInput</span><span class="p">(</span><span class="n">Input</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Model for STAC Extension Input.</span>
 <span class="sd">    &quot;&quot;&quot;</span>

@@ -718,23 +718,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="hash">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#extraction_methods.plugins.hash--hash-method" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Hash Method
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1674,23 +1657,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="hash">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#extraction_methods.plugins.hash--hash-method" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Hash Method
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1741,9 +1707,6 @@
 <a id="extraction_methods.plugins.hash"></a>
     <div class="doc doc-contents first">
 
-        <p>..  _hash:</p>
-<h3 id="extraction_methods.plugins.hash--hash-method">Hash Method</h3>
-
 
 
 
@@ -1780,25 +1743,19 @@
 
 
 
-        <p>Method: <code>hash</code></p>
+        <p><strong>Method name:</strong> <code>hash</code></p>
+<p>Hashes input string.</p>
 
 
-<details class="description" open>
-  <summary>Description</summary>
-  <p>Hashes input string.</p>
-</details>        <p>Configuration Options:
-.. list-table::</p>
-<pre><code>- ``hash_str``: string to be hashed.
-- ``output_key``: key to output to.
-</code></pre>
-<p>Example configuration:
-.. code-block:: yaml</p>
-<pre><code>method: hash
+<details class="example-configuration" open>
+  <summary>Example configuration</summary>
+  <p>.. code-block:: yaml</p>
+<pre><code>- method: hash
   inputs:
     hash_str: $model
     output_key: hashed_terms
 </code></pre>
-
+</details>
 
 
 
@@ -1808,7 +1765,12 @@
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>extraction_methods/plugins/hash.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">43</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
 <span class="normal">44</span>
 <span class="normal">45</span>
 <span class="normal">46</span>
@@ -1827,38 +1789,19 @@
 <span class="normal">59</span>
 <span class="normal">60</span>
 <span class="normal">61</span>
-<span class="normal">62</span>
-<span class="normal">63</span>
-<span class="normal">64</span>
-<span class="normal">65</span>
-<span class="normal">66</span>
-<span class="normal">67</span>
-<span class="normal">68</span>
-<span class="normal">69</span>
-<span class="normal">70</span>
-<span class="normal">71</span>
-<span class="normal">72</span>
-<span class="normal">73</span>
-<span class="normal">74</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">HashExtract</span><span class="p">(</span><span class="n">ExtractionMethod</span><span class="p">):</span>
+<span class="normal">62</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">HashExtract</span><span class="p">(</span><span class="n">ExtractionMethod</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Method: ``hash``</span>
+<span class="sd">    **Method name:** ``hash``</span>
 
-<span class="sd">    Description:</span>
-<span class="sd">        Hashes input string.</span>
-
-<span class="sd">    Configuration Options:</span>
-<span class="sd">    .. list-table::</span>
-
-<span class="sd">        - ``hash_str``: string to be hashed.</span>
-<span class="sd">        - ``output_key``: key to output to.</span>
+<span class="sd">    Hashes input string.</span>
 
 <span class="sd">    Example configuration:</span>
-<span class="sd">    .. code-block:: yaml</span>
+<span class="sd">        .. code-block:: yaml</span>
 
-<span class="sd">        method: hash</span>
-<span class="sd">          inputs:</span>
-<span class="sd">            hash_str: $model</span>
-<span class="sd">            output_key: hashed_terms</span>
+<span class="sd">            - method: hash</span>
+<span class="sd">              inputs:</span>
+<span class="sd">                hash_str: $model</span>
+<span class="sd">                output_key: hashed_terms</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">input_class</span> <span class="o">=</span> <span class="n">HashInput</span>
@@ -1970,17 +1913,17 @@
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>extraction_methods/plugins/hash.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">30</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
 <span class="normal">31</span>
 <span class="normal">32</span>
 <span class="normal">33</span>
 <span class="normal">34</span>
-<span class="normal">35</span>
-<span class="normal">36</span>
-<span class="normal">37</span>
-<span class="normal">38</span>
-<span class="normal">39</span>
-<span class="normal">40</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">HashInput</span><span class="p">(</span><span class="n">Input</span><span class="p">):</span>
+<span class="normal">35</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">HashInput</span><span class="p">(</span><span class="n">Input</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Model for Hash Input.</span>
 <span class="sd">    &quot;&quot;&quot;</span>

@@ -1123,23 +1123,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="string_template">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#extraction_methods.plugins.string_template--string-template-method" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        String Template Method
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1674,23 +1657,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="string_template">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#extraction_methods.plugins.string_template--string-template-method" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        String Template Method
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1741,9 +1707,6 @@
 <a id="extraction_methods.plugins.string_template"></a>
     <div class="doc doc-contents first">
 
-        <p>..  _string-template:</p>
-<h3 id="extraction_methods.plugins.string_template--string-template-method">String Template Method</h3>
-
 
 
 
@@ -1780,26 +1743,19 @@
 
 
 
-        <p>Method: <code>string_template</code></p>
+        <p><strong>Method name:</strong> <code>string_template</code></p>
+<p>Accepts a template and output_key. terms are added to the template.</p>
 
 
-<details class="description" open>
-  <summary>Description</summary>
-  <p>Accepts a template and output_key. terms are added to the template.</p>
-</details>        <p>Configuration Options:
-.. list-table::</p>
-<pre><code>- ``template``: ``REQUIRED`` Template to follow.
-- ``descructive``: True if terms should be removed after templating.
-- ``output_key``: ``REQUIRED`` key to output to.
-</code></pre>
-<p>Example Configuration:
-.. code-block:: yaml</p>
+<details class="example-configuration" open>
+  <summary>Example Configuration</summary>
+  <p>.. code-block:: yaml</p>
 <pre><code>- method: string_template
   inputs:
     template: {hello}/{goodbye}/{hello}/bonjour.html
     output_key: manifest_url
 </code></pre>
-
+</details>
 
 
 
@@ -1809,7 +1765,12 @@
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>extraction_methods/plugins/string_template.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">46</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
 <span class="normal">47</span>
 <span class="normal">48</span>
 <span class="normal">49</span>
@@ -1833,40 +1794,19 @@
 <span class="normal">67</span>
 <span class="normal">68</span>
 <span class="normal">69</span>
-<span class="normal">70</span>
-<span class="normal">71</span>
-<span class="normal">72</span>
-<span class="normal">73</span>
-<span class="normal">74</span>
-<span class="normal">75</span>
-<span class="normal">76</span>
-<span class="normal">77</span>
-<span class="normal">78</span>
-<span class="normal">79</span>
-<span class="normal">80</span>
-<span class="normal">81</span>
-<span class="normal">82</span>
-<span class="normal">83</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">StringTemplateExtract</span><span class="p">(</span><span class="n">ExtractionMethod</span><span class="p">):</span>
+<span class="normal">70</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">StringTemplateExtract</span><span class="p">(</span><span class="n">ExtractionMethod</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Method: ``string_template``</span>
+<span class="sd">    **Method name:** ``string_template``</span>
 
-<span class="sd">    Description:</span>
-<span class="sd">        Accepts a template and output_key. terms are added to the template.</span>
-
-<span class="sd">    Configuration Options:</span>
-<span class="sd">    .. list-table::</span>
-
-<span class="sd">        - ``template``: ``REQUIRED`` Template to follow.</span>
-<span class="sd">        - ``descructive``: True if terms should be removed after templating.</span>
-<span class="sd">        - ``output_key``: ``REQUIRED`` key to output to.</span>
+<span class="sd">    Accepts a template and output_key. terms are added to the template.</span>
 
 <span class="sd">    Example Configuration:</span>
-<span class="sd">    .. code-block:: yaml</span>
+<span class="sd">        .. code-block:: yaml</span>
 
-<span class="sd">        - method: string_template</span>
-<span class="sd">          inputs:</span>
-<span class="sd">            template: {hello}/{goodbye}/{hello}/bonjour.html</span>
-<span class="sd">            output_key: manifest_url</span>
+<span class="sd">            - method: string_template</span>
+<span class="sd">              inputs:</span>
+<span class="sd">                template: {hello}/{goodbye}/{hello}/bonjour.html</span>
+<span class="sd">                output_key: manifest_url</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">input_class</span> <span class="o">=</span> <span class="n">StringTemplateInput</span>
@@ -1999,7 +1939,12 @@
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>extraction_methods/plugins/string_template.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">29</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
 <span class="normal">30</span>
 <span class="normal">31</span>
 <span class="normal">32</span>
@@ -2008,12 +1953,7 @@
 <span class="normal">35</span>
 <span class="normal">36</span>
 <span class="normal">37</span>
-<span class="normal">38</span>
-<span class="normal">39</span>
-<span class="normal">40</span>
-<span class="normal">41</span>
-<span class="normal">42</span>
-<span class="normal">43</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">StringTemplateInput</span><span class="p">(</span><span class="n">Input</span><span class="p">):</span>
+<span class="normal">38</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">StringTemplateInput</span><span class="p">(</span><span class="n">Input</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Model for String Template Input.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
