@@ -1,10 +1,5 @@
 # encoding: utf-8
-"""
-..  general-function:
-
-General Function Method
------------------------
-"""
+""" """
 __author__ = "Richard Smith"
 __date__ = "28 May 2021"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -64,34 +59,24 @@ class GeneralFunctionInput(Input):
 
 class GeneralFunctionExtract(ExtractionMethod):
     """
-    Method: ``general_function``
+    **Method name:** ``general_function``
 
-    Description:
-        Accepts a dictionary. String values are popped from the dictionary and
-        are put back into the dictionary with the ``key`` specified.
-
-    Configuration Options:
-    .. list-table::
-
-        - ``function``: ``REQUIRED`` Function to be run ``name``, ``args``, and ``kwargs``.
-        - ``delimiter``: Optional text delimiter to put between module/function
-                        names ``Default`` "."
-        - ``output_key``: Optional name of the key you would like to output else
-                          response will be merged.
+    Accepts a dictionary. String values are popped from the dictionary and
+    are put back into the dictionary with the ``key`` specified.
 
     Example Configuration:
-    .. code-block:: yaml
+        .. code-block:: yaml
 
-        - method: general_function
-          inputs:
-            funtion:
-              name: import.path.to.the.fuction
-              args:
-                - hello
-                - world
-              kwargs:
-                hello: world
-                foo: bar
+            - method: general_function
+              inputs:
+                funtion:
+                  name: import.path.to.the.fuction
+                  args:
+                    - hello
+                    - world
+                  kwargs:
+                    hello: world
+                    foo: bar
     """
 
     input_class = GeneralFunctionInput

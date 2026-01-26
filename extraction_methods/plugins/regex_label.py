@@ -1,10 +1,5 @@
 # encoding: utf-8
-"""
-..  _regex-label:
-
-Regex Label Method
-------------------
-"""
+""" """
 __author__ = "Rhys Evans"
 __date__ = "8 Jul 2024"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -52,28 +47,18 @@ class RegexLabelInput(Input):
 
 class RegexLabelExtract(ExtractionMethod):
     """
-    Method: ``regex_label``
+    **Method name:** ``regex_label``
 
-    Description:
-        Adds label if full match of regex.
-
-    Configuration Options:
-    .. list-table::
-
-        - ``input_term``: term for method to run on.
-        - ``label``: ``REQUIRED`` Label to add if regex passes.
-        - ``regex``: ``REQUIRED`` Regex to test against.
-        - ``allow_multiple``: True if multiple labels are allowed.
-        - ``output_key``: Term for method to output to.
+    Adds label if full match of regex.
 
     Example configuration:
-    .. code-block:: yaml
+        .. code-block:: yaml
 
-        - method: regex_label
-          inputs:
-            label: metadata
-            regex: README
-            allow_multiple: true
+            - method: regex_label
+              inputs:
+                label: metadata
+                regex: README
+                allow_multiple: true
 
     # noqa: W605
     """

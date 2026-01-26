@@ -1,10 +1,5 @@
 # encoding: utf-8
-"""
-..  _cf-header:
-
-CF Header Backend
------------------
-"""
+""" """
 __author__ = "Richard Smith"
 __date__ = "27 May 2021"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -44,20 +39,12 @@ class CfHeaderInput(Input):
 
 class CfHeader(ExtractionMethod):
     """
-    Method: ``cf``
+    **Method name:** ``cf``
 
-    Description:
-        CF backend for header method.
-
-    Configuration Options:
-    .. list-table::
-
-        - ``input_term``:term for method to run on
-        - ``read_kwargs``:kwargs for cf read
-        - ``attributes``:attributes to be extracted
+    CF backend for header method.
 
     Example configuration:
-    .. code-block:: yaml
+        .. code-block:: yaml
 
         - method: cf
           inputs:

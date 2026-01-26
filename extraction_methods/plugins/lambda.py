@@ -1,10 +1,5 @@
 # encoding: utf-8
-"""
-..  _lambda:
-
-Lambda Method
--------------
-"""
+""" """
 __author__ = "Richard Smith"
 __date__ = "28 May 2021"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -47,35 +42,23 @@ class LambdaInput(Input):  # type: ignore[no-redef]
 
 class LambdaExtract(ExtractionMethod):
     """
-    Method: ``lambda``
+    **Method name:** ``lambda``
 
-    Description:
-        Accepts a dictionary. String values are popped from the dictionary and
-        are put back into the dictionary with the ``key`` specified.
-
-    Configuration Options:
-    .. list-table::
-
-        - ``function``: ``REQUIRED`` lambda function to be run.
-        - ``output_key``: Optional name of the key you would like to output else
-                          response will be merged.
-        - ``args``: Optional list of arguments for function.
-                    Use $ for previously extracted terms
-        - ``kwargs``: Optional dictionary of key word arguments for function.
-                      Use $ for previously extracted terms
+    Accepts a dictionary. String values are popped from the dictionary and
+    are put back into the dictionary with the ``key`` specified.
 
     Example Configuration:
-    .. code-block:: yaml
+        .. code-block:: yaml
 
-        - method: lambda
-          inputs:
-            function: 'lambda x: x * x'
-            args:
-              - hello
-              - $world
-            kwargs:
-              hello: world
-              goodbye: all
+            - method: lambda
+              inputs:
+                function: 'lambda x: x * x'
+                args:
+                  - hello
+                  - $world
+                kwargs:
+                  hello: world
+                  goodbye: all
     """
 
     input_class = LambdaInput

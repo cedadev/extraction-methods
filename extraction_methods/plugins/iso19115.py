@@ -1,10 +1,5 @@
 # encoding: utf-8
-"""
-..  _iso19115:
-
-ISO 19115 Method
-----------------
-"""
+""" """
 __author__ = "Richard Smith"
 __date__ = "28 Jul 2021"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -55,26 +50,19 @@ iso19115_ns = {
 
 class ISO19115Extract(ExtractionMethod):
     """
-    Method: ``iso19115``
+    **Method name:** ``iso19115``
 
-    Description:
-        Takes a URL and calls out to URL to retrieve the iso19115 record.
-
-    Configuration Options:
-    .. list-table::
-
-        - ``url``: ``REQUIRED`` URL to record store.
-        - ``date_terms``: List of name, key, format of date terms to retrieve from the response.
+    Takes a URL and calls out to URL to retrieve the iso19115 record.
 
     Example configuration:
-    .. code-block:: yaml
+        .. code-block:: yaml
 
-        - method: iso19115
-          inputs:
-            url: $url
-            dates:
-              - key: './/gml:beginPosition'
-                output_key: start_datetime
+            - method: iso19115
+              inputs:
+                url: $url
+                dates:
+                  - key: './/gml:beginPosition'
+                    output_key: start_datetime
     """
 
     input_class = ISO19115Input

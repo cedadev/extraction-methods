@@ -1,10 +1,5 @@
 # encoding: utf-8
-"""
-..  _facet-prefix:
-
-Facet Prefix Method
--------------------
-"""
+""" """
 __author__ = "Richard Smith"
 __date__ = "28 May 2021"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -40,27 +35,20 @@ class FacetPrefixInput(Input):
 
 class FacetPrefixExtract(ExtractionMethod):
     """
-    Method: ``facet_prefix``
+    **Method name:** ``facet_prefix``
 
-    Description:
-        In some cases, you may wish add a prefix to some or all of the facets
-        based on the vocabulary they're from.
-
-    Configuration Options:
-    .. list-table::
-
-        - ``prefix``: Prefix to be added.
-        - ``keys``: List of keys that require prefix.
+    In some cases, you may wish add a prefix to some or all of the facets
+    based on the vocabulary they're from.
 
     Example Configuration:
-    .. code-block:: yaml
+        .. code-block:: yaml
 
-        - method: facet_prefix
-          inputs:
-            prefix: cmip6
-            keys:
-              - start_time
-              - model
+            - method: facet_prefix
+              inputs:
+                prefix: cmip6
+                keys:
+                - start_time
+                - model
     """
 
     input_class = FacetPrefixInput

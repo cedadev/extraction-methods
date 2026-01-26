@@ -1,10 +1,5 @@
 # encoding: utf-8
-"""
-..  _string-template:
-
-String Template Method
-----------------------
-"""
+""" """
 __author__ = "Richard Smith"
 __date__ = "28 May 2021"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -45,25 +40,17 @@ class StringTemplateInput(Input):
 
 class StringTemplateExtract(ExtractionMethod):
     """
-    Method: ``string_template``
+    **Method name:** ``string_template``
 
-    Description:
-        Accepts a template and output_key. terms are added to the template.
-
-    Configuration Options:
-    .. list-table::
-
-        - ``template``: ``REQUIRED`` Template to follow.
-        - ``descructive``: True if terms should be removed after templating.
-        - ``output_key``: ``REQUIRED`` key to output to.
+    Accepts a template and output_key. terms are added to the template.
 
     Example Configuration:
-    .. code-block:: yaml
+        .. code-block:: yaml
 
-        - method: string_template
-          inputs:
-            template: {hello}/{goodbye}/{hello}/bonjour.html
-            output_key: manifest_url
+            - method: string_template
+              inputs:
+                template: {hello}/{goodbye}/{hello}/bonjour.html
+                output_key: manifest_url
     """
 
     input_class = StringTemplateInput

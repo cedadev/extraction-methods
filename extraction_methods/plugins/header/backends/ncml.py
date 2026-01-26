@@ -1,10 +1,5 @@
 # encoding: utf-8
-"""
-..  _ncml-header:
-
-NCML Header Backend
--------------------
-"""
+""" """
 __author__ = "David Huard"
 __date__ = "June 2022"
 __copyright__ = "Copyright 2022 Ouranos"
@@ -55,22 +50,12 @@ class NcMLHeaderInput(Input):
 
 class NcMLHeader(ExtractionMethod):
     """
-    Method: ``ncml``
+    **Method name:** ``ncml``
 
-    Description:
-        NcML backend for header method.
-
-    Configuration Options:
-    .. list-table::
-
-        - ``input_term``:term for method to run on
-        - ``request_params``:params for request
-        - ``namespaces``:NcML namespaces
-        - ``attributes``:attributes to be extracted
-        - ``request_timeout``:request time out
+    NcML backend for header method.
 
     Example configuration:
-    .. code-block:: yaml
+        .. code-block:: yaml
 
         - method: ncml
           inputs:

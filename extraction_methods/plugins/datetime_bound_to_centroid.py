@@ -1,10 +1,5 @@
 # encoding: utf-8
-"""
-..  _datetime-bound-to-centroid:
-
-Datetime Bound to Centroid Method
----------------------------------
-"""
+""" """
 __author__ = "Richard Smith"
 __date__ = "28 May 2021"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -57,31 +52,20 @@ class DatetimeBoundToCentroidInput(Input):
 
 class DatetimeBoundToCentroidExtract(ExtractionMethod):
     """
-    Method: ``datetime_bound_to_centroid``
+    **Method name:** ``datetime_bound_to_centroid``
 
-    Description:
-        Accepts a dictionary of coordinate values and converts to `RFC 7946, section 5 <https://tools.ietf.org/html/rfc7946#section-5>`_
-        formatted bbox.
-
-    Configuration Options:
-    .. list-table::
-
-        - ``start_datetime``: Start datetime bound
-        - ``start_format``: Format of the start datetime
-        - ``end_datetime``: End datetime bound
-        - ``end_format``: Format of the end datetime
-        - ``output_key``: Term for method to output to
-        - ``output_format``: Format of the output datetime
+    Accepts a dictionary of coordinate values and converts to `RFC 7946, section 5 <https://tools.ietf.org/html/rfc7946#section-5>`_
+    formatted bbox.
 
     Example Configuration:
-    .. code-block:: yaml
+        .. code-block:: yaml
 
-        - method: datetime_bound_to_centroid
-          inputs:
-            start_datetime: $start_date
-            end_datetime: 2022-02-02
-            end_format: %Y-%m-%d
-            output_key: polygon
+            - method: datetime_bound_to_centroid
+              inputs:
+                start_datetime: $start_date
+                end_datetime: 2022-02-02
+                end_format: %Y-%m-%d
+                output_key: polygon
     """
 
     input_class = DatetimeBoundToCentroidInput

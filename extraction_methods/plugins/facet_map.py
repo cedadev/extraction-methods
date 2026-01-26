@@ -1,10 +1,5 @@
 # encoding: utf-8
-"""
-..  _facet-map:
-
-Facet Map Method
-----------------
-"""
+""" """
 __author__ = "Richard Smith"
 __date__ = "28 May 2021"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -38,26 +33,20 @@ class FacetMapInput(Input):
 
 class FacetMapExtract(ExtractionMethod):
     """
-    Method: ``facet_map``
+    **Method name:** ``facet_map``
 
-    Description:
-        In some cases, you may wish to map the header attributes to different
-        facets. This method takes a map and converts the facet labels into those
-        specified.
-
-    Configuration Options:
-    .. list-table::
-
-        - ``term_map``: Dictionary of terms to map.
+    In some cases, you may wish to map the header attributes to different
+    facets. This method takes a map and converts the facet labels into those
+    specified.
 
     Example Configuration:
-    .. code-block:: yaml
+        .. code-block:: yaml
 
-        - method: facet_map
-          inputs:
-            term_map:
-                old_key: new_key
-                time_coverage_start: start_time
+            - method: facet_map
+              inputs:
+                term_map:
+                    old_key: new_key
+                    time_coverage_start: start_time
     """
 
     input_class = FacetMapInput

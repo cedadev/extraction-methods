@@ -1,10 +1,5 @@
 # encoding: utf-8
-"""
-..  _header:
-
-Header Method
--------------
-"""
+""" """
 __author__ = "Richard Smith"
 __date__ = "27 May 2021"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -38,19 +33,13 @@ class HeaderInput(Input):
 
 class HeaderExtract(ExtractionMethod, SetEntryPointsMixin):
     """
-    Method: ``header``
+    **Method name:** ``header``
 
-    Description:
-        Takes a header backend to run and returns the updated body
-        from the configured backend.
-
-    Configuration Options:
-    .. list-table::
-
-        - ``backend``: Specify which backend
+    Takes a header backend to run and returns the updated body
+    from the configured backend.
 
     Example configuration:
-    .. code-block:: yaml
+        .. code-block:: yaml
 
         - method: header
           inputs:

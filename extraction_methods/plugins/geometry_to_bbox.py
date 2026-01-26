@@ -1,10 +1,5 @@
 # encoding: utf-8
-"""
-..  _geometry-to-bbox:
-
-Geometry to Bounding Box Method
--------------------------------
-"""
+""" """
 __author__ = "Richard Smith"
 __date__ = "28 May 2021"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -42,28 +37,21 @@ class GeometryToBboxInput(Input):
 
 class GeometryToBboxExtract(ExtractionMethod):
     """
-    Method: ``geometry_to_bbox``
+    **Method name:** ``geometry_to_bbox``
 
-    Description:
-        Accepts a geometry with type and list of coordinates to `RFC 7946,
-        section 5 <https://tools.ietf.org/html/rfc7946#section-5>`_ formatted bbox.
-
-    Configuration Options:
-    .. list-table::
-
-        - ``geometry``: ``REQUIRED`` geometry to be converted to bbox.
-        - ''output_key'': key to output to.
+    Accepts a geometry with type and list of coordinates to `RFC 7946,
+    section 5 <https://tools.ietf.org/html/rfc7946#section-5>`_ formatted bbox.
 
     Example Configuration:
-    .. code-block:: yaml
+        .. code-block:: yaml
 
-        - method: geometry_to_bbox
-          inputs:
-            geometry:
-              type: point
-              coordinates:
-                - 20
-                - 0
+            - method: geometry_to_bbox
+              inputs:
+                geometry:
+                  type: point
+                  coordinates:
+                    - 20
+                    - 0
     """
 
     input_class = GeometryToBboxInput

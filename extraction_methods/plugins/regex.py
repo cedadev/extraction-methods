@@ -1,10 +1,5 @@
 # encoding: utf-8
-"""
-..  _regex:
-
-Regex Method
-------------
-"""
+""" """
 __author__ = "Richard Smith"
 __date__ = "27 May 2021"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -41,25 +36,18 @@ class RegexInput(Input):
 
 class RegexExtract(ExtractionMethod):
     """
-    Method: ``regex``
+    **Method name:** ``regex``
 
-    Description:
-        Takes an input string and a regex with
-        named capture groups and returns a dictionary of the values
-        extracted using the named capture groups.
-
-    Configuration Options:
-    .. list-table::
-
-        - ``input_term``: Term for regex to be ran on.
-        - ``regex``: ``REQUIRED`` The regular expression to match against.
+    Takes an input string and a regex with
+    named capture groups and returns a dictionary of the values
+    extracted using the named capture groups.
 
     Example configuration:
-    .. code-block:: yaml
+        .. code-block:: yaml
 
-        - method: regex
-          inputs:
-            regex: ^(?:[^_]*_){2}(?P<datetime>\d*)
+            - method: regex
+              inputs:
+                regex: ^(?:[^_]*_){2}(?P<datetime>\d*)
 
     # noqa: W605
     """

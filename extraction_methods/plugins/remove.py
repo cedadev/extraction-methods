@@ -1,10 +1,5 @@
 # encoding: utf-8
-"""
-..  _remove:
-
-Remove Method
--------------
-"""
+""" """
 __author__ = "Richard Smith"
 __date__ = "28 May 2021"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -41,25 +36,18 @@ class RemoveInput(Input):
 
 class RemoveExtract(ExtractionMethod):
     """
-    Method: ``remove``
+    **Method name:** ``remove``
 
-    Description:
-        remove keys from body.
-
-    Configuration Options:
-    .. list-table::
-
-        - ``keys``: ``REQUIRED`` list of keys to remove.
-        - ``delimiter``: delimiter for nested key.
+    remove keys from body.
 
     Example Configuration:
-    .. code-block:: yaml
+        .. code-block:: yaml
 
-        - method: remove
-          inputs:
-            keys:
-            - hello
-            - world
+            - method: remove
+              inputs:
+                keys:
+                  - hello
+                  - world
     """
 
     input_class = RemoveInput

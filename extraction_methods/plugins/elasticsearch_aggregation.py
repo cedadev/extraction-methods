@@ -1,10 +1,5 @@
 # encoding: utf-8
-"""
-..  _elasticsearch-aggregation:
-
-Elasticsearch Aggregation Method
---------------------------------
-"""
+""" """
 __author__ = "Rhys Evans"
 __date__ = "24 May 2022"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -93,44 +88,31 @@ class ElasticsearchAggregationInput(Input):
 
 class ElasticsearchAggregationExtract(ExtractionMethod):
     """
-    Method: ``elasticsearch_aggregation``
+    **Method name:** ``elasticsearch_aggregation``
 
-    Description:
-        Using an ID. Generate a summary of information for higher level entities.
+    Using an ID. Generate a summary of information for higher level entities.
 
-    Configuration Options:
-    .. list-table::
 
-        - ``index``: Name of the index holding the STAC entities
-        - ``id_term``: Term used for agregating the STAC entities
-        - ``client_kwargs``: Session parameters passed to
-        `elasticsearch.Elasticsearch<https://elasticsearch-py.readthedocs.io/en/7.10.0/api.html>`_
-        - ``bbox``: list of terms for which their aggregate bbox should be returned
-        - ``min``: list of terms for which the minimum of their aggregate should be returned
-        - ``max``: list of terms for which the maximum of their aggregate should be returned
-        - ``sum``: list of terms for which the sum of their aggregate should be returned
-        - ``list``: list of terms for which a list of their aggregage should be returned
+    Example Configuration:
+        .. code-block:: yaml
 
-    Configuration Example:
-    .. code-block:: yaml
-
-        - method: elasticsearch_aggregation
-          inputs:
-            index: ceda-index
-            id_term: item_id
-            client_kwargs:
-              hosts: ['host1:9200','host2:9200']
-            bbox:
-              - bbox
-            min:
-              - start_time
-            max:
-              - end_time
-            sum:
-              - size
-            list:
-              - term1
-              - term2
+            - method: elasticsearch_aggregation
+              inputs:
+                index: ceda-index
+                id_term: item_id
+                client_kwargs:
+                  hosts: ['host1:9200','host2:9200']
+                bbox:
+                  - bbox
+                min:
+                  - start_time
+                max:
+                  - end_time
+                sum:
+                  - size
+                list:
+                  - term1
+                  - term2
     """
 
     def __init__(self, **kwargs: Any) -> None:

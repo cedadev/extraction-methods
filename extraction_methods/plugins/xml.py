@@ -1,10 +1,5 @@
 # encoding: utf-8
-"""
-..  _xml:
-
-XML Method
-----------
-"""
+""" """
 __author__ = "Richard Smith"
 __date__ = "19 Aug 2021"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -66,45 +61,19 @@ class XMLInput(Input):
 
 class XMLExtract(ExtractionMethod):
     """
-    Method: ``xml``
+    **Method name:** ``xml``
 
-    Description:
-        Processes XML documents to extract metadata
-
-    Configuration Options:
-    .. list-table::
-
-        - ``input_term``: Term for method to run on.
-        - ``template``: ``REQUIRED`` Template to follow.
-        - ``properties``: ``REQUIRED`` List of properties to retrieve from the document.
-        - ``namespaces``: ``REQUIRED`` Map of namespaces.
-
-    Extraction Keys:
-        Extraction keys should be a map.
-
-        .. list-table::
-
-            * - Name
-              - Description
-            * - ``key``
-              - Key of the property. Passed to
-                `xml.etree.ElementTree.find() <https://docs.python.org/3/library/xml.etree.elementtree.html?highlight=find#xml.etree.ElementTree.ElementTree.find>`_
-                and also supports `xpath formatted <https://docs.python.org/3/library/xml.etree.elementtree.html#xpath-support>`_ accessors
-            * - ``output_key``
-              - Key to output to.
-            * - ``attribute``
-              - Allows you to select from the element attribute. In the absence of this value, the default behaviour is to access the text value of the key.
-                In some cases, you might want to access and attribute of the element.
+    Processes XML documents to extract metadata
 
     Example configuration:
-    .. code-block:: yaml
+        .. code-block:: yaml
 
-        - method: xml
-          inputs:
-            properties:
-              - name: start_datetime
-                key: './/gml:beginPosition'
-                attribute: start
+            - method: xml
+              inputs:
+                properties:
+                  - name: start_datetime
+                    key: './/gml:beginPosition'
+                    attribute: start
 
     # noqa: W605
     """

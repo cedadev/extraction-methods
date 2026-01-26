@@ -1,10 +1,5 @@
 # encoding: utf-8
-"""
-..  _open-zip:
-
-Open Zip Method
----------------
-"""
+""" """
 __author__ = "Richard Smith"
 __date__ = "19 Aug 2021"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -51,27 +46,19 @@ class ZipInput(Input):
 
 class ZipExtract(ExtractionMethod):
     """
-    Method: ``open_zip``
+    **Method name:** ``open_zip``
 
-    Description:
-        Open a zip file and read inner files
-
-    Configuration Options:
-    .. list-table::
-
-        - ``input_term``: List of keys to retrieve from the document.
-        - ``inner_files``: Lost of inner zipped files to be read.
-        - ``output_key``: key to output to.
+    Open a zip file and read inner files
 
     Example configuration:
-    .. code-block:: yaml
+        .. code-block:: yaml
 
-        - method: open_zip
-          inputs:
-            input_term: /path/to/a/file
-            inner_files:
-              - key: hello.txt
-                output_key: world
+            - method: open_zip
+              inputs:
+                input_term: /path/to/a/file
+                inner_files:
+                  - key: hello.txt
+                    output_key: world
 
     # noqa: W605
     """

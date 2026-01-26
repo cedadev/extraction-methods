@@ -1,10 +1,5 @@
 # encoding: utf-8
-"""
-..  _ceda-observation:
-
-CEDA Observation Method
------------------------
-"""
+""" """
 __author__ = "Richard Smith"
 __date__ = "11 Jun 2021"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -45,22 +40,16 @@ class CEDAObservationInput(Input):
 
 class CEDAObservationExtract(ExtractionMethod):
     """
-    Method: ``ceda_observation``
+    **Method name:** ``ceda_observation``
 
-    Description:
-        Returns a ceda observation record for the ``input_term``.
-
-    Configuration Options:
-    .. list-table::
-
-        - ``input_term``: ``REQUIRED`` term for method to run on
+    Returns a ceda observation record for the ``input_term``.
 
     Example Configuration:
-    .. code-block:: yaml
+        .. code-block:: yaml
 
-        - method: ceda_observation
-          inputs:
-            input_term: $url
+            - method: ceda_observation
+              inputs:
+                input_term: $url
     """
 
     input_class = CEDAObservationInput

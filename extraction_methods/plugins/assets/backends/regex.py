@@ -1,10 +1,5 @@
 # encoding: utf-8
-"""
-..  _regex-assets:
-
-Regex Assets Backend
---------------------
-"""
+""" """
 __author__ = "Richard Smith"
 __date__ = "27 May 2021"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -37,18 +32,12 @@ class RegexAssetsInput(Input):
 
 class RegexAssets(Backend):
     """
-    Method: ``regex_assets``
+    **Method name:** ``regex_assets``
 
-    Description:
-        Takes a regex glob and yields a dictionary for each matching path.
-
-    Configuration Options:
-    .. list-table::
-
-        - ``input_term``:The regular expression to match against the path
+    Takes a regex glob and yields a dictionary for each matching path.
 
     Example configuration:
-    .. code-block:: yaml
+        .. code-block:: yaml
 
         - method: regex
           inputs:

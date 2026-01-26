@@ -1,10 +1,5 @@
 # encoding: utf-8
-"""
-..  _default:
-
-Default Method
---------------
-"""
+""" """
 __author__ = "Richard Smith"
 __date__ = "27 May 2021"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -36,23 +31,17 @@ class DefaultInput(Input):
 
 class DefaultExtract(ExtractionMethod):
     """
-    Method: ``default``
+    **Method name:** ``default``
 
-    Description:
-        Takes a set of default facets.
-
-    Configuration Options:
-    .. list-table::
-
-        - ``defaults``: Dictionary of defaults to be added
+    Takes a set of default facets.
 
     Example configuration:
-    .. code-block:: yaml
+        .. code-block:: yaml
 
-        - method: default
-          inputs:
-            defaults:
-                mip_era: CMIP6
+            - method: default
+              inputs:
+                defaults:
+                    mip_era: CMIP6
     """
 
     input_class = DefaultInput

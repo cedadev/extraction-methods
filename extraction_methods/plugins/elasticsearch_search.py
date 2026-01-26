@@ -1,10 +1,5 @@
 # encoding: utf-8
-"""
-..  _elasticsearch-search:
-
-Elasticsearch Search
---------------------
-"""
+""" """
 __author__ = "Rhys Evans"
 __date__ = "24 May 2022"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -51,37 +46,26 @@ class ElasticsearchSearchInput(Input):
 
 class ElasticsearchSearchExtract(ExtractionMethod):
     """
-    Method: ``elasticsearch_search``
+    **Method name:** ``elasticsearch_search``
 
-    Description:
-        Search Elasticsearch.
-
-    Configuration Options:
-    .. list-table::
-
-        - ``index``: Name of the index to query
-        - ``client_kwargs``: Parameters to pass to
-          `elasticsearch.Elasticsearch<https://elasticsearch-py.readthedocs.io/en/7.10.0/api.html>`_
-        - ``search_kwargs``: Parameters to pass to
-          `elasticsearch.Elasticsearch.search<https://elasticsearch-py.readthedocs.io/en/7.10.0/api.html#elasticsearch.Elasticsearch.search>`_
-        - ``body``: Body of search request
+    Search Elasticsearch.
 
 
-    Configuration Example:
-    .. code-block:: yaml
+    Example Configuration:
+        .. code-block:: yaml
 
-        - name: elasticsearch
-          inputs:
-            index: ceda-index
-            client_kwargs:
-              hosts: ['host1:9200','host2:9200']
-            search_kwargs:
-              timeout: 100s
-            body:
-              query:
-                regex: $regex_value
-              _source:
-                - path
+            - method: elasticsearch
+              inputs:
+                index: ceda-index
+                client_kwargs:
+                  hosts: ['host1:9200','host2:9200']
+                search_kwargs:
+                  timeout: 100s
+                body:
+                  query:
+                    regex: $regex_value
+                  _source:
+                    - path
     """
 
     input_class = ElasticsearchSearchInput

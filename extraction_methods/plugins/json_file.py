@@ -1,10 +1,5 @@
 # encoding: utf-8
-"""
-..  _json-file:
-
-JSON File Method
-----------------
-"""
+""" """
 __author__ = "Richard Smith"
 __date__ = "27 May 2021"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -43,26 +38,19 @@ class JsonFileInput(Input):
 
 class JsonFileExtract(ExtractionMethod):
     """
-    Method: ``json_file``
+    **Method name:** ``json_file``
 
-    Description:
-        Takes an input list of string to extract from the json file.
-
-    Configuration Options:
-    .. list-table::
-
-        - ``path``: Path to directory or single JSON file.
-        - ``terms``: List of terms to extract.
+    Takes an input list of string to extract from the json file.
 
     Example configuration:
-    .. code-block:: yaml
+        .. code-block:: yaml
 
-        - method: json_file
-          inputs:
-            path: /path/to/file.json
-            properties:
-              - key: MIP_ERA
-                output_key: mip_era
+            - method: json_file
+              inputs:
+                path: /path/to/file.json
+                properties:
+                  - key: MIP_ERA
+                    output_key: mip_era
     """
 
     input_class = JsonFileInput

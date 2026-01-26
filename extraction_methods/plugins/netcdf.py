@@ -1,10 +1,5 @@
 # encoding: utf-8
-"""
-..  _netcdf:
-
-NetCDF Method
--------------
-"""
+""" """
 __author__ = "Richard Smith"
 __date__ = "19 Aug 2021"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -60,44 +55,20 @@ LOGGER = logging.getLogger(__name__)
 
 class NetCDFExtract(ExtractionMethod):
     """
-    Method: ``netcdf``
+    **Method name:** ``netcdf``
 
     Description:  Processes XML documents to extract metadata
 
-    Configuration Options:
-    .. list-table::
-
-        - ``extraction_keys``: List of keys to retrieve from the document.
-        - ``filter_expr``: Regex to match against files to limit the attempts to known files
-        - ``namespaces``: Map of namespaces
-
-    Extraction Keys:
-        Extraction keys should be a map.
-
-        .. list-table::
-
-            * - Name
-              - Description
-            * - ``output_key``
-              - Name of the outputted attribute
-            * - ``key``
-              - Access key to extract the required data. Passed to
-                `xml.etree.ElementTree.find() <https://docs.python.org/3/library/xml.etree.elementtree.html?highlight=find#xml.etree.ElementTree.ElementTree.find>`_
-                and also supports `xpath formatted <https://docs.python.org/3/library/xml.etree.elementtree.html#xpath-support>`_ accessors
-            * - ``attribute``
-              - Allows you to select from the element attribute. In the absence of this value, the default behaviour is to access the text value of the key.
-                In some cases, you might want to access and attribute of the element
-
     Example configuration:
-    .. code-block:: yaml
+        .. code-block:: yaml
 
-        - method: xml
-          inputs:
-            filter_expr: '\.manifest$'
-            extraction_keys:
-              - name: start_datetime
-                key: './/gml:beginPosition'
-                attribute: start
+            - method: xml
+              inputs:
+                filter_expr: '\.manifest$'
+                extraction_keys:
+                  - name: start_datetime
+                    key: './/gml:beginPosition'
+                    attribute: start
 
     # noqa: W605
     """

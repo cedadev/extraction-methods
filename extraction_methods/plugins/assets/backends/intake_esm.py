@@ -1,10 +1,5 @@
 # encoding: utf-8
-"""
-..  _intake-assets:
-
-Intake Assets Backend
----------------------
-"""
+""" """
 __author__ = "Richard Smith"
 __date__ = "23 Sep 2021"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -50,29 +45,14 @@ class IntakeESMAssetsInput(Input):
 
 class IntakeESMAssets(Backend):
     """
-    Method: ``intake_assets``
+    **Method name:** ``intake_assets``
 
-    Description:
-        Performs Search on intake catalog to provide a stream of assets for procesing.
-        Uses an `Intake catalog <https://intake.readthedocs.io/>`_
-        as a source for file objects.
-
-    Configuration Options:
-    .. list-table::
-
-        - ``input_term``: The URI of a path or URL to an ESM collection JSON
-          file. ``DEFAULT``: ``$uri``
-        - ``href_term``: The column header which contains the URI to the file
-          object. ``DEFAULT``: ``path``
-        - ``catalog_kwargs``: Optional kwargs to pass to `intake.open_esm_datastore
-          <https://intake-esm.readthedocs.io/en/latest
-          /api.html#intake_esm.core.esm_datastore>`_
-        - ``search_kwargs``: Optional kwargs to pass to `esm_datastore.search
-          <https://intake-esm.readthedocs.io/en/latest
-          /api.html#intake_esm.core.esm_datastore.search>`_
+    Performs Search on intake catalog to provide a stream of assets for procesing.
+    Uses an `Intake catalog <https://intake.readthedocs.io/>`_
+    as a source for file objects.
 
     Example Configuration:
-    .. code-block:: yaml
+        .. code-block:: yaml
 
         - method: intake_esm
           inputs:

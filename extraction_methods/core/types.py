@@ -1,10 +1,5 @@
 # encoding: utf-8
-"""
-..  _extraction-types:
-
-Extraction Method Types
------------------------
-"""
+""" """
 __author__ = "Rhys Evans"
 __date__ = "07 Jun 2021"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"

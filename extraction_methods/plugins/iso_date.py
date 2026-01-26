@@ -1,10 +1,5 @@
 # encoding: utf-8
-"""
-..  _iso-date:
-
-ISO Date Method
----------------
-"""
+""" """
 __author__ = "Richard Smith"
 __date__ = "28 May 2021"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -55,38 +50,30 @@ class ISODateInput(Input):
 
 class ISODateExtract(ExtractionMethod):
     """
-    Method: ``iso_date``
+    **Method name:** ``iso_date``
 
-    Description:
-        Takes the source dict and the key to access the date and
-        converts the date to ISO 8601 Format.
+    Takes the source dict and the key to access the date and
+    converts the date to ISO 8601 Format.
 
-        e.g.
+    e.g.
 
-        ``YYYY-MM-DDTHH:MM:SS.ffffff``, if microsecond is not 0
-        ``YYYY-MM-DDTHH:MM:SS``, if microsecond is 0
+    ``YYYY-MM-DDTHH:MM:SS.ffffff``, if microsecond is not 0
+    ``YYYY-MM-DDTHH:MM:SS``, if microsecond is 0
 
-        If the date format cannot be parsed, it is removed from the source dict with
-        an error logged.
-
-    Configuration Options:
-    .. list-table::
-
-        - ``date_terms``: `REQUIRED` List keys to the date value. Using a list allows processing of multiple dates.
-        - ``format``: Optional format string. Default behaviour uses `dateutil.parser.parse <https://dateutil.readthedocs.io/en/stable/parser.html#dateutil.parser.parse>`_.
-          If a format string is supplied, this will change to use `datetime.datetime.strptime <https://docs.python.org/3/library/datetime.html#datetime.datetime.strptime>`_.
+    If the date format cannot be parsed, it is removed from the source dict with
+    an error logged.
 
     Example Configuration:
-    .. code-block:: yaml
+        .. code-block:: yaml
 
-        - method: iso_date
-          inputs:
-            dates:
-              - key: $datetime
-                output_key: date
-                format: "%Y-%m-%dT%H:%M:%S"
-              - key: 2012-12-12
-                format: "%Y-%m-%d"
+            - method: iso_date
+              inputs:
+                dates:
+                  - key: $datetime
+                    output_key: date
+                    format: "%Y-%m-%dT%H:%M:%S"
+                  - key: 2012-12-12
+                    format: "%Y-%m-%d"
     """
 
     input_class = ISODateInput

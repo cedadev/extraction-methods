@@ -1,10 +1,5 @@
 # encoding: utf-8
-"""
-..  _controlled-vocabulary:
-
-Controlled Vocabulary Method
-----------------------------
-"""
+""" """
 __author__ = "David Huard"
 __date__ = "June 2022"
 __copyright__ = "Copyright 2022 Ouranos"
@@ -43,16 +38,9 @@ class ControlledVocabularyInput(Input):
 
 class ControlledVocabularyExtract(ExtractionMethod):
     """
-    Method: ``controlled_vocabulary``
+    **Method name:** ``controlled_vocabulary``
 
-    Description:
-        Compare properties to a controlled vocabulary defined by a pydantic.BaseModel.
-
-    Configuration Options:
-    .. list-table::
-
-        - ``model``: pydantic.BaseModel subclass to be imported at run-time, e.g. `package.module.class_name`
-        - ``strict``: If True, raise ValidationError, otherwise simply log ValidationError messages
+    Compare properties to a controlled vocabulary defined by a pydantic.BaseModel.
 
     Example Configuration:
         .. code-block:: yaml

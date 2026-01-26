@@ -1,10 +1,5 @@
 # encoding: utf-8
-"""
-..  _path-parts:
-
-Path Parts Method
------------------
-"""
+""" """
 __author__ = "Richard Smith"
 __date__ = "27 May 2021"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -42,24 +37,18 @@ class PathPartsInput(Input):
 
 class PathPartsExtract(ExtractionMethod):
     """
-    Method: ``path_parts``
+    **Method name:** ``path_parts``
 
-    Description:
-        Extracts the parts of a given path skipping ``skip`` number
-        of top level parts.
-
-    Configuration Options:
-    .. list-table::
-
-        - ``skip``: The number of path parts to skip. ``default: 0``
+    Extracts the parts of a given path skipping ``skip`` number
+    of top level parts.
 
     Example configuration:
-    .. code-block:: yaml
+        .. code-block:: yaml
 
-        - method: path_parts
-          inputs:
-            input_term: $uri
-            skip: 2
+            - method: path_parts
+              inputs:
+                input_term: $uri
+                skip: 2
     """
 
     input_class = PathPartsInput

@@ -1,10 +1,5 @@
 # encoding: utf-8
-"""
-..  _regex-type-cast:
-
-Regex Type Cast Method
-----------------------
-"""
+""" """
 __author__ = "Rhys Evans"
 __date__ = "8 Jul 2024"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -51,25 +46,19 @@ class RegexTypeCastInput(Input):
 
 class RegexTypeCastExtract(ExtractionMethod):
     """
-    Method: ``regex_type_cast``
+    **Method name:** ``regex_type_cast``
 
-    Description:
-        Takes a list of regex and cast type combinations. Any existing properties
-        that full match a regex are cast to the associated type.
-
-    Configuration Options:
-    .. list-table::
-
-        - ``regex_casts``: Regex and cast type combinations.
+    Takes a list of regex and cast type combinations. Any existing properties
+    that full match a regex are cast to the associated type.
 
     Example configuration:
-    .. code-block:: yaml
+        .. code-block:: yaml
 
-        - method: regex_type_cast
-          inputs:
-            regex_casts:
-              - regex: clound_cover
-                cast_type: int
+            - method: regex_type_cast
+              inputs:
+                regex_casts:
+                  - regex: clound_cover
+                    cast_type: int
 
     # noqa: W605
     """

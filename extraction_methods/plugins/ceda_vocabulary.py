@@ -1,10 +1,5 @@
 # encoding: utf-8
-"""
-..  _ceda-vocabulary:
-
-CEDA Vocabulary Method
-----------------------
-"""
+""" """
 __author__ = "Richard Smith"
 __date__ = "27 May 2021"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -52,23 +47,13 @@ class CEDAVocabularyInput(Input):
 
 class CEDAVocabularyExtract(ExtractionMethod):
     """
-    Method: ``ceda_vocabulary``
+    **Method name:** ``ceda_vocabulary``
 
-    Description:
-        Validates and sorts properties into vocabs and generates
-        the `general` vocab for specified properties.
-
-    Configuration Options:
-    .. list-table::
-
-        - ``url``: ``REQUIRED`` url of vocabulary server
-        - ``namespace``: ``REQUIRED`` namespace of vocab for terms
-        - ``terms``: Terms to be validated
-        - ``strict``: Boolean on whether values should be validated
-        - ``request_timeout``: request time out
+    Validates and sorts properties into vocabs and generates
+    the `general` vocab for specified properties.
 
     Example configuration:
-    .. code-block:: yaml
+        .. code-block:: yaml
 
         - method: ceda_vocabulary
           inputs:

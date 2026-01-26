@@ -1,10 +1,5 @@
 # encoding: utf-8
-"""
-..  _stac-extension:
-
-STAC Extension Method
----------------------
-"""
+""" """
 __author__ = "Richard Smith"
 __date__ = "28 May 2021"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -53,28 +48,22 @@ class STACExtensionInput(Input):
 
 class STACExtensionExtract(ExtractionMethod):
     """
-    Method: ``stac_extension``
+    **Method name:** ``stac_extension``
 
-    Description:
-        Accepts a list of extensions which contain url, prefix and
-        list of properties.
-
-    Configuration Options:
-    .. list-table::
-
-        - ``extensions``: ``REQUIRED`` List of extensions.
+    Accepts a list of extensions which contain url, prefix and
+    list of properties.
 
     Example Configuration:
-    .. code-block:: yaml
+        .. code-block:: yaml
 
-        - method: stac_extension
-          inputs:
-            extensions:
-              - url: hello.com/v1.0.0/world.json
-                prefix: hello
-                properties:
-                  - foo
-                  - bar
+            - method: stac_extension
+              inputs:
+                extensions:
+                  - url: hello.com/v1.0.0/world.json
+                    prefix: hello
+                    properties:
+                      - foo
+                      - bar
     """
 
     input_class = STACExtensionInput

@@ -1,10 +1,5 @@
 # encoding: utf-8
-"""
-..  _regex-rename:
-
-Regex Rename Method
--------------------
-"""
+""" """
 __author__ = "Rhys Evans"
 __date__ = "8 Jul 2024"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -55,26 +50,20 @@ class RegexRenameInput(Input):
 
 class RegexRenameExtract(ExtractionMethod):
     """
-    Method: ``regex_rename``
+    **Method name:** ``regex_rename``
 
-    Description:
-        Takes a list of regex and output key combinations. Any existing properties
-        that full match a regex are rename to the output key.
-        Later regex take precedence.
-
-    Configuration Options:
-    .. list-table::
-
-        - ``regex_swaps``: Regex and output key combinations.
+    Takes a list of regex and output key combinations. Any existing properties
+    that full match a regex are rename to the output key.
+    Later regex take precedence.
 
     Example configuration:
-    .. code-block:: yaml
+        .. code-block:: yaml
 
-        - method: regex_rename
-          inputs:
-            regex_swaps:
-              - regex: README
-                output_key: metadata
+            - method: regex_rename
+              inputs:
+                regex_swaps:
+                  - regex: README
+                    output_key: metadata
 
     # noqa: W605
     """

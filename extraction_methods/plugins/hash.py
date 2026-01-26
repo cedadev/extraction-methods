@@ -1,10 +1,5 @@
 # encoding: utf-8
-"""
-..  _hash:
-
-Hash Method
------------
-"""
+""" """
 __author__ = "Richard Smith"
 __date__ = "27 May 2021"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -42,24 +37,17 @@ class HashInput(Input):
 
 class HashExtract(ExtractionMethod):
     """
-    Method: ``hash``
+    **Method name:** ``hash``
 
-    Description:
-        Hashes input string.
-
-    Configuration Options:
-    .. list-table::
-
-        - ``hash_str``: string to be hashed.
-        - ``output_key``: key to output to.
+    Hashes input string.
 
     Example configuration:
-    .. code-block:: yaml
+        .. code-block:: yaml
 
-        method: hash
-          inputs:
-            hash_str: $model
-            output_key: hashed_terms
+            - method: hash
+              inputs:
+                hash_str: $model
+                output_key: hashed_terms
     """
 
     input_class = HashInput

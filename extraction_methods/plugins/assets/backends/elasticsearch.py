@@ -1,10 +1,5 @@
 # encoding: utf-8
-"""
-..  _elasticsearch-assets:
-
-Elasticsearch Assets Backend
-----------------------------
-"""
+""" """
 __author__ = "Rhys Evans"
 __date__ = "24 May 2022"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -51,32 +46,22 @@ class ElasticsearchAssetsInput(Input):
 
 class ElasticsearchAssets(Backend):
     """
-    Method: ``elasticsearch_assets``
+    **Method name:** ``elasticsearch_assets``
 
-    Description:
-        Using an ID. Generate a summary of information for higher level entities.
+    Using an ID. Generate a summary of information for higher level entities.
 
-    Configuration Options:
-    .. list-table::
 
-        - ``index``: Name of the index holding the STAC entities
-        - ``client_kwargs``: Parameters to pass to
-          `elasticsearch.Elasticsearch<https://elasticsearch-py.readthedocs.io/en/7.10.0/api.html>`_
-        - ``request_timeout``: Timeout for the Elasticsearch request.
-        - ``body``: list of terms for which their aggregate bbox should be returned.
-        - ``id_term``: Term used for agregating the STAC entities
+    Example Configuration:
+        .. code-block:: yaml
 
-    Configuration Example:
-    .. code-block:: yaml
-
-        - name: elasticsearch
-          inputs:
-            index: ceda-index
-            id_term: item_id
-            client_kwargs:
-                hosts: ['host1:9200','host2:9200']
-            fields:
-                - roles
+            - name: elasticsearch
+              inputs:
+                index: ceda-index
+                id_term: item_id
+                client_kwargs:
+                    hosts: ['host1:9200','host2:9200']
+                fields:
+                    - roles
     """
 
     input_class = ElasticsearchAssetsInput

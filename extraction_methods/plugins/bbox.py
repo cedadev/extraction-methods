@@ -1,10 +1,5 @@
 # encoding: utf-8
-"""
-..  _bbox:
-
-Bounding Box Method
--------------------
-"""
+""" """
 __author__ = "Richard Smith"
 __date__ = "28 May 2021"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -45,24 +40,17 @@ class BboxInput(Input):
 
 class BboxExtract(ExtractionMethod):
     """
-    Method: ``bbox``
 
-    Description:
-      Converts a coordinate values to `RFC 7946,
-      section 5 <https://tools.ietf.org/html/rfc7946#section-5>`_ formatted bbox.
+    **Method name:** ``bbox``
 
-    Configuration Options:
-        +-----------+-----------------------------------------+
-        | ``west``  | ``REQUIRED`` Most westerly coordinate.  |
-        | ``south`` | ``REQUIRED`` Most southernly coordinate |
-        | ``east``  | ``REQUIRED`` Most easterly coordinate.  |
-        | ``north`` | ``REQUIRED`` Most northernly coordinate |
-        +-----------+-----------------------------------------+
+    Converts a coordinate values to `RFC 7946,
+    section 5 <https://tools.ietf.org/html/rfc7946#section-5>`_ formatted bbox.
 
     Example Configuration:
         .. code-block:: yaml
+
             - method: bbox
-                inputs:
+              inputs:
                 west: 0
                 south: 0
                 east: $east_variable

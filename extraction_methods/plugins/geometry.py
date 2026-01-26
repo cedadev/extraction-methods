@@ -1,10 +1,5 @@
 # encoding: utf-8
-"""
-..  _geometry:
-
-Geometry Method
----------------
-"""
+""" """
 __author__ = "Richard Smith"
 __date__ = "28 May 2021"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -51,32 +46,24 @@ class GeometryInput(Input):
 
 class GeometryExtract(ExtractionMethod):
     """
-    Method: ``geometry``
+    **Method name:** ``geometry``
 
-    Description:
-        Accepts a dictionary of coordinate values and converts to `RFC 7946, <https://tools.ietf.org/html/rfc7946>`_
-        formatted geometry.
-
-    Configuration Options:
-    .. list-table::
-
-        - ``type``: ``REQUIRED`` Type of geometry to be produced.
-        - ``coordinates``: ``REQUIRED`` list of coordinates to convert to geometry. Ordering is respected.
-        - ``output_key``: key to output to.
+    Accepts a dictionary of coordinate values and converts to `RFC 7946, <https://tools.ietf.org/html/rfc7946>`_
+    formatted geometry.
 
     Example Configuration:
-    .. code-block:: yaml
+        .. code-block:: yaml
 
-        - name: geometry
-          inputs:
-            type: line
-            coordinates:
-              -
-                - 0
-                - 0
-              -
-                - $lon_2
-                - $lat_2
+            - method: geometry
+              inputs:
+                type: line
+                coordinates:
+                  -
+                    - 0
+                    - 0
+                  -
+                    - $lon_2
+                    - $lat_2
     """
 
     input_class = GeometryInput

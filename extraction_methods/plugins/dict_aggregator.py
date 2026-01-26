@@ -1,10 +1,5 @@
 # encoding: utf-8
-"""
-..  _dict-aggregator:
-
-Dictionary Aggregator Method
-----------------------------
-"""
+""" """
 __author__ = "Rhys Evans"
 __date__ = "24 May 2022"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -56,34 +51,24 @@ class DictAggregatorInput(Input):
 
 class DictAggregatorExtract(ExtractionMethod):
     """
-    Method: ``dict_aggregator``
+    **Method name:** ``dict_aggregator``
 
-    Description:
-        Aggregate information within dictionary.
+    Aggregate information within dictionary.
 
-    Configuration Options:
-    .. list-table::
+    Example Configuration:
+        .. code-block:: yaml
 
-        - ``min``: list of terms for which the minimum of their aggregate should be returned
-        - ``max``: list of terms for which the maximum of their aggregate should be returned
-        - ``sum``: list of terms for which the sum of their aggregate should be returned
-        - ``list``: list of terms for which a list of their aggregage should be returned
-        - ``mean``: list of terms for which a list of their aggregage should be returned
-
-    Configuration Example:
-    .. code-block:: yaml
-
-        - method: dict_aggregator
-          inputs:
-            min:
-              - start_time
-            max:
-              - end_time
-            sum:
-              - size
-            list:
-              - term1
-              - term2
+            - method: dict_aggregator
+              inputs:
+                min:
+                  - start_time
+                max:
+                  - end_time
+                sum:
+                  - size
+                list:
+                  - term1
+                  - term2
     """
 
     input_class = DictAggregatorInput

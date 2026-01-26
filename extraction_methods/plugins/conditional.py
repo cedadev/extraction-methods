@@ -1,10 +1,5 @@
 # encoding: utf-8
-"""
-..  _conditional:
-
-Conditional Extraction
-----------------------
-"""
+""" """
 __author__ = "Rhys Evans"
 __date__ = "27 Oct 2025"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -47,34 +42,26 @@ class ConditionalInput(Input):
 
 class ConditionalExtract(ExtractionMethod):
     """
-    Method: ``conditional``
+    **Method name:** ``conditional``
 
-    Description:
-        Method to run set of extraction methods given a condition.
+    Method to run set of extraction methods given a condition.
 
-    Configuration Options:
-    .. list-table::
+    Example Configuration:
+        .. code-block:: yaml
 
-        - ``condition``: Condition to decide on which methods are run
-        - ``true_methods``: Extraction methods to run if contition is true
-        - ``false_methods``: Extraction methods to run if contition is false
-
-    Configuration Example:
-    .. code-block:: yaml
-
-        - method: conditional
-          inputs:
-            condition: $foo == bar
-            true_methods:
-              - method: default
-                inputs:
-                  defaults:
-                    hello: world
-            false_methods:
-              - method: default
-                inputs:
-                  defaults:
-                    hello: there
+            - method: conditional
+              inputs:
+                condition: $foo == bar
+                true_methods:
+                  - method: default
+                    inputs:
+                      defaults:
+                        hello: world
+                false_methods:
+                  - method: default
+                    inputs:
+                      defaults:
+                        hello: there
     """
 
     input_class = ConditionalInput

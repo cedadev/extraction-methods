@@ -1,10 +1,5 @@
 # encoding: utf-8
-"""
-..  _assets:
-
-STAC Assets Extraction
-----------------------
-"""
+""" """
 __author__ = "Rhys Evans"
 __date__ = "24 May 2022"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -48,33 +43,26 @@ class AssetInput(Input):
 
 class AssetExtract(SetEntryPointsMixin, ExtractionMethod):
     """
-    Method: ``assets``
+    **Method name:** ``assets``
 
-    Description:
-        Method to generate a dictionary of STAC Assets.
+    Method to generate a dictionary of STAC Assets.
 
-    Configuration Options:
-    .. list-table::
 
-        - ``backend``: Backend name and inputs
-        - ``extraction_methods``: Extraction methods to run on assets
-        - ``output_key``: key to output to
+    Example Configuration:
+        .. code-block:: yaml
 
-    Configuration Example:
-    .. code-block:: yaml
-
-        - method: assets
-          inputs:
-            backend:
-              name: elasticsearch
+            - method: assets
               inputs:
-                connection_kwargs:
-                  hosts: ['host1:9200','host2:9200']
-            extraction_methods:
-              - method: default
-                inputs:
-                  defaults:
-                    hello: world
+                backend:
+                  name: elasticsearch
+                  inputs:
+                    connection_kwargs:
+                      hosts: ['host1:9200','host2:9200']
+                extraction_methods:
+                  - method: default
+                    inputs:
+                      defaults:
+                        hello: world
     """
 
     input_class = AssetInput

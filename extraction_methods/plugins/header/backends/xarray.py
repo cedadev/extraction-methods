@@ -1,10 +1,5 @@
 # encoding: utf-8
-"""
-..  _xarray-header:
-
-Xarray Header Backend
----------------------
-"""
+""" """
 __author__ = "Richard Smith"
 __date__ = "27 May 2021"
 __copyright__ = "Copyright 2018 United Kingdom Research and Innovation"
@@ -44,20 +39,12 @@ class XarrayHeaderInput(Input):
 
 class XarrayHeader(ExtractionMethod):
     """
-    Method: ``xarray``
+    **Method name:** ``xarray``
 
-    Description:
-        Xarray backend for header method.
-
-    Configuration Options:
-    .. list-table::
-
-        - ``input_term``:term for method to run on
-        - ``dataset_kwargs``:kwargs to open dataset
-        - ``attributes``:attributes to be extracted
+    Xarray backend for header method.
 
     Example configuration:
-    .. code-block:: yaml
+        .. code-block:: yaml
 
         - method: xarray
           inputs:
