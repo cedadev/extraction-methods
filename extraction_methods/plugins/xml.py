@@ -13,12 +13,12 @@ __contact__ = "richard.d.smith@stfc.ac.uk"
 
 import logging
 import os.path
-import requests
 
 # Python imports
 from collections import defaultdict
 
 # Package imports
+import requests
 from typing import Any
 
 from lxml import etree  # nosec B410
