@@ -123,7 +123,7 @@ class XMLExtract(ExtractionMethod):
 
             else:
                 if isinstance(iterm, str) and iterm.startswith("http"):
-                    content = requests.get(iterm).text
+                    content = requests.get(iterm, timeout=10).text
                 else:
                     content = iterm
                 xml_file = etree.XML(content.encode("ascii", "ignore"))
