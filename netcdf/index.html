@@ -9,23 +9,25 @@
       
       
       
-        <link rel="prev" href="../ncml/">
+        <link rel="prev" href="../lambda/">
       
+      
+        <link rel="next" href="../open_zip/">
       
       
         
       
       
-      <link rel="icon" href="../../../images/favicon.ico">
+      <link rel="icon" href="../images/favicon.ico">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
     
     
       
-        <title>Xarray - Extraction Methods</title>
+        <title>Netcdf - Extraction Methods</title>
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
       
       
 
@@ -44,9 +46,9 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
     
-    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -64,7 +66,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#extraction_methods.plugins.header.backends.xarray" class="md-skip">
+        <a href="#extraction_methods.plugins.netcdf" class="md-skip">
           Skip to content
         </a>
       
@@ -80,7 +82,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../.." title="Extraction Methods" class="md-header__button md-logo" aria-label="Extraction Methods" data-md-component="logo">
+    <a href=".." title="Extraction Methods" class="md-header__button md-logo" aria-label="Extraction Methods" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -100,7 +102,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Xarray
+              Netcdf
             
           </span>
         </div>
@@ -190,7 +192,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="Extraction Methods" class="md-nav__button md-logo" aria-label="Extraction Methods" data-md-component="logo">
+    <a href=".." title="Extraction Methods" class="md-nav__button md-logo" aria-label="Extraction Methods" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -220,7 +222,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../.." class="md-nav__link">
+      <a href=".." class="md-nav__link">
         
   
   
@@ -247,7 +249,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../bbox/" class="md-nav__link">
+      <a href="../bbox/" class="md-nav__link">
         
   
   
@@ -274,7 +276,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../ceda_observation/" class="md-nav__link">
+      <a href="../ceda_observation/" class="md-nav__link">
         
   
   
@@ -301,7 +303,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../ceda_vocabulary/" class="md-nav__link">
+      <a href="../ceda_vocabulary/" class="md-nav__link">
         
   
   
@@ -328,7 +330,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../conditional/" class="md-nav__link">
+      <a href="../conditional/" class="md-nav__link">
         
   
   
@@ -355,7 +357,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../controlled_vocabulary/" class="md-nav__link">
+      <a href="../controlled_vocabulary/" class="md-nav__link">
         
   
   
@@ -382,7 +384,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../datetime_bound_to_centroid/" class="md-nav__link">
+      <a href="../datetime_bound_to_centroid/" class="md-nav__link">
         
   
   
@@ -409,7 +411,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../default/" class="md-nav__link">
+      <a href="../default/" class="md-nav__link">
         
   
   
@@ -436,7 +438,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../dict_aggregator/" class="md-nav__link">
+      <a href="../dict_aggregator/" class="md-nav__link">
         
   
   
@@ -463,7 +465,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../elasticsearch_aggregation/" class="md-nav__link">
+      <a href="../elasticsearch_aggregation/" class="md-nav__link">
         
   
   
@@ -490,7 +492,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../elasticsearch_search/" class="md-nav__link">
+      <a href="../elasticsearch_search/" class="md-nav__link">
         
   
   
@@ -517,7 +519,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../facet_map/" class="md-nav__link">
+      <a href="../facet_map/" class="md-nav__link">
         
   
   
@@ -544,7 +546,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../facet_prefix/" class="md-nav__link">
+      <a href="../facet_prefix/" class="md-nav__link">
         
   
   
@@ -571,7 +573,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../general_function/" class="md-nav__link">
+      <a href="../general_function/" class="md-nav__link">
         
   
   
@@ -598,7 +600,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../geometry/" class="md-nav__link">
+      <a href="../geometry/" class="md-nav__link">
         
   
   
@@ -625,7 +627,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../geometry_to_bbox/" class="md-nav__link">
+      <a href="../geometry_to_bbox/" class="md-nav__link">
         
   
   
@@ -652,7 +654,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../hash/" class="md-nav__link">
+      <a href="../hash/" class="md-nav__link">
         
   
   
@@ -679,7 +681,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../intake_esm/" class="md-nav__link">
+      <a href="../intake_esm/" class="md-nav__link">
         
   
   
@@ -706,7 +708,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../iso19115/" class="md-nav__link">
+      <a href="../iso19115/" class="md-nav__link">
         
   
   
@@ -733,7 +735,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../iso_date/" class="md-nav__link">
+      <a href="../iso_date/" class="md-nav__link">
         
   
   
@@ -760,7 +762,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../json_file/" class="md-nav__link">
+      <a href="../json_file/" class="md-nav__link">
         
   
   
@@ -787,7 +789,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../lambda/" class="md-nav__link">
+      <a href="../lambda/" class="md-nav__link">
         
   
   
@@ -811,10 +813,35 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../../netcdf/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Netcdf
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -830,6 +857,91 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#extraction_methods.plugins.netcdf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        netcdf
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="netcdf">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#extraction_methods.plugins.netcdf--netcdf-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NetCDF Method
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extraction_methods.plugins.netcdf.NetCDFExtract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NetCDFExtract
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="NetCDFExtract">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#extraction_methods.plugins.netcdf.NetCDFExtract--noqa-w605" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        noqa: W605
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extraction_methods.plugins.netcdf.NetCDFInput" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NetCDFInput
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -841,7 +953,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../open_zip/" class="md-nav__link">
+      <a href="../open_zip/" class="md-nav__link">
         
   
   
@@ -868,7 +980,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../path_parts/" class="md-nav__link">
+      <a href="../path_parts/" class="md-nav__link">
         
   
   
@@ -895,7 +1007,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../regex/" class="md-nav__link">
+      <a href="../regex/" class="md-nav__link">
         
   
   
@@ -922,7 +1034,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../regex_label/" class="md-nav__link">
+      <a href="../regex_label/" class="md-nav__link">
         
   
   
@@ -949,7 +1061,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../regex_rename/" class="md-nav__link">
+      <a href="../regex_rename/" class="md-nav__link">
         
   
   
@@ -976,7 +1088,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../regex_type_cast/" class="md-nav__link">
+      <a href="../regex_type_cast/" class="md-nav__link">
         
   
   
@@ -1003,7 +1115,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../remove/" class="md-nav__link">
+      <a href="../remove/" class="md-nav__link">
         
   
   
@@ -1030,7 +1142,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../stac_extension/" class="md-nav__link">
+      <a href="../stac_extension/" class="md-nav__link">
         
   
   
@@ -1057,7 +1169,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../string_template/" class="md-nav__link">
+      <a href="../string_template/" class="md-nav__link">
         
   
   
@@ -1084,7 +1196,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../xml/" class="md-nav__link">
+      <a href="../xml/" class="md-nav__link">
         
   
   
@@ -1158,7 +1270,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../assets/assets/" class="md-nav__link">
+      <a href="../assets/assets/" class="md-nav__link">
         
   
   
@@ -1233,7 +1345,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../assets/backends/elasticsearch/" class="md-nav__link">
+      <a href="../assets/backends/elasticsearch/" class="md-nav__link">
         
   
   
@@ -1261,7 +1373,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../assets/backends/intake_esm/" class="md-nav__link">
+      <a href="../assets/backends/intake_esm/" class="md-nav__link">
         
   
   
@@ -1289,7 +1401,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../assets/backends/regex/" class="md-nav__link">
+      <a href="../assets/backends/regex/" class="md-nav__link">
         
   
   
@@ -1329,20 +1441,18 @@
       
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_35" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_35" >
         
           
           <label class="md-nav__link" for="__nav_35" id="__nav_35_label" tabindex="0">
@@ -1363,7 +1473,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_35_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_35_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_35">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1381,7 +1491,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../header/" class="md-nav__link">
+      <a href="../header/header/" class="md-nav__link">
         
   
   
@@ -1406,20 +1516,18 @@
                 
   
   
-    
   
   
-  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_35_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_35_2" >
         
           
           <label class="md-nav__link" for="__nav_35_2" id="__nav_35_2_label" tabindex="0">
@@ -1440,7 +1548,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_35_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_35_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_35_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1458,7 +1566,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cf/" class="md-nav__link">
+      <a href="../header/backends/cf/" class="md-nav__link">
         
   
   
@@ -1486,7 +1594,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ncml/" class="md-nav__link">
+      <a href="../header/backends/ncml/" class="md-nav__link">
         
   
   
@@ -1511,35 +1619,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Xarray
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../header/backends/xarray/" class="md-nav__link">
         
   
   
@@ -1555,74 +1638,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#extraction_methods.plugins.header.backends.xarray" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        xarray
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="xarray">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#extraction_methods.plugins.header.backends.xarray--xarray-header-backend" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Xarray Header Backend
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#extraction_methods.plugins.header.backends.xarray.XarrayHeader" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        XarrayHeader
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#extraction_methods.plugins.header.backends.xarray.XarrayHeaderInput" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        XarrayHeaderInput
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1668,22 +1683,22 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#extraction_methods.plugins.header.backends.xarray" class="md-nav__link">
+  <a href="#extraction_methods.plugins.netcdf" class="md-nav__link">
     <span class="md-ellipsis">
       
-        xarray
+        netcdf
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="xarray">
+    <nav class="md-nav" aria-label="netcdf">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#extraction_methods.plugins.header.backends.xarray--xarray-header-backend" class="md-nav__link">
+  <a href="#extraction_methods.plugins.netcdf--netcdf-method" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Xarray Header Backend
+        NetCDF Method
       
     </span>
   </a>
@@ -1696,21 +1711,38 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#extraction_methods.plugins.header.backends.xarray.XarrayHeader" class="md-nav__link">
+  <a href="#extraction_methods.plugins.netcdf.NetCDFExtract" class="md-nav__link">
     <span class="md-ellipsis">
       
-        XarrayHeader
+        NetCDFExtract
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="NetCDFExtract">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#extraction_methods.plugins.netcdf.NetCDFExtract--noqa-w605" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        noqa: W605
       
     </span>
   </a>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
-  <a href="#extraction_methods.plugins.header.backends.xarray.XarrayHeaderInput" class="md-nav__link">
+  <a href="#extraction_methods.plugins.netcdf.NetCDFInput" class="md-nav__link">
     <span class="md-ellipsis">
       
-        XarrayHeaderInput
+        NetCDFInput
       
     </span>
   </a>
@@ -1734,17 +1766,17 @@
 
 
 
-  <h1>Xarray</h1>
+  <h1>Netcdf</h1>
 
 <div class="doc doc-object doc-module">
 
 
 
-<a id="extraction_methods.plugins.header.backends.xarray"></a>
+<a id="extraction_methods.plugins.netcdf"></a>
     <div class="doc doc-contents first">
 
-        <p>..  _xarray-header:</p>
-<h3 id="extraction_methods.plugins.header.backends.xarray--xarray-header-backend">Xarray Header Backend</h3>
+        <p>..  _netcdf:</p>
+<h3 id="extraction_methods.plugins.netcdf--netcdf-method">NetCDF Method</h3>
 
 
 
@@ -1769,8 +1801,8 @@
 
 
 
-<h2 id="extraction_methods.plugins.header.backends.xarray.XarrayHeader" class="doc doc-heading">
-            <code>XarrayHeader</code>
+<h2 id="extraction_methods.plugins.netcdf.NetCDFExtract" class="doc doc-heading">
+            <code>NetCDFExtract</code>
 
 
 </h2>
@@ -1782,24 +1814,43 @@
 
 
 
-        <p>Method: <code>xarray</code></p>
-
-
-<details class="description" open>
-  <summary>Description</summary>
-  <p>Xarray backend for header method.</p>
-</details>        <p>Configuration Options:
+        <p>Method: <code>netcdf</code></p>
+<p>Description:  Processes XML documents to extract metadata</p>
+<p>Configuration Options:
 .. list-table::</p>
-<pre><code>- ``input_term``:term for method to run on
-- ``dataset_kwargs``:kwargs to open dataset
-- ``attributes``:attributes to be extracted
+<pre><code>- ``extraction_keys``: List of keys to retrieve from the document.
+- ``filter_expr``: Regex to match against files to limit the attempts to known files
+- ``namespaces``: Map of namespaces
 </code></pre>
-<p>Example configuration:
+
+
+<details class="extraction-keys" open>
+  <summary>Extraction Keys</summary>
+  <p>Extraction keys should be a map.</p>
+<p>.. list-table::</p>
+<pre><code>* - Name
+  - Description
+* - ``output_key``
+  - Name of the outputted attribute
+* - ``key``
+  - Access key to extract the required data. Passed to
+    `xml.etree.ElementTree.find() &lt;https://docs.python.org/3/library/xml.etree.elementtree.html?highlight=find#xml.etree.ElementTree.ElementTree.find&gt;`_
+    and also supports `xpath formatted &lt;https://docs.python.org/3/library/xml.etree.elementtree.html#xpath-support&gt;`_ accessors
+* - ``attribute``
+  - Allows you to select from the element attribute. In the absence of this value, the default behaviour is to access the text value of the key.
+    In some cases, you might want to access and attribute of the element
+</code></pre>
+</details>        <p>Example configuration:
 .. code-block:: yaml</p>
-<pre><code>- method: xarray
+<pre><code>- method: xml
   inputs:
-    input_term: hello_world
+    filter_expr: '\.manifest$'
+    extraction_keys:
+      - name: start_datetime
+        key: './/gml:beginPosition'
+        attribute: start
 </code></pre>
+<h3 id="extraction_methods.plugins.netcdf.NetCDFExtract--noqa-w605">noqa: W605</h3>
 
 
 
@@ -1809,76 +1860,178 @@
 
 
               <details class="mkdocstrings-source">
-                <summary>Source code in <code>extraction_methods/plugins/header/backends/xarray.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">45</span>
-<span class="normal">46</span>
-<span class="normal">47</span>
-<span class="normal">48</span>
-<span class="normal">49</span>
-<span class="normal">50</span>
-<span class="normal">51</span>
-<span class="normal">52</span>
-<span class="normal">53</span>
-<span class="normal">54</span>
-<span class="normal">55</span>
-<span class="normal">56</span>
-<span class="normal">57</span>
-<span class="normal">58</span>
-<span class="normal">59</span>
-<span class="normal">60</span>
-<span class="normal">61</span>
-<span class="normal">62</span>
-<span class="normal">63</span>
-<span class="normal">64</span>
-<span class="normal">65</span>
-<span class="normal">66</span>
-<span class="normal">67</span>
-<span class="normal">68</span>
-<span class="normal">69</span>
-<span class="normal">70</span>
-<span class="normal">71</span>
-<span class="normal">72</span>
-<span class="normal">73</span>
-<span class="normal">74</span>
-<span class="normal">75</span>
-<span class="normal">76</span>
-<span class="normal">77</span>
-<span class="normal">78</span>
-<span class="normal">79</span>
-<span class="normal">80</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">XarrayHeader</span><span class="p">(</span><span class="n">ExtractionMethod</span><span class="p">):</span>
+                <summary>Source code in <code>extraction_methods/plugins/netcdf.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">NetCDFExtract</span><span class="p">(</span><span class="n">ExtractionMethod</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Method: ``xarray``</span>
+<span class="sd">    Method: ``netcdf``</span>
 
-<span class="sd">    Description:</span>
-<span class="sd">        Xarray backend for header method.</span>
+<span class="sd">    Description:  Processes XML documents to extract metadata</span>
 
 <span class="sd">    Configuration Options:</span>
 <span class="sd">    .. list-table::</span>
 
-<span class="sd">        - ``input_term``:term for method to run on</span>
-<span class="sd">        - ``dataset_kwargs``:kwargs to open dataset</span>
-<span class="sd">        - ``attributes``:attributes to be extracted</span>
+<span class="sd">        - ``extraction_keys``: List of keys to retrieve from the document.</span>
+<span class="sd">        - ``filter_expr``: Regex to match against files to limit the attempts to known files</span>
+<span class="sd">        - ``namespaces``: Map of namespaces</span>
+
+<span class="sd">    Extraction Keys:</span>
+<span class="sd">        Extraction keys should be a map.</span>
+
+<span class="sd">        .. list-table::</span>
+
+<span class="sd">            * - Name</span>
+<span class="sd">              - Description</span>
+<span class="sd">            * - ``output_key``</span>
+<span class="sd">              - Name of the outputted attribute</span>
+<span class="sd">            * - ``key``</span>
+<span class="sd">              - Access key to extract the required data. Passed to</span>
+<span class="sd">                `xml.etree.ElementTree.find() &lt;https://docs.python.org/3/library/xml.etree.elementtree.html?highlight=find#xml.etree.ElementTree.ElementTree.find&gt;`_</span>
+<span class="sd">                and also supports `xpath formatted &lt;https://docs.python.org/3/library/xml.etree.elementtree.html#xpath-support&gt;`_ accessors</span>
+<span class="sd">            * - ``attribute``</span>
+<span class="sd">              - Allows you to select from the element attribute. In the absence of this value, the default behaviour is to access the text value of the key.</span>
+<span class="sd">                In some cases, you might want to access and attribute of the element</span>
 
 <span class="sd">    Example configuration:</span>
 <span class="sd">    .. code-block:: yaml</span>
 
-<span class="sd">        - method: xarray</span>
+<span class="sd">        - method: xml</span>
 <span class="sd">          inputs:</span>
-<span class="sd">            input_term: hello_world</span>
+<span class="sd">            filter_expr: &#39;\.manifest$&#39;</span>
+<span class="sd">            extraction_keys:</span>
+<span class="sd">              - name: start_datetime</span>
+<span class="sd">                key: &#39;.//gml:beginPosition&#39;</span>
+<span class="sd">                attribute: start</span>
+
+<span class="sd">    # noqa: W605</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">input_class</span> <span class="o">=</span> <span class="n">XarrayHeaderInput</span>
+    <span class="n">input_class</span> <span class="o">=</span> <span class="n">NetCDFInput</span>
 
     <span class="nd">@update_input</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">body</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
 
-        <span class="n">ds</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">input_term</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">dataset_kwargs</span><span class="p">)</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">xarray</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">input_term</span><span class="p">,</span> <span class="n">decode_coords</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">)</span>
 
-        <span class="k">for</span> <span class="n">attribute</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">attributes</span><span class="p">:</span>
-            <span class="n">value</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">attribute</span><span class="o">.</span><span class="n">key</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">variable_attributes</span><span class="p">:</span>
+            <span class="n">variable</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">variable_id</span><span class="p">]</span>
+            <span class="n">variable_attrs</span> <span class="o">=</span> <span class="n">variable</span><span class="o">.</span><span class="n">attrs</span>
 
-            <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
-                <span class="n">body</span><span class="p">[</span><span class="n">attribute</span><span class="o">.</span><span class="n">output_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="k">for</span> <span class="n">variable_attribute</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">variable_attributes</span><span class="p">:</span>
+                <span class="n">body</span><span class="p">[</span><span class="n">variable_attribute</span><span class="o">.</span><span class="n">output_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">variable_attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                    <span class="n">variable_attribute</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="kc">None</span>
+                <span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">global_attributes</span><span class="p">:</span>
+            <span class="n">global_attrs</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">attrs</span>
+
+            <span class="k">for</span> <span class="n">global_attribute</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">global_attributes</span><span class="p">:</span>
+                <span class="n">body</span><span class="p">[</span><span class="n">global_attribute</span><span class="o">.</span><span class="n">output_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">global_attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                    <span class="n">global_attribute</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="kc">None</span>
+                <span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">cf_attributes</span><span class="p">:</span>
+            <span class="n">cf_attrs</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">cf</span>
+
+            <span class="k">for</span> <span class="n">cf_attribute</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">cf_attributes</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">body</span><span class="p">[</span><span class="n">cf_attribute</span><span class="o">.</span><span class="n">output_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">cf_attrs</span><span class="p">[</span><span class="n">cf_attribute</span><span class="o">.</span><span class="n">key</span><span class="p">]</span>
+
+                <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                    <span class="n">body</span><span class="p">[</span><span class="n">cf_attribute</span><span class="o">.</span><span class="n">output_key</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">rio_attributes</span><span class="p">:</span>
+            <span class="n">rio_attrs</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">rio</span>
+
+            <span class="k">for</span> <span class="n">rio_attribute</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">rio_attributes</span><span class="p">:</span>
+                <span class="n">body</span><span class="p">[</span><span class="n">rio_attribute</span><span class="o">.</span><span class="n">output_key</span><span class="p">]</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span>
+                    <span class="n">rio_attrs</span><span class="p">,</span> <span class="n">rio_attribute</span><span class="o">.</span><span class="n">key</span><span class="p">,</span> <span class="kc">None</span>
+                <span class="p">)</span>
 
         <span class="k">return</span> <span class="n">body</span>
 </code></pre></div></td></tr></table></div>
@@ -1909,8 +2062,8 @@
 
 
 
-<h2 id="extraction_methods.plugins.header.backends.xarray.XarrayHeaderInput" class="doc doc-heading">
-            <code>XarrayHeaderInput</code>
+<h2 id="extraction_methods.plugins.netcdf.NetCDFInput" class="doc doc-heading">
+            <code>NetCDFInput</code>
 
 
 </h2>
@@ -1922,7 +2075,7 @@
 
 
 
-        <p>Model for Xarray Header Method Input.</p>
+        <p>Model for NetCDF Input.</p>
 
 
 <p><span class="doc-section-title">Parameters:</span></p>
@@ -1954,30 +2107,78 @@
           </tr>
           <tr class="doc-section-item">
             <td>
-                <code>dataset_kwargs</code>
+                <code>variable_id</code>
             </td>
             <td>
-                  <code><span title="dict">dict</span>[<span title="str">str</span>, <span title="typing.Any">Any</span>]</code>
+                  <code><span title="str">str</span></code>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>kwargs to open dataset.</p>
+                <p>lambda function to be run.</p>
               </div>
             </td>
             <td>
-                  <code>{}</code>
+                  <code>&#39;$uri&#39;</code>
             </td>
           </tr>
           <tr class="doc-section-item">
             <td>
-                <code>attributes</code>
+                <code>variable_attributes</code>
             </td>
             <td>
                   <code><span title="list">list</span>[<span title="extraction_methods.core.types.KeyOutputKey">KeyOutputKey</span>]</code>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>attributes to be extracted.</p>
+                <p>list of variable attributes to extract.</p>
+              </div>
+            </td>
+            <td>
+                  <code>[]</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>global_attributes</code>
+            </td>
+            <td>
+                  <code><span title="list">list</span>[<span title="extraction_methods.core.types.KeyOutputKey">KeyOutputKey</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>list of global attributes to extract.</p>
+              </div>
+            </td>
+            <td>
+                  <code>[]</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>cf_attributes</code>
+            </td>
+            <td>
+                  <code><span title="list">list</span>[<span title="extraction_methods.core.types.KeyOutputKey">KeyOutputKey</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>list of cf attributes to extract.</p>
+              </div>
+            </td>
+            <td>
+                  <code>[]</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>rio_attributes</code>
+            </td>
+            <td>
+                  <code><span title="list">list</span>[<span title="extraction_methods.core.types.KeyOutputKey">KeyOutputKey</span>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>list of rio attributes to extract.</p>
               </div>
             </td>
             <td>
@@ -1995,9 +2196,8 @@
 
 
               <details class="mkdocstrings-source">
-                <summary>Source code in <code>extraction_methods/plugins/header/backends/xarray.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">26</span>
-<span class="normal">27</span>
+                <summary>Source code in <code>extraction_methods/plugins/netcdf.py</code></summary>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">27</span>
 <span class="normal">28</span>
 <span class="normal">29</span>
 <span class="normal">30</span>
@@ -2012,22 +2212,47 @@
 <span class="normal">39</span>
 <span class="normal">40</span>
 <span class="normal">41</span>
-<span class="normal">42</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">XarrayHeaderInput</span><span class="p">(</span><span class="n">Input</span><span class="p">):</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">NetCDFInput</span><span class="p">(</span><span class="n">Input</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Model for Xarray Header Method Input.</span>
+<span class="sd">    Model for NetCDF Input.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">input_term</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
         <span class="n">default</span><span class="o">=</span><span class="s2">&quot;$uri&quot;</span><span class="p">,</span>
         <span class="n">description</span><span class="o">=</span><span class="s2">&quot;term for method to run on.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">dataset_kwargs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
-        <span class="n">default</span><span class="o">=</span><span class="p">{},</span>
-        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;kwargs to open dataset.&quot;</span><span class="p">,</span>
+    <span class="n">variable_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;$uri&quot;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;lambda function to be run.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">attributes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">KeyOutputKey</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+    <span class="n">variable_attributes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">KeyOutputKey</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
         <span class="n">default</span><span class="o">=</span><span class="p">[],</span>
-        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;attributes to be extracted.&quot;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;list of variable attributes to extract.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">global_attributes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">KeyOutputKey</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="p">[],</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;list of global attributes to extract.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">cf_attributes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">KeyOutputKey</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="p">[],</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;list of cf attributes to extract.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">rio_attributes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">KeyOutputKey</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="p">[],</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;list of rio attributes to extract.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
               </details>
@@ -2110,10 +2335,10 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>
