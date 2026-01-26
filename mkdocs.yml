@@ -1,14 +1,24 @@
 site_name: Extraction Methods
+repo_url: https://github.com/cedadev/extraction-methods
 
-nav:
-- Code Reference: reference/
+theme:
+  name: material
+  favicon: images/favicon.ico
+  features:
+    - content.code.copy
 
 plugins:
 - search
 - gen-files:
     scripts:
-    - tools/gen_ref_pages.py
-- literate-nav:
-    nav_file: SUMMARY.md
-- section-index
-- mkdocstrings
+        - docs/scripts/gen_plugins.py
+- mkdocstrings:
+    default_handler: python
+    handlers:
+        python:
+            options:
+                import:
+                    - https://docs.python.org/3/objects.inv
+                    - https://docs.pydantic.dev/latest/objects.inv
+                extensions:
+                  - griffe_fieldz
