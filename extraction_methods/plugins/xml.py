@@ -18,6 +18,7 @@ import os.path
 from collections import defaultdict
 
 # Package imports
+import requests
 from typing import Any
 
 from lxml import etree  # nosec B410
@@ -116,11 +117,16 @@ class XMLExtract(ExtractionMethod):
         # Extract the keys
         try:
 
-            if os.path.isfile(self.input.input_term):
-                xml_file = etree.parse(self.input.input_term)
+            iterm = self.input.input_term
+            if os.path.isfile(iterm):
+                xml_file = etree.parse(iterm)
 
             else:
-                xml_file = etree.XML(self.input.input_term.encode("ascii", "ignore"))
+                if isinstance(iterm, str) and iterm.startswith("http"):
+                    content = requests.get(iterm, timeout=10).text
+                else:
+                    content = iterm
+                xml_file = etree.XML(content.encode("ascii", "ignore"))
 
         except (etree.ParseError, FileNotFoundError, TypeError):
             return body
