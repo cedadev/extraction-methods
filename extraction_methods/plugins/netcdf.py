@@ -16,6 +16,8 @@ import logging
 from typing import Any
 
 import xarray
+import cf_xarray
+import rioxarray
 from pydantic import Field
 
 from extraction_methods.core.extraction_method import ExtractionMethod, update_input
