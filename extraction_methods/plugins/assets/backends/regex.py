@@ -41,7 +41,7 @@ class RegexAssets(Backend):
 
         - method: regex
           inputs:
-            input_term: ^(?:[^_]*_){2}(?P<datetime>\d*)
+            input_term: '/path/glob/*.json'
 
     # noqa: W605
     """
