@@ -35,10 +35,10 @@ class FacetPrefixInput(Input):
 
 class FacetPrefixExtract(ExtractionMethod):
     """
-    **Method name:** ``facet_prefix``
-
     In some cases, you may wish add a prefix to some or all of the facets
     based on the vocabulary they're from.
+
+    **Method name:** ``facet_prefix``
 
     Example Configuration:
         .. code-block:: yaml

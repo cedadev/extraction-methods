@@ -31,9 +31,9 @@ class DefaultInput(Input):
 
 class DefaultExtract(ExtractionMethod):
     """
-    **Method name:** ``default``
+    Takes a set of default key value pairs.
 
-    Takes a set of default facets.
+    **Method name:** ``default``
 
     Example configuration:
         .. code-block:: yaml

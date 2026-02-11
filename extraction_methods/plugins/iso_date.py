@@ -50,8 +50,6 @@ class ISODateInput(Input):
 
 class ISODateExtract(ExtractionMethod):
     """
-    **Method name:** ``iso_date``
-
     Takes the source dict and the key to access the date and
     converts the date to ISO 8601 Format.
 
@@ -62,6 +60,8 @@ class ISODateExtract(ExtractionMethod):
 
     If the date format cannot be parsed, it is removed from the source dict with
     an error logged.
+
+    **Method name:** ``iso_date``
 
     Example Configuration:
         .. code-block:: yaml

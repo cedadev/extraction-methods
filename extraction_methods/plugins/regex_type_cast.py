@@ -46,10 +46,10 @@ class RegexTypeCastInput(Input):
 
 class RegexTypeCastExtract(ExtractionMethod):
     """
-    **Method name:** ``regex_type_cast``
-
     Takes a list of regex and cast type combinations. Any existing properties
     that full match a regex are cast to the associated type.
+
+    **Method name:** ``regex_type_cast``
 
     Example configuration:
         .. code-block:: yaml

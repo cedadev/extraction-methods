@@ -45,16 +45,16 @@ class IntakeESMAssetsInput(Input):
 
 class IntakeESMAssets(Backend):
     """
-    **Method name:** ``intake_assets``
-
     Performs Search on intake catalog to provide a stream of assets for procesing.
     Uses an `Intake catalog <https://intake.readthedocs.io/>`_
     as a source for file objects.
 
+    **Backend name:** ``intake_assets``
+
     Example Configuration:
         .. code-block:: yaml
 
-        - method: intake_esm
+        - name: intake_esm
           inputs:
             href_term: url
     """

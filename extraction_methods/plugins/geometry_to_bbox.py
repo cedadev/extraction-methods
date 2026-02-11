@@ -37,10 +37,10 @@ class GeometryToBboxInput(Input):
 
 class GeometryToBboxExtract(ExtractionMethod):
     """
-    **Method name:** ``geometry_to_bbox``
-
     Accepts a geometry with type and list of coordinates to `RFC 7946,
     section 5 <https://tools.ietf.org/html/rfc7946#section-5>`_ formatted bbox.
+
+    **Method name:** ``geometry_to_bbox``
 
     Example Configuration:
         .. code-block:: yaml

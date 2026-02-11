@@ -10,6 +10,8 @@ __contact__ = "richard.d.smith@stfc.ac.uk"
 import logging
 from typing import Any
 
+import cf_xarray  # noqa: F401, pylint: disable=unused-import
+import rioxarray  # noqa: F401, pylint: disable=unused-import
 import xarray
 from pydantic import Field
 
@@ -55,20 +57,20 @@ LOGGER = logging.getLogger(__name__)
 
 class NetCDFExtract(ExtractionMethod):
     """
-    **Method name:** ``netcdf``
+    Description: Opens files with xarray allowing extraction of variable, global, cf, and/or rio attributes
 
-    Description:  Processes XML documents to extract metadata
+    **Method name:** ``netcdf``
 
     Example configuration:
         .. code-block:: yaml
 
-            - method: xml
+            - method: netcdf
               inputs:
-                filter_expr: '\.manifest$'
-                extraction_keys:
-                  - name: start_datetime
-                    key: './/gml:beginPosition'
-                    attribute: start
+                input_term: /path/to/file.nc
+                global_attributes:
+                  - key: start_datetime
+                  - key: end_datetime
+                    output_key: end
 
     # noqa: W605
     """

@@ -38,9 +38,9 @@ class ControlledVocabularyInput(Input):
 
 class ControlledVocabularyExtract(ExtractionMethod):
     """
-    **Method name:** ``controlled_vocabulary``
-
     Compare properties to a controlled vocabulary defined by a pydantic.BaseModel.
+
+    **Method name:** ``controlled_vocabulary``
 
     Example Configuration:
         .. code-block:: yaml

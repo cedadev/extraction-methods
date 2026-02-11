@@ -34,13 +34,17 @@ class JsonFileInput(Input):
     properties: list[KeyOutputKey] = Field(
         description="list of properties to extract.",
     )
+    output_key: str = Field(
+        default=None,
+        description="Key to output to. if none output is merged.",
+    )
 
 
 class JsonFileExtract(ExtractionMethod):
     """
-    **Method name:** ``json_file``
-
     Takes an input list of string to extract from the json file.
+
+    **Method name:** ``json_file``
 
     Example configuration:
         .. code-block:: yaml
@@ -94,6 +98,10 @@ class JsonFileExtract(ExtractionMethod):
                         output[k].append(v)
 
         if path.is_file():
-            output = {path.name: self.extract_terms(path)}
+            output = self.extract_terms(path)
+
+        if self.input.output_key:
+            body[self.input.output_key] = output
+            return body
 
         return body | output

@@ -33,11 +33,11 @@ class FacetMapInput(Input):
 
 class FacetMapExtract(ExtractionMethod):
     """
-    **Method name:** ``facet_map``
-
     In some cases, you may wish to map the header attributes to different
     facets. This method takes a map and converts the facet labels into those
     specified.
+
+    **Method name:** ``facet_map``
 
     Example Configuration:
         .. code-block:: yaml

@@ -47,10 +47,10 @@ class CEDAVocabularyInput(Input):
 
 class CEDAVocabularyExtract(ExtractionMethod):
     """
-    **Method name:** ``ceda_vocabulary``
-
     Validates and sorts properties into vocabs and generates
     the `general` vocab for specified properties.
+
+    **Method name:** ``ceda_vocabulary``
 
     Example configuration:
         .. code-block:: yaml

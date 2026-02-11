@@ -52,10 +52,10 @@ class DatetimeBoundToCentroidInput(Input):
 
 class DatetimeBoundToCentroidExtract(ExtractionMethod):
     """
-    **Method name:** ``datetime_bound_to_centroid``
-
     Accepts a dictionary of coordinate values and converts to `RFC 7946, section 5 <https://tools.ietf.org/html/rfc7946#section-5>`_
     formatted bbox.
+
+    **Method name:** ``datetime_bound_to_centroid``
 
     Example Configuration:
         .. code-block:: yaml

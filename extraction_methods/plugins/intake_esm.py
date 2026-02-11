@@ -45,11 +45,11 @@ class IntakeESMInput(Input):
 
 class IntakeESMExtract(ExtractionMethod):
     """
-    **Method name:** ``intake``
-
     Performs Search on intake catalog.
     Uses an `Intake catalog <https://intake.readthedocs.io/>`_
     as a source for file objects.
+
+    **Method name:** ``intake``
 
     Example Configuration:
         .. code-block:: yaml

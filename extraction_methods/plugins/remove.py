@@ -36,9 +36,9 @@ class RemoveInput(Input):
 
 class RemoveExtract(ExtractionMethod):
     """
-    **Method name:** ``remove``
-
     remove keys from body.
+
+    **Method name:** ``remove``
 
     Example Configuration:
         .. code-block:: yaml

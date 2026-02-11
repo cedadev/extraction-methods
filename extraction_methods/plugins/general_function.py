@@ -21,13 +21,17 @@ from extraction_methods.core.types import Input
 LOGGER = logging.getLogger(__name__)
 
 
-class Function(BaseModel):  # type: ignore[no-redef]
+class GeneralFunctionInput(Input):
     """
-    Model for Fuction.
+    Model for General Fuction Input.
     """
 
-    name: str = Field(
-        description="Name of function.",
+    function: str = Field(
+        description="Function to be run name can be seperatated by delimieter.",
+    )
+    delimiter: str = Field(
+        default=".",
+        description="text delimiter to put between module/function names.",
     )
     args: list[Any] = Field(
         default=[],
@@ -37,20 +41,6 @@ class Function(BaseModel):  # type: ignore[no-redef]
         default={},
         description="dictionary of key word arguments for function.",
     )
-
-
-class GeneralFunctionInput(Input):
-    """
-    Model for General Fuction Input.
-    """
-
-    function: Function = Field(
-        description="Function to be run name maybe seperatated my delimieter.",
-    )
-    delimiter: str = Field(
-        default=".",
-        description="text delimiter to put between module/function names.",
-    )
     output_key: str = Field(
         default="",
         description="key to output to, else response will be merged with body.",
@@ -59,24 +49,23 @@ class GeneralFunctionInput(Input):
 
 class GeneralFunctionExtract(ExtractionMethod):
     """
-    **Method name:** ``general_function``
-
     Accepts a dictionary. String values are popped from the dictionary and
     are put back into the dictionary with the ``key`` specified.
+
+    **Method name:** ``general_function``
 
     Example Configuration:
         .. code-block:: yaml
 
             - method: general_function
               inputs:
-                funtion:
-                  name: import.path.to.the.fuction
-                  args:
-                    - hello
-                    - world
-                  kwargs:
-                    hello: world
-                    foo: bar
+                funtion:import.path.to.the.fuction
+                args:
+                  - hello
+                  - world
+                kwargs:
+                  hello: world
+                  foo: bar
     """
 
     input_class = GeneralFunctionInput
@@ -85,15 +74,13 @@ class GeneralFunctionExtract(ExtractionMethod):
     def run(self, body: dict[str, Any]) -> dict[str, Any]:
         output_body = body.copy()
 
-        module_name, function_name = self.input.function.name.rsplit(
-            self.input.delimiter, 1
-        )
+        module_name, function_name = self.input.function.rsplit(self.input.delimiter, 1)
 
         module = importlib.import_module(module_name)
 
         function = getattr(module, function_name)
 
-        result = function(*self.input.function.args, **self.input.function.kwargs)
+        result = function(*self.input.args, **self.input.kwargs)
 
         if self.input.output_key:
             output_body[self.input.output_key] = result

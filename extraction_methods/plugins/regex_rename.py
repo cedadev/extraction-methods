@@ -50,11 +50,11 @@ class RegexRenameInput(Input):
 
 class RegexRenameExtract(ExtractionMethod):
     """
-    **Method name:** ``regex_rename``
-
     Takes a list of regex and output key combinations. Any existing properties
     that full match a regex are rename to the output key.
     Later regex take precedence.
+
+    **Method name:** ``regex_rename``
 
     Example configuration:
         .. code-block:: yaml

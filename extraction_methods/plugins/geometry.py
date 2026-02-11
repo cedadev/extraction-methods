@@ -46,10 +46,10 @@ class GeometryInput(Input):
 
 class GeometryExtract(ExtractionMethod):
     """
-    **Method name:** ``geometry``
-
     Accepts a dictionary of coordinate values and converts to `RFC 7946, <https://tools.ietf.org/html/rfc7946>`_
     formatted geometry.
+
+    **Method name:** ``geometry``
 
     Example Configuration:
         .. code-block:: yaml

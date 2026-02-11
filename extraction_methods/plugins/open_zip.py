@@ -46,9 +46,9 @@ class ZipInput(Input):
 
 class ZipExtract(ExtractionMethod):
     """
-    **Method name:** ``open_zip``
-
     Open a zip file and read inner files
+
+    **Method name:** ``open_zip``
 
     Example configuration:
         .. code-block:: yaml

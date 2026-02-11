@@ -37,9 +37,9 @@ class HashInput(Input):
 
 class HashExtract(ExtractionMethod):
     """
-    **Method name:** ``hash``
-
     Hashes input string.
+
+    **Method name:** ``hash``
 
     Example configuration:
         .. code-block:: yaml

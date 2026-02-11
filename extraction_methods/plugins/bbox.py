@@ -40,11 +40,10 @@ class BboxInput(Input):
 
 class BboxExtract(ExtractionMethod):
     """
-
-    **Method name:** ``bbox``
-
     Converts a coordinate values to `RFC 7946,
     section 5 <https://tools.ietf.org/html/rfc7946#section-5>`_ formatted bbox.
+
+    **Method name:** ``bbox``
 
     Example Configuration:
         .. code-block:: yaml

@@ -88,10 +88,9 @@ class ElasticsearchAggregationInput(Input):
 
 class ElasticsearchAggregationExtract(ExtractionMethod):
     """
-    **Method name:** ``elasticsearch_aggregation``
-
     Using an ID. Generate a summary of information for higher level entities.
 
+    **Method name:** ``elasticsearch_aggregation``
 
     Example Configuration:
         .. code-block:: yaml

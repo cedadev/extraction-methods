@@ -33,10 +33,10 @@ class HeaderInput(Input):
 
 class HeaderExtract(ExtractionMethod, SetEntryPointsMixin):
     """
-    **Method name:** ``header``
-
     Takes a header backend to run and returns the updated body
     from the configured backend.
+
+    **Method name:** ``header``
 
     Example configuration:
         .. code-block:: yaml

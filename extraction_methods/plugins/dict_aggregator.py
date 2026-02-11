@@ -51,9 +51,9 @@ class DictAggregatorInput(Input):
 
 class DictAggregatorExtract(ExtractionMethod):
     """
-    **Method name:** ``dict_aggregator``
-
     Aggregate information within dictionary.
+
+    **Method name:** ``dict_aggregator``
 
     Example Configuration:
         .. code-block:: yaml

@@ -37,17 +37,17 @@ class PathPartsInput(Input):
 
 class PathPartsExtract(ExtractionMethod):
     """
-    **Method name:** ``path_parts``
-
     Extracts the parts of a given path skipping ``skip`` number
     of top level parts.
+
+    **Method name:** ``path_parts``
 
     Example configuration:
         .. code-block:: yaml
 
             - method: path_parts
               inputs:
-                input_term: $uri
+                path: $uri
                 skip: 2
     """
 

@@ -39,14 +39,14 @@ class XarrayHeaderInput(Input):
 
 class XarrayHeader(ExtractionMethod):
     """
-    **Method name:** ``xarray``
-
     Xarray backend for header method.
+
+    **Backend name:** ``xarray``
 
     Example configuration:
         .. code-block:: yaml
 
-        - method: xarray
+        - name: xarray
           inputs:
             input_term: hello_world
     """

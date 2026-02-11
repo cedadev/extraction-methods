@@ -39,14 +39,14 @@ class CfHeaderInput(Input):
 
 class CfHeader(ExtractionMethod):
     """
-    **Method name:** ``cf``
-
     CF backend for header method.
+
+    **Backend name:** ``cf``
 
     Example configuration:
         .. code-block:: yaml
 
-        - method: cf
+        - name: cf
           inputs:
             input_term: hello_world
     """

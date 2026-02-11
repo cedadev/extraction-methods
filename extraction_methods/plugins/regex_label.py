@@ -47,9 +47,9 @@ class RegexLabelInput(Input):
 
 class RegexLabelExtract(ExtractionMethod):
     """
-    **Method name:** ``regex_label``
-
     Adds label if full match of regex.
+
+    **Method name:** ``regex_label``
 
     Example configuration:
         .. code-block:: yaml

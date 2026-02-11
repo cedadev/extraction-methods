@@ -40,9 +40,9 @@ class StringTemplateInput(Input):
 
 class StringTemplateExtract(ExtractionMethod):
     """
-    **Method name:** ``string_template``
+    Accepts a template and output_key. Existing terms are added to the template.
 
-    Accepts a template and output_key. terms are added to the template.
+    **Method name:** ``string_template``
 
     Example Configuration:
         .. code-block:: yaml

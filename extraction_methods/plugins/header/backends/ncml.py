@@ -50,14 +50,14 @@ class NcMLHeaderInput(Input):
 
 class NcMLHeader(ExtractionMethod):
     """
-    **Method name:** ``ncml``
-
     NcML backend for header method.
+
+    **Backend name:** ``ncml``
 
     Example configuration:
         .. code-block:: yaml
 
-        - method: ncml
+        - name: ncml
           inputs:
             input_term: hello_world
     """

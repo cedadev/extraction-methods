@@ -42,9 +42,9 @@ class ConditionalInput(Input):
 
 class ConditionalExtract(ExtractionMethod):
     """
-    **Method name:** ``conditional``
-
     Method to run set of extraction methods given a condition.
+
+    **Method name:** ``conditional``
 
     Example Configuration:
         .. code-block:: yaml

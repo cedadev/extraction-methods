@@ -50,9 +50,9 @@ iso19115_ns = {
 
 class ISO19115Extract(ExtractionMethod):
     """
-    **Method name:** ``iso19115``
-
     Takes a URL and calls out to URL to retrieve the iso19115 record.
+
+    **Method name:** ``iso19115``
 
     Example configuration:
         .. code-block:: yaml

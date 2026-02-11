@@ -61,9 +61,9 @@ class XMLInput(Input):
 
 class XMLExtract(ExtractionMethod):
     """
-    **Method name:** ``xml``
-
     Processes XML documents to extract metadata
+
+    **Method name:** ``xml``
 
     Example configuration:
         .. code-block:: yaml

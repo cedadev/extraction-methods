@@ -36,11 +36,11 @@ class RegexInput(Input):
 
 class RegexExtract(ExtractionMethod):
     """
-    **Method name:** ``regex``
-
     Takes an input string and a regex with
     named capture groups and returns a dictionary of the values
     extracted using the named capture groups.
+
+    **Method name:** ``regex``
 
     Example configuration:
         .. code-block:: yaml

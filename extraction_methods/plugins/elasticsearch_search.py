@@ -46,10 +46,9 @@ class ElasticsearchSearchInput(Input):
 
 class ElasticsearchSearchExtract(ExtractionMethod):
     """
-    **Method name:** ``elasticsearch_search``
-
     Search Elasticsearch.
 
+    **Method name:** ``elasticsearch_search``
 
     Example Configuration:
         .. code-block:: yaml

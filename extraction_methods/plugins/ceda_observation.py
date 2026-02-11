@@ -40,9 +40,9 @@ class CEDAObservationInput(Input):
 
 class CEDAObservationExtract(ExtractionMethod):
     """
-    **Method name:** ``ceda_observation``
-
     Returns a ceda observation record for the ``input_term``.
+
+    **Method name:** ``ceda_observation``
 
     Example Configuration:
         .. code-block:: yaml

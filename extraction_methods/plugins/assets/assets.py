@@ -43,10 +43,9 @@ class AssetInput(Input):
 
 class AssetExtract(SetEntryPointsMixin, ExtractionMethod):
     """
-    **Method name:** ``assets``
-
     Method to generate a dictionary of STAC Assets.
 
+    **Method name:** ``assets``
 
     Example Configuration:
         .. code-block:: yaml

@@ -48,10 +48,10 @@ class STACExtensionInput(Input):
 
 class STACExtensionExtract(ExtractionMethod):
     """
-    **Method name:** ``stac_extension``
-
     Accepts a list of extensions which contain url, prefix and
     list of properties.
+
+    **Method name:** ``stac_extension``
 
     Example Configuration:
         .. code-block:: yaml

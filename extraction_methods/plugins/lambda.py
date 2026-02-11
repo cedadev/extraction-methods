@@ -42,10 +42,10 @@ class LambdaInput(Input):  # type: ignore[no-redef]
 
 class LambdaExtract(ExtractionMethod):
     """
-    **Method name:** ``lambda``
-
-    Accepts a dictionary. String values are popped from the dictionary and
+    Description: Accepts a dictionary. String values are popped from the dictionary and
     are put back into the dictionary with the ``key`` specified.
+
+    **Method name:** ``lambda``
 
     Example Configuration:
         .. code-block:: yaml
