@@ -1748,20 +1748,30 @@
 
 
         <p>Using an ID. Generate a summary of information for higher level entities.</p>
-<p><strong>Backend name:</strong> <code>elasticsearch_assets</code></p>
+<p><strong>Method name:</strong> <code>elasticsearch</code></p>
 
 
 <details class="example-configuration" open>
   <summary>Example Configuration</summary>
   <p>.. code-block:: yaml</p>
-<pre><code>- name: elasticsearch
+<pre><code>- method: elasticsearch
   inputs:
     index: ceda-index
-    id_term: item_id
+    href_term: item_id
+    body:
+      query:
+        bool:
+          must:
+            - regexp:
+              "path.keyword":
+                value: $data_regex
+            - exists:
+              field: md5
+          must_not:
+            - exists:
+              field: removed
     client_kwargs:
         hosts: ['host1:9200','host2:9200']
-    fields:
-        - roles
 </code></pre>
 </details>
 
@@ -1810,23 +1820,43 @@
 <span class="normal">81</span>
 <span class="normal">82</span>
 <span class="normal">83</span>
-<span class="normal">84</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">ElasticsearchAssets</span><span class="p">(</span><span class="n">Backend</span><span class="p">):</span>
+<span class="normal">84</span>
+<span class="normal">85</span>
+<span class="normal">86</span>
+<span class="normal">87</span>
+<span class="normal">88</span>
+<span class="normal">89</span>
+<span class="normal">90</span>
+<span class="normal">91</span>
+<span class="normal">92</span>
+<span class="normal">93</span>
+<span class="normal">94</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">ElasticsearchAssets</span><span class="p">(</span><span class="n">Backend</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Using an ID. Generate a summary of information for higher level entities.</span>
 
-<span class="sd">    **Backend name:** ``elasticsearch_assets``</span>
+<span class="sd">    **Method name:** ``elasticsearch``</span>
 
 <span class="sd">    Example Configuration:</span>
 <span class="sd">        .. code-block:: yaml</span>
 
-<span class="sd">            - name: elasticsearch</span>
+<span class="sd">            - method: elasticsearch</span>
 <span class="sd">              inputs:</span>
 <span class="sd">                index: ceda-index</span>
-<span class="sd">                id_term: item_id</span>
+<span class="sd">                href_term: item_id</span>
+<span class="sd">                body:</span>
+<span class="sd">                  query:</span>
+<span class="sd">                    bool:</span>
+<span class="sd">                      must:</span>
+<span class="sd">                        - regexp:</span>
+<span class="sd">                          &quot;path.keyword&quot;:</span>
+<span class="sd">                            value: $data_regex</span>
+<span class="sd">                        - exists:</span>
+<span class="sd">                          field: md5</span>
+<span class="sd">                      must_not:</span>
+<span class="sd">                        - exists:</span>
+<span class="sd">                          field: removed</span>
 <span class="sd">                client_kwargs:</span>
 <span class="sd">                    hosts: [&#39;host1:9200&#39;,&#39;host2:9200&#39;]</span>
-<span class="sd">                fields:</span>
-<span class="sd">                    - roles</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">input_class</span> <span class="o">=</span> <span class="n">ElasticsearchAssetsInput</span>

@@ -1782,16 +1782,16 @@
 
 
         <p>Takes a regex glob and yields a dictionary for each matching path.</p>
-<p><strong>Backend name:</strong> <code>regex_assets</code></p>
+<p><strong>Method name:</strong> <code>regex</code></p>
 
 
 <details class="example-configuration" open>
   <summary>Example configuration</summary>
   <p>.. code-block:: yaml</p>
 <ul>
-<li>name: regex
+<li>method: regex
   inputs:
-    input_term: ^(?:[^_]<em>_){2}(?P<datetime>\d</em>)</li>
+    input_term: '/path/glob/*.json'</li>
 </ul>
 </details>        <h3 id="extraction_methods.plugins.assets.backends.regex.RegexAssets--noqa-w605">noqa: W605</h3>
 
@@ -1832,14 +1832,14 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Takes a regex glob and yields a dictionary for each matching path.</span>
 
-<span class="sd">    **Backend name:** ``regex_assets``</span>
+<span class="sd">    **Method name:** ``regex``</span>
 
 <span class="sd">    Example configuration:</span>
 <span class="sd">        .. code-block:: yaml</span>
 
-<span class="sd">        - name: regex</span>
+<span class="sd">        - method: regex</span>
 <span class="sd">          inputs:</span>
-<span class="sd">            input_term: ^(?:[^_]*_){2}(?P&lt;datetime&gt;\d*)</span>
+<span class="sd">            input_term: &#39;/path/glob/*.json&#39;</span>
 
 <span class="sd">    # noqa: W605</span>
 <span class="sd">    &quot;&quot;&quot;</span>

@@ -1757,7 +1757,7 @@ from the configured backend.</p>
 <li>method: header
   inputs:
     backend:
-        name: xarray
+        method: xarray
         inputs:
           kwargs:
             decode_times: False
@@ -1820,7 +1820,7 @@ from the configured backend.</p>
 <span class="sd">        - method: header</span>
 <span class="sd">          inputs:</span>
 <span class="sd">            backend:</span>
-<span class="sd">                name: xarray</span>
+<span class="sd">                method: xarray</span>
 <span class="sd">                inputs:</span>
 <span class="sd">                  kwargs:</span>
 <span class="sd">                    decode_times: False</span>
@@ -1835,7 +1835,7 @@ from the configured backend.</p>
     <span class="nd">@update_input</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">body</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
 
-        <span class="n">backend_entry_point</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">entry_points</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+        <span class="n">backend_entry_point</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">entry_points</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">method</span><span class="p">]</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
         <span class="n">backend</span> <span class="o">=</span> <span class="n">backend_entry_point</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">inputs</span><span class="p">)</span>
         <span class="n">body</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">_run</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
 
