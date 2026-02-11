@@ -1747,17 +1747,17 @@
 
 
 
-        <p><strong>Method name:</strong> <code>intake_assets</code></p>
-<p>Performs Search on intake catalog to provide a stream of assets for procesing.
+        <p>Performs Search on intake catalog to provide a stream of assets for procesing.
 Uses an <code>Intake catalog &lt;https://intake.readthedocs.io/&gt;</code>_
 as a source for file objects.</p>
+<p><strong>Backend name:</strong> <code>intake_assets</code></p>
 
 
 <details class="example-configuration" open>
   <summary>Example Configuration</summary>
   <p>.. code-block:: yaml</p>
 <ul>
-<li>method: intake_esm
+<li>name: intake_esm
   inputs:
     href_term: url</li>
 </ul>
@@ -1805,16 +1805,16 @@ as a source for file objects.</p>
 <span class="normal">77</span>
 <span class="normal">78</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">IntakeESMAssets</span><span class="p">(</span><span class="n">Backend</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    **Method name:** ``intake_assets``</span>
-
 <span class="sd">    Performs Search on intake catalog to provide a stream of assets for procesing.</span>
 <span class="sd">    Uses an `Intake catalog &lt;https://intake.readthedocs.io/&gt;`_</span>
 <span class="sd">    as a source for file objects.</span>
 
+<span class="sd">    **Backend name:** ``intake_assets``</span>
+
 <span class="sd">    Example Configuration:</span>
 <span class="sd">        .. code-block:: yaml</span>
 
-<span class="sd">        - method: intake_esm</span>
+<span class="sd">        - name: intake_esm</span>
 <span class="sd">          inputs:</span>
 <span class="sd">            href_term: url</span>
 <span class="sd">    &quot;&quot;&quot;</span>

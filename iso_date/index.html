@@ -1911,14 +1911,14 @@
 
 
 
-        <p><strong>Method name:</strong> <code>iso_date</code></p>
-<p>Takes the source dict and the key to access the date and
+        <p>Takes the source dict and the key to access the date and
 converts the date to ISO 8601 Format.</p>
 <p>e.g.</p>
 <p><code>YYYY-MM-DDTHH:MM:SS.ffffff</code>, if microsecond is not 0
 <code>YYYY-MM-DDTHH:MM:SS</code>, if microsecond is 0</p>
 <p>If the date format cannot be parsed, it is removed from the source dict with
 an error logged.</p>
+<p><strong>Method name:</strong> <code>iso_date</code></p>
 
 
 <details class="example-configuration" open>
@@ -1998,8 +1998,6 @@ an error logged.</p>
 <span class="normal">103</span>
 <span class="normal">104</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">ISODateExtract</span><span class="p">(</span><span class="n">ExtractionMethod</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    **Method name:** ``iso_date``</span>
-
 <span class="sd">    Takes the source dict and the key to access the date and</span>
 <span class="sd">    converts the date to ISO 8601 Format.</span>
 
@@ -2010,6 +2008,8 @@ an error logged.</p>
 
 <span class="sd">    If the date format cannot be parsed, it is removed from the source dict with</span>
 <span class="sd">    an error logged.</span>
+
+<span class="sd">    **Method name:** ``iso_date``</span>
 
 <span class="sd">    Example Configuration:</span>
 <span class="sd">        .. code-block:: yaml</span>

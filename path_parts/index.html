@@ -1743,9 +1743,9 @@
 
 
 
-        <p><strong>Method name:</strong> <code>path_parts</code></p>
-<p>Extracts the parts of a given path skipping <code>skip</code> number
+        <p>Extracts the parts of a given path skipping <code>skip</code> number
 of top level parts.</p>
+<p><strong>Method name:</strong> <code>path_parts</code></p>
 
 
 <details class="example-configuration" open>
@@ -1753,7 +1753,7 @@ of top level parts.</p>
   <p>.. code-block:: yaml</p>
 <pre><code>- method: path_parts
   inputs:
-    input_term: $uri
+    path: $uri
     skip: 2
 </code></pre>
 </details>
@@ -1800,17 +1800,17 @@ of top level parts.</p>
 <span class="normal">69</span>
 <span class="normal">70</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">PathPartsExtract</span><span class="p">(</span><span class="n">ExtractionMethod</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    **Method name:** ``path_parts``</span>
-
 <span class="sd">    Extracts the parts of a given path skipping ``skip`` number</span>
 <span class="sd">    of top level parts.</span>
+
+<span class="sd">    **Method name:** ``path_parts``</span>
 
 <span class="sd">    Example configuration:</span>
 <span class="sd">        .. code-block:: yaml</span>
 
 <span class="sd">            - method: path_parts</span>
 <span class="sd">              inputs:</span>
-<span class="sd">                input_term: $uri</span>
+<span class="sd">                path: $uri</span>
 <span class="sd">                skip: 2</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
