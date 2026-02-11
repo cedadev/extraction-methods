@@ -49,12 +49,12 @@ class IntakeESMAssets(Backend):
     Uses an `Intake catalog <https://intake.readthedocs.io/>`_
     as a source for file objects.
 
-    **Backend name:** ``intake_assets``
+    **Method name:** ``intake_assets``
 
     Example Configuration:
         .. code-block:: yaml
 
-        - name: intake_esm
+        - method: intake_esm
           inputs:
             href_term: url
     """

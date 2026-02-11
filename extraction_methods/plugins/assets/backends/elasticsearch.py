@@ -48,19 +48,29 @@ class ElasticsearchAssets(Backend):
     """
     Using an ID. Generate a summary of information for higher level entities.
 
-    **Backend name:** ``elasticsearch_assets``
+    **Method name:** ``elasticsearch_assets``
 
     Example Configuration:
         .. code-block:: yaml
 
-            - name: elasticsearch
+            - method: elasticsearch
               inputs:
                 index: ceda-index
-                id_term: item_id
+                href_term: item_id
+                body:
+                  query:
+                    bool:
+                      must:
+                        - regexp:
+                          "path.keyword":
+                            value: $data_regex
+                        - exists:
+                          field: md5
+                      must_not:
+                        - exists:
+                          field: removed
                 client_kwargs:
                     hosts: ['host1:9200','host2:9200']
-                fields:
-                    - roles
     """
 
     input_class = ElasticsearchAssetsInput

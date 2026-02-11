@@ -41,12 +41,12 @@ class CfHeader(ExtractionMethod):
     """
     CF backend for header method.
 
-    **Backend name:** ``cf``
+    **Method name:** ``cf``
 
     Example configuration:
         .. code-block:: yaml
 
-        - name: cf
+        - method: cf
           inputs:
             input_term: hello_world
     """

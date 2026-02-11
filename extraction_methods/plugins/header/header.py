@@ -44,7 +44,7 @@ class HeaderExtract(ExtractionMethod, SetEntryPointsMixin):
         - method: header
           inputs:
             backend:
-                name: xarray
+                method: xarray
                 inputs:
                   kwargs:
                     decode_times: False
@@ -59,7 +59,7 @@ class HeaderExtract(ExtractionMethod, SetEntryPointsMixin):
     @update_input
     def run(self, body: dict[str, Any]) -> dict[str, Any]:
 
-        backend_entry_point = self.entry_points[self.input.backend.name].load()
+        backend_entry_point = self.entry_points[self.input.backend.method].load()
         backend = backend_entry_point(**self.input.backend.inputs)
         body = backend._run(body)
 

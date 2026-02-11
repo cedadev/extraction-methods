@@ -34,12 +34,12 @@ class RegexAssets(Backend):
     """
     Takes a regex glob and yields a dictionary for each matching path.
 
-    **Backend name:** ``regex_assets``
+    **Method name:** ``regex_assets``
 
     Example configuration:
         .. code-block:: yaml
 
-        - name: regex
+        - method: regex
           inputs:
             input_term: ^(?:[^_]*_){2}(?P<datetime>\d*)
 

@@ -52,7 +52,7 @@ class AssetExtract(SetEntryPointsMixin, ExtractionMethod):
 
             - method: assets
               inputs:
-                backend:
+                method:
                   name: elasticsearch
                   inputs:
                     connection_kwargs:
