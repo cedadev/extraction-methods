@@ -48,7 +48,7 @@ class ElasticsearchAssets(Backend):
     """
     Using an ID. Generate a summary of information for higher level entities.
 
-    **Method name:** ``elasticsearch_assets``
+    **Method name:** ``elasticsearch``
 
     Example Configuration:
         .. code-block:: yaml
