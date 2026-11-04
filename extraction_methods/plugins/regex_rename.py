@@ -112,7 +112,7 @@ class RegexRenameExtract(ExtractionMethod):
         :return: dict
         :rtype: update body
         """
-        value = None
+        value = "__MISSING__"
         for key in self.matching_keys(body.keys(), key_parts[0]):
             if len(key_parts) > 1:
                 body[key], value = self.find(body[key], key_parts[1:])
@@ -162,6 +162,7 @@ class RegexRenameExtract(ExtractionMethod):
             )
 
             body, value = self.find(body, key_parts)
-            body = self.add(body, output_key_parts, value)
+            if value != "__MISSING__":
+                body = self.add(body, output_key_parts, value)
 
         return body
